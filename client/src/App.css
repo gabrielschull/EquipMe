@@ -1,5 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .component-container {
-
-border: 1px solid black
+  border: 1px solid black;
 }
-

@@ -5,7 +5,7 @@ import GearListings from '../gear/GearListings';
 
 const Home: React.FC = (): JSX.Element => {
   return (
-    <div className='component-container'>
+    <div className="component-container prose lg:prose-xl">
       <h2>Home</h2>
       <NavBar></NavBar>
       <CurrentRental></CurrentRental>
