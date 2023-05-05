@@ -1,5 +1,18 @@
-.component-container {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  html * {
+    font-family: system-ui, sans-serif;
+    font-weight: 800;
+    color: red;
+  }
 
-border: 1px solid black
+  h1 {
+    @apply text-7xl;
+  }
 }
 
+.component-container {
+  border: 1px solid black;
+}
