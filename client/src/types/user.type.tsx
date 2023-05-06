@@ -1,15 +1,15 @@
 export interface User {
-  id: string;
-  created_at: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  password: string;
-  location: string;
-  bio?: string;
-  is_owner: boolean;
-  is_renter: boolean;
-  rating?: number;
-  rental_contracts?: string[];
+  bio: string | null
+          created_at: string | null
+          email: string
+          first_name: string
+          id: string
+          is_owner: boolean | null
+          is_renter: boolean | null
+          last_name: string
+          location: string
+          password: string
+          phone: string
+          rating: number | null
+          rental_contracts: string[] | null
 }
