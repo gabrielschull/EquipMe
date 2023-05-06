@@ -13,3 +13,5 @@ export interface User {
           rating: number | null
           rental_contracts: string[] | null
 }
+
+

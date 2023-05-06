@@ -1,4 +1,7 @@
-import React from "react";
+import React from 'react';
+import { useEffect, useState } from 'react';
+import  {Gear}  from "../../types/gear.type";
+import { supabase } from '../../services/supabase.service';
 
 const people = [
     {
@@ -56,11 +59,21 @@ const people = [
   ]
 
 const GearListings : React.FC = (): JSX.Element => {
+
+  const [gear, setGear] = useState<Gear[]>();
+  useEffect(() => {
+    supabase.getGear().then((gear) => setGear(gear));
+  }, []);
    return (
     <>
+      <ul>
+         {gear &&
+         gear.map((gear) => <li key={gear.id}>{gear.description}</li>)}
+      </ul>
     <div className="component-container mx-12">
     <h2>Gear Listings - The below component will be updated to show different gear etc </h2>
     </div>
+
     <ul role="list" className="divide-y divide-gray-100 mx-12">
       {people.map((person) => (
         <li key={person.email} className="flex justify-between gap-x-6 py-5">
