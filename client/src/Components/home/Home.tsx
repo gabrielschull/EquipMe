@@ -6,6 +6,7 @@ import Login from '../auth/Login';
 import Signup from '../auth/Signup';
 import AddGear from '../gear/AddGear';
 import UserProfile from '../users/UserProfile';
+import Chat from '../rentals/Chat';
 const Home: React.FC = (): JSX.Element => {
   return (
     <>
@@ -18,6 +19,7 @@ const Home: React.FC = (): JSX.Element => {
         <Signup></Signup>
         <AddGear></AddGear>
         <UserProfile></UserProfile>
+        <Chat></Chat>
       </div>
     </>
   );
