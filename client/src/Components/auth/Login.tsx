@@ -1,16 +1,20 @@
 import { Auth } from '@supabase/auth-ui-react';
-import { useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
 import { supabaseClient } from '../../services/supabase.service';
 
 const Login: React.FC = (): JSX.Element => {
-  const { session } = useContext(UserContext);
+  const session = useContext(UserContext);
+
+  useEffect(() => {
+    console.log('👀 session=', session);
+  });
 
   return (
     <>
       <div className='component-container'>
         <h2>Login</h2>
-        {/* <li>{session?.profile ? 'user logged in' : 'user logged out'}</li> */}
+        <li>{session?.profile ? 'user logged in' : 'user logged out'}</li>
       </div>
 
       <Auth
