@@ -11,6 +11,7 @@ import GearDetails from '../gear/GearDetails';
 import MyGear from '../gear/MyGear';
 import EditGear from '../gear/EditGear';
 import GettingStarted from '../auth/GettingStarted';
+import Payment from '../rentals/Payment';
 
 const Home: React.FC = (): JSX.Element => {
   return (
@@ -29,6 +30,7 @@ const Home: React.FC = (): JSX.Element => {
         <GearDetails></GearDetails>
         <MyGear></MyGear>
         <EditGear></EditGear>
+        <Payment></Payment>
       </div>
     </>
   );
