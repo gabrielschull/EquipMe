@@ -5,7 +5,7 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 const AddGear : React.FC = (): JSX.Element => {
    return (
     <>
-    <h1>List your gear here</h1>
+    <h2 className="component-container">List your gear here</h2>
     <form className="mx-12">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
