@@ -29,7 +29,7 @@ const product = {
   ],
 
   description:
-    'Details here about the surfboard',
+    'Details here about the surfboard including availability ',
 }
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
