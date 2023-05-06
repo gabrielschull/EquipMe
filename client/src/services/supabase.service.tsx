@@ -9,7 +9,7 @@ const supabaseClient = createClient<Database>(
 export const supabase = {
   getUsers: async function getUsers() {
     try {
-      let data = await supabaseClient.from('Users').select();
+      const data = await supabaseClient.from('Users').select();
       if (data && data.data) {
         return data.data;
       }
