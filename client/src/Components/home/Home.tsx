@@ -2,24 +2,23 @@ import React from 'react';
 import CurrentRental from '../rentals/CurrentRental';
 import NavBar from './NavBar';
 import GearListings from '../gear/GearListings';
+import Login from '../auth/Login';
+import Signup from '../auth/Signup';
+import AddGear from '../gear/AddGear';
 
 const Home: React.FC = (): JSX.Element => {
   return (
     <>
       <div className="component-container">
         <h1>Home</h1>
-        <NavBar></NavBar>
+         <NavBar></NavBar>
         <CurrentRental></CurrentRental>
-        <GearListings></GearListings>
+        {/* <GearListings></GearListings>  */}
+        <Login></Login>
+        <Signup></Signup>
+        <AddGear></AddGear>
       </div>
-      <div>
-        <p className="text-sm ...">The quick brown fox ...</p>
-        <p className="text-base ...">The quick brown fox ...</p>
-        <p className="text-lg ...">The quick brown fox ...</p>
-        <p className="text-xl ...">The quick brown fox ...</p>
-        <p className="text-2xl ...">The quick brown fox ...</p>
-        <p className="text-9xl text-blue-800/50">The quick brown fox ...</p>
-      </div>
+
     </>
   );
 };
