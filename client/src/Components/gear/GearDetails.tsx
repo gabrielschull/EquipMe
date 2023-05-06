@@ -26,10 +26,11 @@ const product = {
         src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
         alt: 'Model wearing plain white basic tee.',
       },
+
   ],
 
   description:
-    'Details here about the surfboard including availability ',
+    'Details here about the surfboard',
 }
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
@@ -39,12 +40,12 @@ function classNames(...classes:any) {
 
 
 
-const CurrentRental : React.FC = (): JSX.Element => {
+const GearDetails : React.FC = (): JSX.Element => {
 
    return (
    <>
     <div className="component-container">
-    <h2>Current Rental - component needs to be updated to show details of the rental checked out </h2>
+    <h2>Gear Details - component needs to be updated to show details when clicked on gear</h2>
     </div>
     <div className="bg-white">
     <div className="pt-6">
@@ -77,8 +78,8 @@ const CurrentRental : React.FC = (): JSX.Element => {
         </ol>
       </nav>
 
-       {/* Image gallery */}
-       <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+      {/* Image gallery */}
+      <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
           <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
             <img
               src={product.images[0].src}
@@ -110,7 +111,6 @@ const CurrentRental : React.FC = (): JSX.Element => {
             />
           </div>
         </div>
-
       {/* Product info */}
       <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
         <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
@@ -172,4 +172,4 @@ const CurrentRental : React.FC = (): JSX.Element => {
    )
     }
 
-export default CurrentRental
+export default GearDetails;
