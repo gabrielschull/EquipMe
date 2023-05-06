@@ -18,4 +18,15 @@ export const supabase = {
       alert('Cannot get users from Supabase');
     }
   },
+  getGear: async function getGear() {
+    try {
+      const data = await supabaseClient.from('Gear').select();
+      if (data && data.data) {
+        return data.data;
+      }
+    } catch (e: any) {
+      console.log(e);
+      alert('Cannot get gear from Supabase');
+    }
+  },
 };

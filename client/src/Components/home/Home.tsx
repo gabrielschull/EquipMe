@@ -11,6 +11,7 @@ import GearDetails from '../gear/GearDetails';
 import MyGear from '../gear/MyGear';
 import EditGear from '../gear/EditGear';
 import GettingStarted from '../auth/GettingStarted';
+// import { useState } from 'react'
 
 const Home: React.FC = (): JSX.Element => {
   return (
@@ -25,7 +26,7 @@ const Home: React.FC = (): JSX.Element => {
         <AddGear></AddGear>
         <UserProfile></UserProfile>
         <Chat></Chat>
-        <GearListings></GearListings>
+        {/* <GearListings></GearListings> */}
         <GearDetails></GearDetails>
         <MyGear></MyGear>
         <EditGear></EditGear>
