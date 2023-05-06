@@ -11,6 +11,7 @@ export const supabase = {
     try {
       const data = await supabaseClient.from('Users').select();
       if (data && data.data) {
+
         return data.data;
       }
     } catch (e: any) {

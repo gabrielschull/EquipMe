@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React from 'react';
+import { useEffect, useState } from 'react';
 import  {Gear}  from "../../types/gear.type";
-import { supabase } from "../../services/supabase.service";
+import { supabase } from '../../services/supabase.service';
 
 const people = [
     {
@@ -56,35 +57,23 @@ const people = [
       lastSeen: null,
     },
   ]
-  //    const [gear, setGear] = useState<Gear[]>();
-
-
-  // useEffect(() => {
-  //   console.log("hello ")
-  //   supabase.getGear().then((gear) => setGear(gear));
-  // }, []);
-
-  //  <ul>
-  //       {users &&
-  //         users.map((user) => <li key={user.first_name}>{user.last_name}</li>)}
-  //     </ul>
-
-//  <ul>
-// {gear &&
-//   gear.map((gear) => <li key={gear.id}>{gear.description}</li>)}
-// </ul>
-
 
 const GearListings : React.FC = (): JSX.Element => {
+
+  const [gear, setGear] = useState<Gear[]>();
+  useEffect(() => {
+    supabase.getGear().then((gear) => setGear(gear));
+  }, []);
    return (
     <>
+      <ul>
+         {gear &&
+         gear.map((gear) => <li key={gear.id}>{gear.description}</li>)}
+      </ul>
     <div className="component-container mx-12">
     <h2>Gear Listings - The below component will be updated to show different gear etc </h2>
-     {/* <ul>
-{gear &&
-  gear.map((gear) => <li key={gear.id}>{gear.rating}</li>)}
-</ul> */}
     </div>
+
     <ul role="list" className="divide-y divide-gray-100 mx-12">
       {people.map((person) => (
         <li key={person.email} className="flex justify-between gap-x-6 py-5">
