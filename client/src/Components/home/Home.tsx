@@ -5,6 +5,7 @@ import GearListings from '../gear/GearListings';
 import Login from '../auth/Login';
 import Signup from '../auth/Signup';
 import AddGear from '../gear/AddGear';
+import GearDetails from '../gear/GearDetails';
 
 const Home: React.FC = (): JSX.Element => {
   return (
@@ -13,10 +14,11 @@ const Home: React.FC = (): JSX.Element => {
         <h1>Home</h1>
          <NavBar></NavBar>
         <CurrentRental></CurrentRental>
-        {/* <GearListings></GearListings>  */}
         <Login></Login>
         <Signup></Signup>
         <AddGear></AddGear>
+        <GearListings></GearListings>
+        <GearDetails></GearDetails>
       </div>
 
     </>

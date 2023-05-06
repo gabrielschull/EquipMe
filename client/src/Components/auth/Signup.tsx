@@ -7,7 +7,7 @@ const Signup : React.FC = (): JSX.Element => {
     <h2>Signup</h2>
     </div>
     <div className="component-container">
-    <h2>Login</h2>
+
     </div>
 
      {/*
