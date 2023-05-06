@@ -82,7 +82,7 @@ const UserProfile: React.FC = (): JSX.Element => {
       <div className="component-container">
         <h2>UserProfile</h2>
       </div>
-      <div className="bg-white py-24 sm:py-32">
+      <div className="bg-white py-24 sm:py-32 w-1/3">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <figure className="mt-10">
@@ -108,17 +108,21 @@ const UserProfile: React.FC = (): JSX.Element => {
               Raul Barros
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Hey guys, I'm a brazilian 28 years old Surfer, pretty busy with my
-              studies this days and my surfboard is free to be be rented, I
-              always take good care of it and would really apreciate if you do
-              do the same, Im live close to the Copacabana Beach so easy to
-              meet, please let me know if you need a board for day or more, I
-              can also give you some tips about where to find the best surfing
-              places in Rio 🤙🏾 🏄🏽‍♂️
+              Hey guys! I'm a Brazilian surfer, 28 years young, who's currently
+              hitting the books pretty hard. That means my surfboard is up for
+              rent, and it's in tip-top shape! I take really good care of my
+              board, and I'm looking for someone who'll do the same. Lucky for
+              you, I'm right near the world-famous Copacabana Beach, so it's
+              super easy to meet up. Whether you need the board for a day or
+              longer, I've got you covered. And, if you're looking for the best
+              surf spots in Rio, I'm your guy! I'm happy to share my local
+              knowledge so you can have the best surfing experience possible.
+              So, what are you waiting for? Hit me up and let's catch some
+              waves! 🤙🏾🏄🏽‍♂️
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+            <dl className="grid max-w-xl grid-rows-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-rows-2 lg:gap-y-16">
               {features.map((feature) => (
                 <div key={feature.name} className="relative pl-16">
                   <dt className="text-base font-semibold leading-7 text-gray-900">
