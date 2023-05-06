@@ -1,5 +1,3 @@
-// ⛔️⛔️⛔️ The commented lines in this component are just an example of how to render data from Supabase
-// import { useEffect, useState } from 'react';
 import './App.css';
 import Home from './Components/home/Home';
 // import { User } from './types/user.type';
@@ -15,12 +13,8 @@ export const UserContext = createContext<GearhubUserInfo>({
   profile: null,
 });
 
-const App: React.FC = (): JSX.Element => {
-  // const [users, setUsers] = useState<User[]>();
 
-  // useEffect(() => {
-  //   supabase.getUsers().then((users) => setUsers(users));
-  // }, []);
+const App: React.FC = (): JSX.Element => {
 
   const gearhubUserInfo = useSession();
   const session = useContext(UserContext);
@@ -36,6 +30,8 @@ const App: React.FC = (): JSX.Element => {
         {/* <NavBar /> */}
         {/* <Home /> */}
       </UserContext.Provider>
+      <Home />
+
     </>
   );
 };
