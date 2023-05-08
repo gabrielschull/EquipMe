@@ -8,6 +8,15 @@ export const supabaseClient = createClient<Database>(
 );
 
 export const supabase = {
+  signOut: async function signOut() {
+    try {
+      await supabaseClient.auth.signOut();
+    } catch (e: any) {
+      console.log(e);
+      alert('Cannot log out');
+    }
+  },
+
   getUsers: async function getUsers() {
     try {
       const data = await supabaseClient.from('Users').select();
@@ -50,6 +59,7 @@ export const supabase = {
     }
   },
 
+
   getGearId: async function getGearId(  id: string | undefined) {
     try {
       const data = await supabaseClient
@@ -65,4 +75,28 @@ export const supabase = {
     }
   },
 };
+
+/*updateUserLocation: async function updateUserLocation(
+  user: User,
+  location: string
+) {
+  try {
+    const{data, error } = await supabaseClient
+    .from("Users")
+    .update({location})
+    .eq('id', user.id)
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (e:any) {
+    console.log(e);
+    alert('Cannot update user location in Supabase')
+  }
+},*/
+}
+
+
 

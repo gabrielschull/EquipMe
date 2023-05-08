@@ -14,3 +14,9 @@
 .component-container {
   border: 1px solid black;
 }
+
+.map-style {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
