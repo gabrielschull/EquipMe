@@ -7,9 +7,7 @@ import AddGear from '../Components/gear/AddGear';
 const MyGearPage: React.FC = (): JSX.Element => {
     return (
       <>
-          <NavBar></NavBar>
           <MyGear/>
-          <AddGear></AddGear>
           <EditGear></EditGear>
       </>
     );

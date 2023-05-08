@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -11,7 +11,9 @@ const navigation = [
   { name: 'Home', href: '/home', current: false },
   { name: 'Find some gear', href: '/landingpage', current: false },
   { name: 'My Profile', href: '/myprofile', current: false },
+  { name: 'Find some gear', href: '/landingpage', current: false },
   { name: 'Rentals', href: '/geardetails', current: false },
+  { name: 'My Gear', href: '/mygear', current: false },
 ];
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');

@@ -23,7 +23,6 @@ const Home: React.FC = (): JSX.Element => {
         {/* <CurrentRental></CurrentRental> */}
         <Chat></Chat>
         <GearListings></GearListings>
-        <AddGear></AddGear>
       </div>
     </>
   );

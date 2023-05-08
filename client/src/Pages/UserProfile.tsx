@@ -119,11 +119,20 @@ const UserProfile: React.FC = (): JSX.Element => {
         </div>
       </div>
       <button
-        type="submit"
-        onClick={() => navigate(`/edituser`)}
-        className="rounded-md bg-indigo-600 px-9 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-        Edit Profile
-      </button>
+          type="submit"
+          onClick = { () => navigate(`/edituser`)}
+          className="rounded-md bg-indigo-600 px-9 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 m-8"
+        >
+          Edit Profile
+        </button>
+      <button
+          type="submit"
+          onClick = { () => navigate(`/addgear`)}
+          className="rounded-md bg-indigo-600 px-9 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 m-8"
+        >
+          Add Gear
+        </button>
+
     </>
   );
 };
