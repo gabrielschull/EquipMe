@@ -66,6 +66,7 @@ export const supabase = {
         .from('images')
         .upload(userid + '/' + 'profileImage', file, {
           cacheControl: '3600',
+          upsert: true,
         });
       if (error) throw new Error(`Couldn't upload the image`, error);
       return data;
@@ -73,15 +74,10 @@ export const supabase = {
       console.log(e);
     }
   },
-};
 
-
-  getGearId: async function getGearId(  id: string | undefined) {
+  getGearId: async function getGearId(id: string | undefined) {
     try {
-      const data = await supabaseClient
-      .from('Gear')
-      .select()
-      .eq('id', id)
+      const data = await supabaseClient.from('Gear').select().eq('id', id);
       if (data && data.data) {
         return data.data;
       }
@@ -91,26 +87,24 @@ export const supabase = {
     }
   },
 
-updateUserLocation: async function updateUserLocation(
-  user: User,
-  location: string
-) {
-  try {
-    const{data, error } = await supabaseClient
-    .from("Users")
-    .update({location})
-    .eq('id', user.id)
+  updateUserLocation: async function updateUserLocation(
+    user: User,
+    location: string
+  ) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({ location })
+        .eq('id', user.id);
 
-    if (error) {
-      throw error;
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (e: any) {
+      console.log(e);
+      alert('Cannot update user location in Supabase');
     }
-
-    return data;
-  } catch (e:any) {
-    console.log(e);
-    alert('Cannot update user location in Supabase')
-  }
-}
+  },
 };
-
-
