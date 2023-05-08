@@ -264,7 +264,7 @@ const EditUser: React.FC = (): JSX.Element => {
           <button
             type="button"
             className="text-sm font-semibold leading-6 text-gray-900"
-            onClick={() => navigate(`/userprofile`)}>
+            onClick={() => navigate(`/myprofile`)}>
             Cancel
           </button>
           <button
