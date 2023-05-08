@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { supabase } from '../../services/supabase.service';
+import { useNavigate } from 'react-router-dom';
 
 const navigation = [
   { name: 'My Profile', href: '#', current: true },
@@ -15,6 +16,8 @@ function classNames(...classes: any) {
 }
 
 const NavBar: React.FC = (): JSX.Element => {
+  const navigate = useNavigate();
+
   return (
     <Disclosure as='nav' className='bg-gray-800'>
       {({ open }) => (
@@ -130,7 +133,10 @@ const NavBar: React.FC = (): JSX.Element => {
                               active ? 'bg-gray-100' : '',
                               'block px-4 py-2 text-sm text-gray-700'
                             )}
-                            onClick={() => supabase.signOut()}
+                            onClick={() => {
+                              supabase.signOut();
+                              navigate(`/login`);
+                            }}
                           >
                             Sign out
                           </a>
