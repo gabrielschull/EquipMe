@@ -5,18 +5,14 @@ import EditGear from "../Components/gear/EditGear";
 import NavBar from "../Components/home/NavBar";
 import AddGear from '../Components/gear/AddGear';
 
-
-
-
 const MyGearPage: React.FC = (): JSX.Element => {
     return (
       <>
         <div className="component-container">
-          <h1>Gear Details</h1>
           <MyGear/>
+        </div>
           <AddGear></AddGear>
           <EditGear></EditGear>
-        </div>
       </>
     );
   };

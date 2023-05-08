@@ -8,7 +8,6 @@ const LandingPage: React.FC = (): JSX.Element => {
     return (
       <>
         <div className="component-container">
-          <h1>Landing Page</h1>
           <NavBar></NavBar>
           <GettingStarted></GettingStarted>
           <Chat></Chat>
