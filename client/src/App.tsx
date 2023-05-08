@@ -4,8 +4,8 @@ from 'react-router-dom';
 import Home from './Pages/Home';
 import { useSession } from './Components/users/Session';
 import NavBar from './Components/home/NavBar';
-import { createContext, useContext } from 'react';
-import { GearhubUserInfo } from './Components/users/Session';
+import { createContext } from 'react';
+import { GearhubUserInfo } from './Components/users/UseSession';
 import Login from './Components/auth/Login';
 import GearDetailsPage from './Pages/GearDetails';
 import MyGear from './Components/gear/MyGear';
@@ -19,7 +19,6 @@ export const UserContext = createContext<GearhubUserInfo>({
 
 const App: React.FC = (): JSX.Element => {
   const gearhubUserInfo = useSession();
-  const session = useContext(UserContext);
 
   return (
     <>

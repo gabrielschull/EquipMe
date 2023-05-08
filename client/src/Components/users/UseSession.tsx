@@ -1,16 +1,12 @@
 // import { RealtimeChannel, Session } from '@supabase/supabase-js';
 import { Session } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
-import { supabaseClient } from '../../services/supabase.service';
-
-export interface UserProfile {
-  username: string;
-  avatarUrl?: string;
-}
+import { supabase, supabaseClient } from '../../services/supabase.service';
+import { User } from '../../types/user.type';
 
 export interface GearhubUserInfo {
   session: Session | null;
-  profile: UserProfile | null;
+  profile: User | null | undefined;
 }
 
 export function useSession(): GearhubUserInfo {
@@ -27,6 +23,9 @@ export function useSession(): GearhubUserInfo {
       supabaseClient.auth.onAuthStateChange((_event: any, session: any) => {
         setUserInfo({ session, profile: null });
       });
+      supabase
+        .getSingleUserByEmail(session?.user.email)
+        .then((userData) => setUserInfo({ session, profile: userData }));
     });
   }, []);
 
