@@ -43,6 +43,11 @@ function classNames(...classes:any) {
 
 const GearDetails : React.FC = (): JSX.Element => {
 
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+  const handleReservationClick = () => {
+    setShowPaymentModal(true);
+  }
    return (
    <>
    <NavBar></NavBar>
@@ -146,12 +151,15 @@ const GearDetails : React.FC = (): JSX.Element => {
 
           <form className="mt-10">
             <button
-              type="submit"
+              type="button"
+              onClick={handleReservationClick}
               className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Reserve this gear
             </button>
+
           </form>
+
         </div>
 
         <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
@@ -165,6 +173,7 @@ const GearDetails : React.FC = (): JSX.Element => {
           </div>
         </div>
       </div>
+        {showPaymentModal && <Payment />}
     </div>
   </div>
   </>

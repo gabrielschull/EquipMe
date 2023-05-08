@@ -3,7 +3,6 @@ import React from 'react';
 const Payment: React.FC = (): JSX.Element => {
   return (
     <>
-      <div>PAYMENT</div>
       <div className="w-1/3 p-5">
         <h2 className="text-2xl font-bold mb-5">Payment</h2>
         <form className="bg-white p-10 rounded-lg shadow-lg">
