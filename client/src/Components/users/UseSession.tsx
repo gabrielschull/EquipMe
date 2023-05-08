@@ -23,6 +23,35 @@ export function useSession(): GearhubUserInfo {
       supabaseClient.auth.onAuthStateChange((_event: any, session: any) => {
         setUserInfo({ session, profile: null });
       });
+
+      // if new user, make them fill out the profile
+      console.log('session?.user.email', session?.user.email);
+      console.log('session?.user.id', session?.user.id);
+
+      const userInfoInUsersTable = async () =>
+        await supabaseClient
+          .from('Users')
+          .select()
+          .eq('id', session?.user?.id)
+          .single();
+
+      if (!userInfoInUsersTable) {
+        const innerFunc = async () => {
+          await supabaseClient.from('Users').insert({
+            id: session?.user?.id,
+            email: session?.user?.email,
+            first_name: session?.user?.identities[0].identity_data?.full_name,
+          });
+        };
+        innerFunc();
+      }
+
+      const test = async () =>
+        await supabase.getSingleUserByEmail(session?.user.email);
+      console.log('⛔️', test);
+      // supabaseClient.from('Users').insert({ id: 1, name: 'Denmark' });
+
+      // if user exists in Users db, get their profile
       supabase
         .getSingleUserByEmail(session?.user.email)
         .then((userData) => setUserInfo({ session, profile: userData }));
