@@ -12,6 +12,7 @@ import MyGear from '../gear/MyGear';
 import EditGear from '../gear/EditGear';
 import GettingStarted from '../auth/GettingStarted';
 import Payment from '../rentals/Payment';
+import Calendar from '../gear/Calendar';
 
 const Home: React.FC = (): JSX.Element => {
   return (
@@ -31,6 +32,7 @@ const Home: React.FC = (): JSX.Element => {
         <MyGear></MyGear>
         <EditGear></EditGear>
         <Payment></Payment>
+        <Calendar></Calendar>
       </div>
     </>
   );
