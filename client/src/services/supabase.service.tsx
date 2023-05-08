@@ -90,9 +90,8 @@ export const supabase = {
       alert('Cannot get gear from Supabase');
     }
   },
-};
 
-/*updateUserLocation: async function updateUserLocation(
+updateUserLocation: async function updateUserLocation(
   user: User,
   location: string
 ) {
@@ -111,8 +110,7 @@ export const supabase = {
     console.log(e);
     alert('Cannot update user location in Supabase')
   }
-},*/
 }
-
+};
 
 
