@@ -17,7 +17,7 @@ export const supabase = {
     }
   },
 
-  getUsers: async function getUsers() {
+  getUsers: async function () {
     try {
       const data = await supabaseClient.from('Users').select();
       if (data && data.data) {
@@ -29,9 +29,7 @@ export const supabase = {
     }
   },
 
-  getSingleUserByEmail: async function getSingleUserByEmail(
-    email: string | undefined
-  ) {
+  getSingleUserByEmail: async function (email: string | undefined) {
     try {
       const data = await supabaseClient
         .from('Users')
@@ -47,7 +45,7 @@ export const supabase = {
     }
   },
 
-  getGear: async function getGear() {
+  getGear: async function () {
     try {
       const data = await supabaseClient.from('Gear').select();
       if (data && data.data) {
@@ -56,6 +54,20 @@ export const supabase = {
     } catch (e: any) {
       console.log(e);
       alert('Cannot get gear from Supabase');
+    }
+  },
+
+  uploadImage: async function (file: File, userid: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient.storage
+        .from('testBucket')
+        .upload(userid + '/' + 'testImage17', file, {
+          cacheControl: '3600',
+        });
+      if (error) throw new Error(`Couldn't upload the image`, error);
+      return data;
+    } catch (e: any) {
+      console.log(e);
     }
   },
 };
