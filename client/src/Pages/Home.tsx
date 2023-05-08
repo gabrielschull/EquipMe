@@ -13,11 +13,9 @@ const Home: React.FC = (): JSX.Element => {
       <div className="component-container">
         <h1>Home</h1>
         <NavBar></NavBar>
-        <CurrentRental></CurrentRental>
-        <UserProfile></UserProfile>
+        {/* <CurrentRental></CurrentRental> */}
         <Chat></Chat>
         <GearListings></GearListings>
-        <Payment></Payment>
       </div>
     </>
   );

@@ -1,7 +1,9 @@
 import React from "react";
-// import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import Login from "../Components/auth/Login";
 import Signup from "../Components/auth/Signup";
+
+
 
 const LoginPage: React.FC = (): JSX.Element => {
     return (
