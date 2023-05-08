@@ -17,7 +17,7 @@ export const supabase = {
     }
   },
 
-  getUsers: async function getUsers() {
+  getUsers: async function () {
     try {
       const data = await supabaseClient.from('Users').select();
       if (data && data.data) {
@@ -29,9 +29,7 @@ export const supabase = {
     }
   },
 
-  getSingleUserByEmail: async function getSingleUserByEmail(
-    email: string | undefined
-  ) {
+  getSingleUserByEmail: async function (email: string | undefined) {
     try {
       const data = await supabaseClient
         .from('Users')
@@ -47,7 +45,7 @@ export const supabase = {
     }
   },
 
-  getGear: async function getGear() {
+  getGear: async function () {
     try {
       const data = await supabaseClient.from('Gear').select();
       if (data && data.data) {
@@ -59,13 +57,27 @@ export const supabase = {
     }
   },
 
-
-  getGearId: async function getGearId(  id: string | undefined) {
+  uploadUserProfileImage: async function (
+    file: File,
+    userid: string | undefined
+  ) {
     try {
-      const data = await supabaseClient
-      .from('Gear')
-      .select()
-      .eq('id', id)
+      const { data, error } = await supabaseClient.storage
+        .from('images')
+        .upload(userid + '/' + 'profileImage', file, {
+          cacheControl: '3600',
+          upsert: true,
+        });
+      if (error) throw new Error(`Couldn't upload the image`, error);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
+  getGearId: async function getGearId(id: string | undefined) {
+    try {
+      const data = await supabaseClient.from('Gear').select().eq('id', id);
       if (data && data.data) {
         return data.data;
       }
@@ -74,29 +86,25 @@ export const supabase = {
       alert('Cannot get gear from Supabase');
     }
   },
-};
 
-/*updateUserLocation: async function updateUserLocation(
-  user: User,
-  location: string
-) {
-  try {
-    const{data, error } = await supabaseClient
-    .from("Users")
-    .update({location})
-    .eq('id', user.id)
+  updateUserLocation: async function updateUserLocation(
+    user: User,
+    location: string
+  ) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({ location })
+        .eq('id', user.id);
 
-    if (error) {
-      throw error;
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (e: any) {
+      console.log(e);
+      alert('Cannot update user location in Supabase');
     }
-
-    return data;
-  } catch (e:any) {
-    console.log(e);
-    alert('Cannot update user location in Supabase')
-  }
-},*/
-// }
-
-
-
+  },
+};

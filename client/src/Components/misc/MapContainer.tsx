@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import { supabaseClient } from '../../services/supabase.service';
+import { supabase } from '../../services/supabase.service';
+import { useContext } from "react"
+import { UserContext } from '../../App';
 
 const apiKey = process.env.REACT_APP_MAPS_API_KEY!;
 
 const MapContainer: React.FC = () => {
+  const { profile } = useContext(UserContext);
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
   const [zoom, setZoom] = useState(12);
   const [mapLoaded, setMapLoaded] = useState(false);
 
-  const handleGeolocation = () => {
+  const handleGeolocation = async () => {
     navigator.geolocation.getCurrentPosition(
-      position => {
+      async position => {
         setCenter({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         });
+        const location = `${position.coords.latitude},${position.coords.longitude}`;
+        if (profile) await supabase.updateUserLocation(profile, location);
       },
       error => {
         console.error(error);

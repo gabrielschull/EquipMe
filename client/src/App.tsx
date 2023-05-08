@@ -9,12 +9,12 @@ import { GearhubUserInfo } from './Components/users/UseSession';
 import Login from './Components/auth/Login';
 import GearDetailsPage from './Pages/GearDetails';
 import MyGear from './Components/gear/MyGear';
+import AddGear from './Components/gear/AddGear';
 import LandingPage from './Pages/LandingPage';
 import UserProfile from './Pages/UserProfile';
 import EditUser from './Pages/EditUser';
 import AddGear from './Components/gear/AddGear';
 import EditGear from './Components/gear/EditGear';
-
 
 export const UserContext = createContext<GearhubUserInfo>({
   session: null,
@@ -24,20 +24,22 @@ export const UserContext = createContext<GearhubUserInfo>({
 const App: React.FC = (): JSX.Element => {
   const gearhubUserInfo = useSession();
 
-
   return (
     <>
-    <UserContext.Provider value={gearhubUserInfo}>
-    <Router>
-      <Routes>
-    <>
-        <Route path = '/' element = {
-       !gearhubUserInfo.profile ? (<Login />) : (<LandingPage />)} />
-        <Route path = '/landingpage' element = {<LandingPage />}/>
-       <Route path = '/home' element = {<Home />}/>
-       <Route path = '/login' element = {<Login />}/>
-       <Route path = '/geardetails' element = {<GearDetailsPage />}/>
-       <Route path = '/mygear' element = {<MyGear />}/>
+      <UserContext.Provider value={gearhubUserInfo}>
+        <Router>
+          <Routes>
+            <>
+              <Route
+                path='/'
+                element={!gearhubUserInfo.profile ? <Login /> : <LandingPage />}
+              />
+              <Route path='/landingpage' element={<LandingPage />} />
+              <Route path='/home' element={<Home />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/geardetails' element={<GearDetailsPage />} />
+              <Route path='/mygear' element={<MyGear />} />
+              <Route path='/addgear' element={<AddGear />} />
        <Route path = '/myprofile' element = {<UserProfile />}/>
        <Route path = '/edituser' element = {<EditUser />}/>
        <Route path = '/editgear' element = {<EditGear />}/>
