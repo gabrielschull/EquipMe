@@ -1,37 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
-// Need to setup Google Maps API
-const apiKey=process.env.REACT_APP_API_KEY!
-
-interface MapProps {
-  apiKey: string;
-  center: {
-    lat: number;
-    lng: number;
-  };
-  zoom: number;
-}
-
-const Map: React.FC<MapProps> = ({ center, zoom }) => {
-  return (
-    <>
-    <LoadScript googleMapsApiKey={apiKey}>
-      <GoogleMap mapContainerStyle={{ height: "400px", width: "100%" }} 
-      center={center} 
-      zoom={zoom}>
-        <Marker position={center} />
-      </GoogleMap>
-    </LoadScript>
-    </>
-  );
-};
+const apiKey = process.env.REACT_APP_MAPS_API_KEY!;
 
 const MapContainer: React.FC = () => {
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
-  const [zoom, setZoom] = useState(10);
+  const [zoom, setZoom] = useState(12);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
-  useEffect(() => {
+  const handleGeolocation = () => {
     navigator.geolocation.getCurrentPosition(
       position => {
         setCenter({
@@ -43,9 +20,32 @@ const MapContainer: React.FC = () => {
         console.error(error);
       }
     );
-  }, []);
+  };
 
-  return <Map apiKey={apiKey} center={center} zoom={zoom} />;
+const handleMapLoad = () => {
+  setMapLoaded(true);
+};
+
+  return (
+    <LoadScript googleMapsApiKey={apiKey}>
+      <div style={{ height: '300px', width: '50%' }}>
+        <GoogleMap
+          mapContainerStyle={{ height: '100%', width: '100%' }}
+          center={center}
+          zoom={zoom}
+          onLoad={handleMapLoad}
+        >
+          <Marker position={center} />
+        </GoogleMap>
+        <button onClick={handleGeolocation}
+              type="submit"
+              className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              Get Current Location
+            </button>
+      </div>
+    </LoadScript>
+  );
 };
 
 export default MapContainer;
