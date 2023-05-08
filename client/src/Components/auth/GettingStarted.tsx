@@ -5,6 +5,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import NavBar from "../home/NavBar";
 import { useNavigate } from "react-router-dom";
+import MapContainer from "../misc/MapContainer";
 
 const people = [
     {
@@ -81,9 +82,6 @@ const GettingStarted : React.FC = (): JSX.Element => {
     const navigate = useNavigate()
    return (
     <>
-    <div className="component-container">
-    <h2>Welcome to GearHub- Landing Page</h2>
-    </div>
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
         <>

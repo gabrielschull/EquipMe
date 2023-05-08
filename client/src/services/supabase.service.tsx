@@ -59,6 +59,23 @@ export const supabase = {
     }
   },
 
+
+  getGearId: async function getGearId(  id: string | undefined) {
+    try {
+      const data = await supabaseClient
+      .from('Gear')
+      .select()
+      .eq('id', id)
+      if (data && data.data) {
+        return data.data;
+      }
+    } catch (e: any) {
+      console.log(e);
+      alert('Cannot get gear from Supabase');
+    }
+  },
+};
+
 /*updateUserLocation: async function updateUserLocation(
   user: User,
   location: string
@@ -80,5 +97,6 @@ export const supabase = {
   }
 },*/
 }
+
 
 

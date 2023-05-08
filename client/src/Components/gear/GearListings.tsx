@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import  {Gear}  from "../../types/gear.type";
 import { supabase } from '../../services/supabase.service';
+import { useNavigate } from 'react-router-dom';
 
 const GearListings : React.FC = (): JSX.Element => {
 
@@ -10,11 +11,10 @@ const GearListings : React.FC = (): JSX.Element => {
     supabase.getGear().then((gear) => setGear(gear));
   }, []);
 
+  const navigate = useNavigate()
+
   return (
     <>
-      <div className="component-container mx-12">
-        <h2>Gear Listings </h2>
-      </div>
       <ul role="list" className="divide-y divide-gray-100 mx-12">
         {gear && gear.map((gear) => (
           <li key={gear.id} className="flex justify-between gap-x-6 py-5">
@@ -32,9 +32,10 @@ const GearListings : React.FC = (): JSX.Element => {
               <form className="mt-10">
             <button
               type="submit"
+              onClick = { () => navigate(`/geardetails`)}
               className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
-              Contact Gear Owner
+              See more details
             </button>
           </form>
             </div>

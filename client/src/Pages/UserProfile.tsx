@@ -5,8 +5,10 @@ import {
   FingerPrintIcon,
   LockClosedIcon,
 } from '@heroicons/react/24/outline';
-import { useEffect, useContext } from 'react';
-import { UserContext } from '../../App';
+import { useEffect, useContext} from 'react';
+import { UserContext } from '../App';
+import NavBar from '../Components/home/NavBar';
+import { useNavigate } from 'react-router-dom';
 
 const features = [
   {
@@ -19,19 +21,7 @@ const features = [
     name: 'My location',
     description: 'GOOGLE MAPS RENDER HERE',
     icon: LockClosedIcon,
-  },
-  //   {
-  //     name: 'Simple queues',
-  //     description:
-  //       'Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.',
-  //     icon: ArrowPathIcon,
-  //   },
-  //   {
-  //     name: 'Advanced security',
-  //     description:
-  //       'Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.',
-  //     icon: FingerPrintIcon,
-  //   },
+  }
 ];
 
 const products = [
@@ -44,52 +34,20 @@ const products = [
       'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
     imageAlt:
       'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-  },
-  {
-    id: 2,
-    name: 'Pyzel Surfboard',
-    href: '#',
-    // price: '$35',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-    imageAlt:
-      'Olive drab green insulated bottle with flared screw lid and flat top.',
-  },
-  {
-    id: 3,
-    name: 'Pyzel Surfboard',
-    href: '#',
-    // price: '$89',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 4,
-    name: 'Pyzel Surfboard',
-    href: '#',
-    // price: '$35',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt:
-      'Hand holding black machined steel mechanical pencil with brass tip and top.',
-  },
-  // More products...
+  }
 ];
-
 const UserProfile: React.FC = (): JSX.Element => {
+
   const loggedInUser = useContext(UserContext);
 
   useEffect(() => {
     console.log('🔪 UserProfile.tsx loggedInUser=', loggedInUser);
   });
 
+  const navigate = useNavigate()
   return (
     <>
-      <div className='component-container'>
-        <h2>UserProfile</h2>
-      </div>
+    <NavBar/>
       <div className='bg-white py-24 sm:py-32 w-1/3'>
         <div className='mx-auto max-w-7xl px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl lg:text-center'>
@@ -158,6 +116,13 @@ const UserProfile: React.FC = (): JSX.Element => {
           </div>
         </div>
       </div>
+      <button
+          type="submit"
+          onClick = { () => navigate(`/edituser`)}
+          className="rounded-md bg-indigo-600 px-9 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Edit Profile
+        </button>
     </>
   );
 };
