@@ -57,11 +57,14 @@ export const supabase = {
     }
   },
 
-  uploadImage: async function (file: File, userid: string | undefined) {
+  uploadUserProfileImage: async function (
+    file: File,
+    userid: string | undefined
+  ) {
     try {
       const { data, error } = await supabaseClient.storage
-        .from('testBucket')
-        .upload(userid + '/' + 'testImage17', file, {
+        .from('images')
+        .upload(userid + '/' + 'profileImage', file, {
           cacheControl: '3600',
         });
       if (error) throw new Error(`Couldn't upload the image`, error);
@@ -71,4 +74,3 @@ export const supabase = {
     }
   },
 };
-
