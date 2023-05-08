@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { supabaseClient } from '../../services/supabase.service';
 
 const apiKey = process.env.REACT_APP_MAPS_API_KEY!;
 
