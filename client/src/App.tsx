@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route}
 from 'react-router-dom';
 import Home from './Pages/Home';
-import { useSession } from './Components/users/Session';
+import { useSession } from './Components/users/UseSession';
 import NavBar from './Components/home/NavBar';
 import { createContext } from 'react';
 import { GearhubUserInfo } from './Components/users/UseSession';
