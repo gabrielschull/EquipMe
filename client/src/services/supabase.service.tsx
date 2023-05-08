@@ -58,5 +58,27 @@ export const supabase = {
       alert('Cannot get gear from Supabase');
     }
   },
-};
+
+/*updateUserLocation: async function updateUserLocation(
+  user: User,
+  location: string
+) {
+  try {
+    const{data, error } = await supabaseClient
+    .from("Users")
+    .update({location})
+    .eq('id', user.id)
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (e:any) {
+    console.log(e);
+    alert('Cannot update user location in Supabase')
+  }
+},*/
+}
+
 
