@@ -96,7 +96,7 @@ export const supabase = {
     alert('Cannot update user location in Supabase')
   }
 },*/
-}
+// }
 
 
 

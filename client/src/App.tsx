@@ -12,6 +12,8 @@ import MyGear from './Components/gear/MyGear';
 import LandingPage from './Pages/LandingPage';
 import UserProfile from './Pages/UserProfile';
 import EditUser from './Pages/EditUser';
+import AddGear from './Components/gear/AddGear';
+import EditGear from './Components/gear/EditGear';
 
 
 export const UserContext = createContext<GearhubUserInfo>({
@@ -38,6 +40,8 @@ const App: React.FC = (): JSX.Element => {
        <Route path = '/mygear' element = {<MyGear />}/>
        <Route path = '/myprofile' element = {<UserProfile />}/>
        <Route path = '/edituser' element = {<EditUser />}/>
+       <Route path = '/editgear' element = {<EditGear />}/>
+       <Route path = '/addgear' element = {<AddGear />}/>
     </>
       </Routes>
       </Router>

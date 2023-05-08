@@ -1,11 +1,14 @@
 import React from "react";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import NavBar from "../home/NavBar";
+import { useNavigate } from "react-router-dom";
 
 
 const AddGear : React.FC = (): JSX.Element => {
+  const navigate = useNavigate()
    return (
     <>
-    <h2 className="component-container">List your gear here</h2>
+    <NavBar></NavBar>
     <form className="mx-12">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
@@ -183,12 +186,13 @@ const AddGear : React.FC = (): JSX.Element => {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+        <button type="button" className="text-sm font-semibold leading-6 text-gray-900"  onClick = { () => navigate(`/myprofile`)}>
           Cancel
         </button>
         <button
           type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          onClick = { () => navigate(`/home`)}
+          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 m-8"
         >
           Save
         </button>
