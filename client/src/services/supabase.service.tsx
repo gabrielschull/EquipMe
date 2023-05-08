@@ -8,6 +8,15 @@ export const supabaseClient = createClient<Database>(
 );
 
 export const supabase = {
+  signOut: async function signOut() {
+    try {
+      await supabaseClient.auth.signOut();
+    } catch (e: any) {
+      console.log(e);
+      alert('Cannot log out');
+    }
+  },
+
   getUsers: async function getUsers() {
     try {
       const data = await supabaseClient.from('Users').select();

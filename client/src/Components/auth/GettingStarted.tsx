@@ -1,5 +1,5 @@
 import React from "react";
-import Map from "../misc/Map";
+import Map from '../misc/MapContainer';
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
