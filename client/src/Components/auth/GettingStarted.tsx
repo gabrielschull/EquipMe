@@ -1,10 +1,11 @@
 import React from "react";
-import Map from "../misc/Map";
+import Map from "../misc/MapContainer";
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import NavBar from "../home/NavBar";
 import { useNavigate } from "react-router-dom";
+import MapContainer from "../misc/MapContainer";
 
 const people = [
     {
@@ -162,7 +163,7 @@ const GettingStarted : React.FC = (): JSX.Element => {
                 />
               </div>
             </div>
-    <Map apiKey="YOUR_API_KEY" center={{ lat: 37.7749, lng: -122.4194 }} zoom={12} />
+    {/* <MapContainer apiKey="YOUR_API_KEY" center={{ lat: 37.7749, lng: -122.4194 }} zoom={12} /> */}
     <button
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mx-12"

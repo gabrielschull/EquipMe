@@ -6,6 +6,7 @@ import AddGear from '../Components/gear/AddGear';
 import UserProfile from '../Components/users/UserProfile';
 import Chat from '../Components/rentals/Chat';
 import Payment from '../Components/rentals/Payment';
+import EditUser from '../Components/users/EditUser';
 
 const Home: React.FC = (): JSX.Element => {
   return (
@@ -16,6 +17,8 @@ const Home: React.FC = (): JSX.Element => {
         {/* <CurrentRental></CurrentRental> */}
         <Chat></Chat>
         <GearListings></GearListings>
+        <UserProfile></UserProfile>
+        <EditUser></EditUser>
       </div>
     </>
   );
