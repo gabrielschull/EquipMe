@@ -9,7 +9,7 @@ import { GearhubUserInfo } from './Components/users/UseSession';
 import Login from './Components/auth/Login';
 import GearDetailsPage from './Pages/GearDetails';
 import MyGear from './Components/gear/MyGear';
-import AddGear from './Components/gear/AddGear';
+import AddGear from './Pages/AddGear';
 import LandingPage from './Pages/LandingPage';
 import UserProfile from './Pages/UserProfile';
 import EditUser from './Pages/EditUser';

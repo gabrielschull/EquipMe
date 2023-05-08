@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 import CurrentRental from '../Components/rentals/CurrentRental';
 import NavBar from '../Components/home/NavBar';
 import GearListings from '../Components/gear/GearListings';
-import AddGear from '../Components/gear/AddGear';
+import AddGear from './AddGear';
 import Chat from '../Components/rentals/Chat';
 import Payment from '../Components/rentals/Payment';
 import { UserContext } from '../App';
