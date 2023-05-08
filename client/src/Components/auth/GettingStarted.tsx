@@ -81,9 +81,6 @@ const GettingStarted : React.FC = (): JSX.Element => {
     const navigate = useNavigate()
    return (
     <>
-    <div className="component-container">
-    <h2>Welcome to GearHub- Landing Page</h2>
-    </div>
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
         <>
