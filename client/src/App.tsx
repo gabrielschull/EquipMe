@@ -1,9 +1,9 @@
 import './App.css';
 import Home from './Components/home/Home';
-import { useSession } from './Components/users/Session';
+import { useSession } from './Components/users/UseSession';
 import NavBar from './Components/home/NavBar';
-import { createContext, useContext } from 'react';
-import { GearhubUserInfo } from './Components/users/Session';
+import { createContext } from 'react';
+import { GearhubUserInfo } from './Components/users/UseSession';
 import Login from './Components/auth/Login';
 
 export const UserContext = createContext<GearhubUserInfo>({
@@ -13,7 +13,6 @@ export const UserContext = createContext<GearhubUserInfo>({
 
 const App: React.FC = (): JSX.Element => {
   const gearhubUserInfo = useSession();
-  const session = useContext(UserContext);
 
   return (
     <>

@@ -4,17 +4,17 @@ import { UserContext } from '../../App';
 import { supabaseClient } from '../../services/supabase.service';
 
 const Login: React.FC = (): JSX.Element => {
-  const session = useContext(UserContext);
+  const loggedInUser = useContext(UserContext);
 
   useEffect(() => {
-    console.log('👀 session=', session);
+    console.log('👀 Login component loggedInUser=', loggedInUser);
   });
 
   return (
     <>
       <div className='component-container'>
         <h2>Login</h2>
-        <li>{session?.profile ? 'user logged in' : 'user logged out'}</li>
+        <li>{loggedInUser?.profile ? 'user logged in' : 'user logged out'}</li>
       </div>
 
       <Auth
