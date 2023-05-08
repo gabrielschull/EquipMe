@@ -5,7 +5,6 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import NavBar from "../home/NavBar";
 import { useNavigate } from "react-router-dom";
-import MapContainer from "../misc/MapContainer";
 
 const people = [
     {
