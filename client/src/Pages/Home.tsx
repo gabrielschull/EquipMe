@@ -17,13 +17,11 @@ const Home: React.FC = (): JSX.Element => {
 
   return (
     <>
-
       <div className="component-container">
         <NavBar></NavBar>
         {/* <CurrentRental></CurrentRental> */}
         <Chat></Chat>
         <GearListings></GearListings>
-        <AddGear></AddGear>
       </div>
     </>
   );
