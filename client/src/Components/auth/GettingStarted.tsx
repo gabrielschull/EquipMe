@@ -76,7 +76,6 @@ const GettingStarted : React.FC = (): JSX.Element => {
     const [selected, setSelected] = useState(people[3])
    return (
     <>
-    <NavBar></NavBar>
     <div className="component-container">
     <h2>Welcome to GearHub- Landing Page</h2>
     </div>
