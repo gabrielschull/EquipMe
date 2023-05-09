@@ -63,7 +63,7 @@ export const supabase = {
   },
 
   uploadUserProfileImage: async function (
-    file: File,
+    file: any,
     userid: string | undefined
   ) {
     try {
@@ -74,6 +74,48 @@ export const supabase = {
           upsert: true,
         });
       if (error) throw new Error(`Couldn't upload the image`, error);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+  uploadGear: async function (file: any, userid: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient.storage
+        .from('gearImagesBucket')
+        .upload(userid + '/' + file.name, file, {
+          cacheControl: '3600',
+          upsert: true,
+        });
+      if (error) throw new Error(`Couldn't upload the image`, error);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
+  uploadUserProfileTextFields: async function (
+    id: string | undefined,
+    newBio: string | undefined,
+    newEmail: string | undefined,
+    newFirstName: string | undefined,
+    newLastName: string | undefined,
+    newLocation: string | undefined,
+    newPhone: string | undefined
+  ) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({
+          bio: newBio,
+          email: newEmail,
+          first_name: newFirstName,
+          last_name: newLastName,
+          location: newLocation,
+          phone: newPhone,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update profile info`);
       return data;
     } catch (e: any) {
       console.log(e);
@@ -113,13 +155,12 @@ export const supabase = {
     }
   },
 
-  deleteGear: async function deleteGear(id:string)
-{
+  deleteGear: async function deleteGear(id: string) {
     try {
       const { data, error } = await supabaseClient
         .from('Gear')
         .delete()
-        .eq('id',id);
+        .eq('id', id);
 
       if (error) {
         throw error;
@@ -130,6 +171,7 @@ export const supabase = {
       console.log(e);
       alert('Cannot delete item in Supabase');
     }
+
 
 },
   getUserById: async function getUserById(id:string)
@@ -148,3 +190,4 @@ export const supabase = {
     }
   }
 };
+
