@@ -7,6 +7,11 @@ export const supabaseClient = createClient<Database>(
   process.env.REACT_APP_SUPABASE_ANON_KEY!
 );
 
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) return error.message;
+  return String(error);
+}
+
 export const supabase = {
   signOut: async function signOut() {
     try {
