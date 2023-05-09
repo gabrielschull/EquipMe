@@ -9,33 +9,8 @@ import { useEffect, useContext } from 'react';
 import { UserContext } from '../App';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
+import MapContainer from '../Components/misc/MapContainer';
 
-const features = [
-  {
-    name: 'About my gear',
-    description:
-      'Pyzel Surfboard Step-Up Shortboard - 2021, very good for getting speed and doing tricks',
-    icon: CloudArrowUpIcon,
-  },
-  {
-    name: 'My location',
-    description: 'GOOGLE MAPS RENDER HERE',
-    icon: LockClosedIcon,
-  },
-];
-
-const products = [
-  {
-    id: 1,
-    name: 'Pyzel Surfboard',
-    href: '#',
-    // price: '$48',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-    imageAlt:
-      'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-  },
-];
 const UserProfile: React.FC = (): JSX.Element => {
   const loggedInUser = useContext(UserContext);
 
@@ -44,10 +19,25 @@ const UserProfile: React.FC = (): JSX.Element => {
   });
 
   const navigate = useNavigate();
+
+const features = [
+  {
+    name: 'About my gear',
+    description:
+      'ADD LIST OF GEAR DESCRIPTIONS',
+    icon: CloudArrowUpIcon,
+  },
+  {
+    name: 'My location',
+    icon: LockClosedIcon,
+    mapComponent: <MapContainer/>
+  },
+];
+
   return (
     <>
       <NavBar />
-      <div className="bg-white py-24 sm:py-32 w-1/3">
+      <div className="bg-white py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <figure className="mt-10">
@@ -74,29 +64,20 @@ const UserProfile: React.FC = (): JSX.Element => {
               </figcaption>
             </figure>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              {loggedInUser?.profile ? loggedInUser.profile.first_name : 'Raul'}{' '}
+              {loggedInUser?.profile ? loggedInUser.profile.first_name : 'FN'}{' '}
               {loggedInUser?.profile
                 ? loggedInUser.profile.last_name
-                : 'Barros'}
+                : 'LN'}
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               {loggedInUser?.profile
                 ? loggedInUser.profile.bio
-                : `Hey guys!
-              I'm a Brazilian surfer, 28 years young, who's currently hitting
-              the books pretty hard. That means my surfboard is up for rent, and
-              it's in tip-top shape! I take really good care of my board, and
-              I'm looking for someone who'll do the same. Lucky for you, I'm
-              right near the world-famous Copacabana Beach, so it's super easy
-              to meet up. Whether you need the board for a day or longer, I've
-              got you covered. And, if you're looking for the best surf spots in
-              Rio, I'm your guy! I'm happy to share my local knowledge so you
-              can have the best surfing experience possible. So, what are you
-              waiting for? Hit me up and let's catch some waves! 🤙🏾🏄🏽‍♂️`}
+                : `Bio`}
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
             <dl className="grid max-w-xl grid-rows-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-rows-2 lg:gap-y-16">
+
               {features.map((feature) => (
                 <div key={feature.name} className="relative pl-16">
                   <dt className="text-base font-semibold leading-7 text-gray-900">
@@ -110,10 +91,11 @@ const UserProfile: React.FC = (): JSX.Element => {
                   </dt>
                   <dd className="mt-2 text-base leading-7 text-gray-600">
                     {feature.description}
-                    <div></div>
+                    {feature.name === "My location" && feature.mapComponent}
                   </dd>
                 </div>
               ))}
+
             </dl>
           </div>
         </div>
