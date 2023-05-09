@@ -9,7 +9,7 @@ const apiKey = process.env.REACT_APP_MAPS_API_KEY!;
 const MapContainer: React.FC = () => {
   const { profile } = useContext(UserContext);
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
-  const [zoom, setZoom] = useState(12);
+  const [zoom, setZoom] = useState(13);
   const [mapLoaded, setMapLoaded] = useState(false);
 
   const handleGeolocation = async () => {
