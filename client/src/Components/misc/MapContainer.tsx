@@ -32,6 +32,7 @@ const MapContainer: React.FC = () => {
 
   useEffect(() => {
     if (profile?.location) {
+      console.log(profile.location, "HEY!")
       const [lat, lng] = profile.location.split(",");
       setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) });
     }

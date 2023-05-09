@@ -131,5 +131,20 @@ export const supabase = {
       alert('Cannot delete item in Supabase');
     }
 
-}
+},
+  getUserById: async function getUserById(id:string)
+  {
+    try {
+      const {data, error}  = await supabaseClient
+      .from("Users")
+      .select('*').eq('id', id).single();
+      if (error) {
+        throw error
+      }
+      return data
+    } catch (e: any) {
+      console.log(e)
+      alert('Cannot fetch User by ID')
+    }
+  }
 };
