@@ -79,6 +79,7 @@ export const supabase = {
       console.log(e);
     }
   },
+
   uploadGear: async function (file: any, userid: string | undefined) {
     try {
       const { data, error } = await supabaseClient.storage
