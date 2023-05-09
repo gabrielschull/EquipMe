@@ -13,7 +13,6 @@ export interface GearhubUserInfo {
 }
 
 export function useSession(): GearhubUserInfo {
-console.log("hello")
   const dispatch: AppDispatch = useDispatch();
   const userInfo = useSelector((state: RootState) => state.User);
 

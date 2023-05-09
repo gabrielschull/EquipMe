@@ -1,6 +1,5 @@
-import { useEffect, useContext, useState } from 'react';
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
-
+import { useState } from 'react';
+import { PhotoIcon } from '@heroicons/react/24/solid';
 import { supabase } from '../services/supabase.service';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
@@ -10,9 +9,8 @@ import { RootState } from '../Redux/store';
 const AddGear: React.FC = (): JSX.Element => {
   const userInfo = useSelector ((state: RootState) => state.User);
   const [file, setFile] = useState<File | null>(null);
-
-
   const navigate = useNavigate()
+
   return (
     <>
 <NavBar></NavBar>
