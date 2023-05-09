@@ -9,6 +9,29 @@ import { RootState } from '../Redux/store';
 const AddGear: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [files, setFiles] = useState<File[] | null>(null);
+  const [formState, setFormState] = useState({
+    description: ""
+  })
+
+  const handleChange = (event: any) => {
+    const inputName = event.target.name;
+    const value = event.target.value;
+
+    setFormState((prevalue) => {
+      return {
+        ...prevalue,
+        [inputName]: value,
+      };
+    });
+  };
+
+  const handleSubmit = () => {
+    supabase.addGear(
+      userInfo.profile.id,
+      formState.description
+
+    );
+  };
 
   useEffect(() => {
     console.log('🍻 AddGear component loggedInUser=', userInfo);
@@ -72,11 +95,12 @@ const AddGear: React.FC = (): JSX.Element => {
                 </label>
                 <div className="mt-2">
                   <textarea
+                  value={formState.description}
+                  onChange={handleChange}
                     id="about"
-                    name="about"
+                    name="description"
                     rows={3}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={''}
                   />
                 </div>
                 <p className="mt-3 text-sm leading-6 text-gray-600">
@@ -275,7 +299,11 @@ const AddGear: React.FC = (): JSX.Element => {
           </button>
           <button
             type="submit"
-            onClick={() => navigate(`/mygear`)}
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmit();
+              navigate(`/mygear`)}
+            }
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Save
           </button>

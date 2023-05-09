@@ -189,6 +189,31 @@ export const supabase = {
       console.log(e)
       alert('Cannot fetch User by ID')
     }
-  }
+  },
+
+  addGear: async function addGear(id :string, description:string | null | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Gear')
+        .insert({
+          availability:[""],
+          deposit: 5,
+          description: description,
+          owner_id: id,
+          price_day: 5,
+          price_hr: 5,
+          rating: null,
+        })
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (e: any) {
+      console.log(e);
+      alert('Cannot create gear in Supabase');
+    }
+},
 };
 
