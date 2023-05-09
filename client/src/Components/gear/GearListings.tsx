@@ -10,6 +10,9 @@ import { RootState, AppDispatch } from "../../Redux/store"
 const GearListings : React.FC = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const gear = useSelector((state: RootState) => state.Gear);
+  const userInfo = useSelector ((state: RootState) => state.User);
+  console.log("MYINFO", userInfo)
+  console.log(gear, "GEAR, BITCH")
 
   useEffect(() => {
     supabase.getGear().then((gear) => {
@@ -17,12 +20,23 @@ const GearListings : React.FC = (): JSX.Element => {
     })
   }, []);
 
+  const [owners, setOwners] = useState({});
+
   const navigate = useNavigate()
+  
+  const getOwnerFirstName = async (ownerId: string) => {
+    const owner = await supabase.getUserById(ownerId);
+    return owner?.first_name ?? '';
+  };
+  
+  const filteredGear = gear.filter((g: Gear) => g.owner_id !== userInfo.profile.id);
+  
+  
 
   return (
     <>
       <ul role="list" className="divide-y divide-gray-100 mx-12">
-        {gear && gear.map((gear) => (
+        {filteredGear && filteredGear.map((gear) => (
           <li key={gear.id} className="flex justify-between gap-x-6 py-5">
             <div className="flex gap-x-4">
               {/* <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={gear.imageUrl} alt="" /> */}
@@ -33,7 +47,7 @@ const GearListings : React.FC = (): JSX.Element => {
               </div>
             </div>
             <div className="hidden sm:flex sm:flex-col sm:items-end">
-              <p className="text-sm leading-6 text-gray-900">{gear.owner}</p>
+              <p className="text-sm leading-6 text-gray-900">{gear.owner_id}</p>
               <p className="mt-1 text-xs leading-5 text-gray-500">&#9733; {gear.rating}</p>
               <form className="mt-10">
             <button

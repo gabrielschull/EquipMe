@@ -8,7 +8,7 @@ import Payment from '../Components/rentals/Payment';
 // import EditUser from './EditUser';
 
 const Home: React.FC = (): JSX.Element => {
-
+  
 
   return (
     <>
