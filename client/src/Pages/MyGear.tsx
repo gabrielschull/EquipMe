@@ -7,7 +7,7 @@ import NavBar from '../Components/home/NavBar';
 import {useDispatch, useSelector} from "react-redux"
 import { setAllGear,deleteGear } from '../Redux/GearSlice';
 import { RootState, AppDispatch } from "../Redux/store"
-import { Dispatch } from 'redux'
+
 
 
 const MyGear : React.FC = (): JSX.Element => {

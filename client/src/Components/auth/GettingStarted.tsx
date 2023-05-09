@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
 import MapContainer from '../misc/MapContainer';
-import { UserContext } from '../../App';
+// import { UserContext } from '../../App';
 import { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import NavBar from '../home/NavBar';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Redux/store';
 
 const people = [
   {
@@ -75,7 +77,7 @@ function classNames(...classes: any) {
 }
 
 const GettingStarted: React.FC = (): JSX.Element => {
-  const loggedInUser = useContext(UserContext);
+  const userInfo = useSelector ((state: RootState) => state.User);
   const [selected, setSelected] = useState(people[3]);
   const navigate = useNavigate();
   return (
@@ -92,7 +94,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                   <img
                     src={
                       'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/images/' +
-                      loggedInUser.profile?.id +
+                      userInfo.profile?.id +
                       '/profileImage'
                     }
                     alt=""
