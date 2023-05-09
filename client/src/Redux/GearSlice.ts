@@ -12,9 +12,9 @@ export const AllGearSlice = createSlice({
     //     const newState = [...state, action.payload];
     //     return newState;
     //   },
-    // deleteGear: (state, action) => {
-    //     return state.filter((gear) => gear.id !== action.payload);
-    //   },
+    deleteGear: (state, action) => {
+        return state.filter((gear) => gear.id !== action.payload);
+      },
 
     // updateGear: (state, action) => {
     //     const indexToUpd = state.findIndex(
@@ -26,5 +26,5 @@ export const AllGearSlice = createSlice({
 
   },
 });
-export const { setAllGear } = AllGearSlice.actions;
+export const { setAllGear, deleteGear} = AllGearSlice.actions;
 export default AllGearSlice.reducer;

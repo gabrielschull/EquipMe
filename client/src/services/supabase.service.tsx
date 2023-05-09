@@ -108,23 +108,23 @@ export const supabase = {
     }
   },
 
-//   deleteGear: async function deleteGear(id:string)
-// {
-//     try {
-//       const { data, error } = await supabaseClient
-//         .from('Gear')
-//         .delete()
-//         .eq('id', id);
+  deleteGear: async function deleteGear(id:string)
+{
+    try {
+      const { data, error } = await supabaseClient
+        .from('Gear')
+        .delete()
+        .eq('id',id);
 
-//       if (error) {
-//         throw error;
-//       }
+      if (error) {
+        throw error;
+      }
 
-//       return data;
-//     } catch (e: any) {
-//       console.log(e);
-//       alert('Cannot delete item in Supabase');
-//     }
+      return data;
+    } catch (e: any) {
+      console.log(e);
+      alert('Cannot delete item in Supabase');
+    }
 
-// }
+}
 };

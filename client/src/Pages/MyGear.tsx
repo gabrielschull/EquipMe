@@ -4,27 +4,33 @@ import { Gear } from '../types/gear.type';
 import { supabase } from '../services/supabase.service';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../Components/home/NavBar';
+import {useDispatch, useSelector} from "react-redux"
+import { setAllGear,deleteGear } from '../Redux/GearSlice';
+import { RootState, AppDispatch } from "../Redux/store"
+import { Dispatch } from 'redux'
 
 
 const MyGear : React.FC = (): JSX.Element => {
-  const [gear, setGear] = useState<Gear[]>();
+  const dispatch: AppDispatch = useDispatch();
+  const gear = useSelector((state: RootState) => state.Gear);
+
   useEffect(() => {
-    supabase.getGear().then((gear) => setGear(gear));
+    supabase.getGear().then((gear) => {
+      dispatch(setAllGear(gear))
+    })
   }, []);
   const navigate = useNavigate();
 
-  // const handleDelete = (gear:Gear) => {
+  const handleDelete = (gear:Gear) => {
+      supabase.deleteGear(gear.id)
+        .then(() => {
+          dispatch(deleteGear(gear.id));
+        })
+        .catch((error:any) => {
+          alert("Error: " + error);
+        });
 
-  //   supabase.deleteGear(gear.id)
-  //   .then (() => {
-  //     const newList = GearArr.filter((item : Gear) => item._id !== gear._id);
-  //     dispatch(setAllGear(newList));
-  //   })
-  //   .catch((error) => {
-  //     alert("Error: " + error);
-  //   });
-  // }
-
+  };
 
    return (
     <>
@@ -49,8 +55,8 @@ const MyGear : React.FC = (): JSX.Element => {
           Edit Gear
         </button>
         <button
-          type="submit"
-          //onClick={handleDelete}
+          type="button"
+          onClick={() => handleDelete(gear)}
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Delete Gear
