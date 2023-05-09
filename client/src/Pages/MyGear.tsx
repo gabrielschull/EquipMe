@@ -5,12 +5,27 @@ import { supabase } from '../services/supabase.service';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../Components/home/NavBar';
 
+
 const MyGear : React.FC = (): JSX.Element => {
   const [gear, setGear] = useState<Gear[]>();
   useEffect(() => {
     supabase.getGear().then((gear) => setGear(gear));
   }, []);
   const navigate = useNavigate();
+
+  // const handleDelete = (gear:Gear) => {
+
+  //   supabase.deleteGear(gear.id)
+  //   .then (() => {
+  //     const newList = GearArr.filter((item : Gear) => item._id !== gear._id);
+  //     dispatch(setAllGear(newList));
+  //   })
+  //   .catch((error) => {
+  //     alert("Error: " + error);
+  //   });
+  // }
+
+
    return (
     <>
     <NavBar></NavBar>
@@ -35,6 +50,7 @@ const MyGear : React.FC = (): JSX.Element => {
         </button>
         <button
           type="submit"
+          //onClick={handleDelete}
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Delete Gear
