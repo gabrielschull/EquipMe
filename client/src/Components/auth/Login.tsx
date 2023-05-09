@@ -14,7 +14,6 @@ const Login: React.FC = (): JSX.Element => {
     <>
       <div className='component-container'>
         <h2>Login</h2>
-        <li>{loggedInUser?.profile ? 'user logged in' : 'user logged out'}</li>
       </div>
 
       <Auth

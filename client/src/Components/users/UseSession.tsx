@@ -1,7 +1,7 @@
 // import { RealtimeChannel, Session } from '@supabase/supabase-js';
 import { Session } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
-import { supabase, supabaseClient } from '../../services/supabase.service';
+import { supabaseClient } from '../../services/supabase.service';
 import { User } from '../../types/user.type';
 
 export interface GearhubUserInfo {
@@ -17,15 +17,62 @@ export function useSession(): GearhubUserInfo {
 
   // const [channel, setChannel] = useState<RealtimeChannel | null>(null);
 
+  const createFirstTimeUser = async (
+    authID: string | undefined,
+    authEmail: string | undefined,
+    first_name: string | undefined,
+    last_name: string | undefined
+  ) => {
+    const { error } = await supabaseClient.from('Users').insert({
+      id: authID,
+      email: authEmail,
+      first_name: first_name,
+      last_name: last_name,
+    });
+    // console.log('Error insterting new user into the database!', error);
+  };
+
   useEffect(() => {
     supabaseClient.auth.getSession().then(({ data: { session } }) => {
       setUserInfo({ ...userInfo, session });
       supabaseClient.auth.onAuthStateChange((_event: any, session: any) => {
         setUserInfo({ session, profile: null });
       });
-      supabase
-        .getSingleUserByEmail(session?.user.email)
-        .then((userData) => setUserInfo({ session, profile: userData }));
+
+      // if user exists in Users db, get their profile
+      supabaseClient
+        .from('Users')
+        .select()
+        .eq('id', session?.user?.id)
+        .single()
+        .then((userData: any) =>
+          setUserInfo({ session, profile: userData.data })
+        );
+
+      // is user is not in Users db, create them
+      if (!userInfo.profile?.id) {
+        console.log('are we getting into this if?');
+        // split the full name from Google into first & last name
+        const fullName = session?.user?.identities
+          ?.at(0)
+          ?.identity_data?.full_name?.split(' ');
+        createFirstTimeUser(
+          session?.user?.id,
+          session?.user?.email,
+          fullName[0],
+          fullName[1]
+        );
+
+        // and get it from the db again
+        supabaseClient
+          .from('Users')
+          .select()
+          .eq('id', session?.user?.id)
+          .single()
+          .then((userData: any) =>
+            setUserInfo({ session, profile: userData.data })
+          );
+      }
     });
   }, []);
 
