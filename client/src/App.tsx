@@ -14,6 +14,8 @@ import LandingPage from './Pages/LandingPage';
 import UserProfile from './Pages/UserProfile';
 import EditUser from './Pages/EditUser';
 import EditGear from './Pages/EditGear';
+import { Provider } from 'react-redux';
+import {store} from "./Redux/store"
 
 export const UserContext = createContext<GearhubUserInfo>({
   session: null,
@@ -25,6 +27,7 @@ const App: React.FC = (): JSX.Element => {
 
   return (
     <>
+    <Provider store = {store}>
       <UserContext.Provider value={gearhubUserInfo}>
         <Router>
           <Routes>
@@ -47,6 +50,7 @@ const App: React.FC = (): JSX.Element => {
       </Router>
 
       </UserContext.Provider>
+      </Provider>
     </>
   );
 };

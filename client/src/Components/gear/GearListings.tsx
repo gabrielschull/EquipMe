@@ -3,12 +3,18 @@ import { useEffect, useState } from 'react';
 import  {Gear}  from "../../types/gear.type";
 import { supabase } from '../../services/supabase.service';
 import { useNavigate } from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux"
+import { setAllGear } from '../../Redux/GearSlice';
+import { RootState, AppDispatch } from "../../Redux/store"
 
 const GearListings : React.FC = (): JSX.Element => {
+  const dispatch: AppDispatch = useDispatch();
+  const gear = useSelector((state: RootState) => state.Gear);
 
-  const [gear, setGear] = useState<Gear[]>();
   useEffect(() => {
-    supabase.getGear().then((gear) => setGear(gear));
+    supabase.getGear().then((gear) => {
+      dispatch(setAllGear(gear))
+    })
   }, []);
 
   const navigate = useNavigate()

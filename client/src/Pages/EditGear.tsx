@@ -3,6 +3,7 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import Delete from '../Components/gear/DeleteModal';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../services/supabase.service';
 
 
 
