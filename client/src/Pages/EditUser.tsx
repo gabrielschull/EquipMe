@@ -7,11 +7,42 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
 
 const EditUser: React.FC = (): JSX.Element => {
+  const userInfo = useSelector((state: RootState) => state.User);
+  const [formState, setFormState] = useState({
+    bio: userInfo.profile.bio,
+    email: userInfo.profile.email,
+    first_name: userInfo.profile.first_name,
+    last_name: userInfo.profile.last_name,
+    location: userInfo.profile.location,
+    phone: userInfo.profile.phone,
+  });
   const [file, setFile] = useState<File | null>(null);
-  const userInfo = useSelector ((state: RootState) => state.User);
-
-
   const navigate = useNavigate();
+
+  const handleChange = (event: any) => {
+    const inputName = event.target.name;
+    const value = event.target.value;
+
+    setFormState((prevalue) => {
+      return {
+        ...prevalue,
+        [inputName]: value,
+      };
+    });
+  };
+
+  const handleSubmit = () => {
+    supabase.uploadUserProfileTextFields(
+      userInfo.profile.id,
+      formState.bio,
+      formState.email,
+      formState.first_name,
+      formState.last_name,
+      formState.location,
+      formState.phone
+    );
+  };
+
   return (
     <>
       <NavBar></NavBar>
@@ -31,13 +62,10 @@ const EditUser: React.FC = (): JSX.Element => {
                 </label>
                 <div className='mt-2'>
                   <input
-                    placeholder={
-                      userInfo.profile.first_name
-                        ? userInfo.profile.first_name
-                        : ''
-                    }
+                    value={formState.first_name}
+                    onChange={handleChange}
                     type='text'
-                    name='first-name'
+                    name='first_name'
                     id='first-name'
                     autoComplete='given-name'
                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
@@ -53,13 +81,10 @@ const EditUser: React.FC = (): JSX.Element => {
                 </label>
                 <div className='mt-2'>
                   <input
-                    placeholder={
-                      userInfo.profile.last_name
-                        ? userInfo.profile.last_name
-                        : ''
-                    }
+                    value={formState.last_name}
+                    onChange={handleChange}
                     type='text'
-                    name='last-name'
+                    name='last_name'
                     id='last-name'
                     autoComplete='given-name'
                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
@@ -76,9 +101,8 @@ const EditUser: React.FC = (): JSX.Element => {
                 </label>
                 <div className='mt-2'>
                   <input
-                    placeholder={
-                      userInfo.profile.email ? userInfo.profile.email : ''
-                    }
+                    value={formState.email}
+                    onChange={handleChange}
                     type='text'
                     name='email'
                     id='email'
@@ -96,9 +120,8 @@ const EditUser: React.FC = (): JSX.Element => {
                 </label>
                 <div className='mt-2'>
                   <input
-                    placeholder={
-                      userInfo.profile.phone ? userInfo.profile.phone : ''
-                    }
+                    value={formState.phone}
+                    onChange={handleChange}
                     type='text'
                     name='phone'
                     id='phone'
@@ -137,14 +160,13 @@ const EditUser: React.FC = (): JSX.Element => {
                 </label>
                 <div className='mt-2'>
                   <textarea
-                    placeholder={
-                      userInfo.profile.bio ? userInfo.profile.bio : ''
-                    }
+                    value={formState.bio}
+                    onChange={handleChange}
                     id='about'
-                    name='about'
+                    name='bio'
                     rows={3}
                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-                    defaultValue={''}
+                    // defaultValue={''}
                   />
                 </div>
               </div>
@@ -284,6 +306,7 @@ const EditUser: React.FC = (): JSX.Element => {
             type='submit'
             onClick={(e) => {
               e.preventDefault();
+              handleSubmit();
               if (file) {
                 supabase.uploadUserProfileImage(
                   file,
