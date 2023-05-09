@@ -1,14 +1,9 @@
 import { Auth } from '@supabase/auth-ui-react';
 import { useEffect, useContext } from 'react';
-import { UserContext } from '../../App';
+
 import { supabaseClient } from '../../services/supabase.service';
 
 const Login: React.FC = (): JSX.Element => {
-  const loggedInUser = useContext(UserContext);
-
-  useEffect(() => {
-    console.log('👀 Login component loggedInUser=', loggedInUser);
-  });
 
   return (
     <>

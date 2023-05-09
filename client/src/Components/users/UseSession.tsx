@@ -3,6 +3,9 @@ import { Session } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import { supabaseClient } from '../../services/supabase.service';
 import { User } from '../../types/user.type';
+import {useDispatch, useSelector} from "react-redux"
+import { UserSlice, setUserInfo } from '../../Redux/UserSlice';
+import { RootState, AppDispatch } from "../../Redux/store"
 
 export interface GearhubUserInfo {
   session: Session | null;
@@ -10,10 +13,9 @@ export interface GearhubUserInfo {
 }
 
 export function useSession(): GearhubUserInfo {
-  const [userInfo, setUserInfo] = useState<GearhubUserInfo>({
-    profile: null,
-    session: null,
-  });
+  const dispatch: AppDispatch = useDispatch();
+  const userInfo = useSelector((state: RootState) => state.User);
+
 
   // const [channel, setChannel] = useState<RealtimeChannel | null>(null);
 
@@ -34,9 +36,10 @@ export function useSession(): GearhubUserInfo {
 
   useEffect(() => {
     supabaseClient.auth.getSession().then(({ data: { session } }) => {
-      setUserInfo({ ...userInfo, session });
+      console.log(session)
+      dispatch(setUserInfo({ ...userInfo, session }))
       supabaseClient.auth.onAuthStateChange((_event: any, session: any) => {
-        setUserInfo({ session, profile: null });
+        dispatch(setUserInfo({ session, profile: null }))
       });
 
       // if user exists in Users db, get their profile
@@ -46,12 +49,11 @@ export function useSession(): GearhubUserInfo {
         .eq('id', session?.user?.id)
         .single()
         .then((userData: any) =>
-          setUserInfo({ session, profile: userData.data })
+          dispatch(setUserInfo({ session, profile: userData.data }))
         );
 
       // is user is not in Users db, create them
       if (!userInfo.profile?.id) {
-        console.log('are we getting into this if?');
         // split the full name from Google into first & last name
         const fullName = session?.user?.identities
           ?.at(0)
@@ -70,7 +72,7 @@ export function useSession(): GearhubUserInfo {
           .eq('id', session?.user?.id)
           .single()
           .then((userData: any) =>
-            setUserInfo({ session, profile: userData.data })
+            dispatch(setUserInfo({ session, profile: userData.data }))
           );
       }
     });

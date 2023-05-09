@@ -1,19 +1,16 @@
-import { useEffect, useContext, useState } from 'react';
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
-import { UserContext } from '../App';
+import { useState } from 'react';
+import { PhotoIcon } from '@heroicons/react/24/solid';
 import { supabase } from '../services/supabase.service';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/store';
 
 const AddGear: React.FC = (): JSX.Element => {
-  const loggedInUser = useContext(UserContext);
+  const userInfo = useSelector ((state: RootState) => state.User);
   const [file, setFile] = useState<File | null>(null);
-
-  useEffect(() => {
-    console.log('🍻 AddGear component loggedInUser=', loggedInUser);
-  });
-
   const navigate = useNavigate()
+
   return (
     <>
 <NavBar></NavBar>
@@ -106,7 +103,7 @@ const AddGear: React.FC = (): JSX.Element => {
                         if (file) {
                           supabase.uploadUserProfileImage(
                             file,
-                            loggedInUser?.session?.user?.id
+                            userInfo?.session?.user?.id
                           );
                         }
                       }}
