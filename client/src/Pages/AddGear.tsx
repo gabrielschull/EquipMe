@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { supabase } from '../services/supabase.service';
 import NavBar from '../Components/home/NavBar';
@@ -7,23 +7,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
 
 const AddGear: React.FC = (): JSX.Element => {
-  const userInfo = useSelector ((state: RootState) => state.User);
-  const [file, setFile] = useState<File | null>(null);
+  const userInfo = useSelector((state: RootState) => state.User);
   const [files, setFiles] = useState<File[] | null>(null);
 
   useEffect(() => {
-    console.log('🍻 AddGear component loggedInUser=', loggedInUser);
+    console.log('🍻 AddGear component loggedInUser=', userInfo);
   });
 
-  // const uploadFiles = async (files) => {
-  //   try {
-  //     const fileUploads = files.map((delay, i) => uploadFile(delay, i));
-  //     await Promise.all(fileUploads);
-  //     console.log('all files uploaded');
-  //   } catch (e) {
-  //     console.log('some files failed to upload');
-  //   }
-  // }
   async function handleUpload() {
     try {
       console.log('files', files);
@@ -31,11 +21,11 @@ const AddGear: React.FC = (): JSX.Element => {
       if (files) {
         fileArray = [...files];
       }
-      const fileUploads = fileArray.map((file, idx) =>
-        supabase.uploadGear(file, loggedInUser?.session?.user.id)
+      const fileUploads = fileArray.map((file) =>
+        // supabase.uploadGear(file, userInfo?.session?.user.id + '/raul')
+        supabase.uploadGear(file, userInfo?.session?.user.id)
       );
       console.log('promises', fileUploads);
-      //@ts-ignore
       await Promise.all(fileUploads);
       console.log('all files uploaded');
     } catch (e) {
@@ -116,9 +106,6 @@ const AddGear: React.FC = (): JSX.Element => {
                           type="file"
                           className="sr-only"
                           multiple
-                          // onChange={(e) =>
-                          //   setFile(e.target.files ? e.target.files[0] : null)
-                          // }
                           onChange={(e) => {
                             setFiles(e.target.files);
                           }}
@@ -131,25 +118,12 @@ const AddGear: React.FC = (): JSX.Element => {
                     <p className="text-xs leading-5 text-gray-600">
                       PNG, JPG, GIF up to 10MB
                     </p>
-                    {/* <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (file) {
-                          supabase.uploadUserProfileImage(
-                            file,
-                            userInfo?.session?.user?.id
-                          );
-                        }
-                      }}>
-                      Test Me!!!!!!!!
-                    </button> */}
                     <button
                       onClick={(e) => {
-                        console.log('trying to click');
                         e.preventDefault();
                         handleUpload();
                       }}>
-                      Try several files
+                      Upload gear pictures
                     </button>
                   </div>
                 </div>
