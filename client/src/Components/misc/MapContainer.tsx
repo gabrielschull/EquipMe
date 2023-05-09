@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { supabase } from '../../services/supabase.service';
 import { useContext } from "react"
@@ -27,6 +27,13 @@ const MapContainer: React.FC = () => {
       }
     );
   };
+
+  useEffect(() => {
+    if (profile?.location) {
+      const [lat, lng] = profile.location.split(",");
+      setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) });
+    }
+  }, [profile]);
 
 const handleMapLoad = () => {
   setMapLoaded(true);
