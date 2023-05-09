@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { supabase } from '../../services/supabase.service';
 import { useContext } from "react"
-import { UserContext } from '../../App';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Redux/store';
+
 
 const apiKey = process.env.REACT_APP_MAPS_API_KEY!;
 
 const MapContainer: React.FC = () => {
-  const { profile } = useContext(UserContext);
+  const {profile} = useSelector ((state: RootState) => state.User);
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
   const [zoom, setZoom] = useState(13);
   const [mapLoaded, setMapLoaded] = useState(false);

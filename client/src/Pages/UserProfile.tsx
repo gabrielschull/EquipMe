@@ -6,17 +6,14 @@ import {
   LockClosedIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useContext } from 'react';
-import { UserContext } from '../App';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
 import MapContainer from '../Components/misc/MapContainer';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/store';
 
 const UserProfile: React.FC = (): JSX.Element => {
-  const loggedInUser = useContext(UserContext);
-
-  useEffect(() => {
-    console.log('🔪 UserProfile.tsx loggedInUser=', loggedInUser);
-  });
+  const userInfo = useSelector ((state: RootState) => state.User);
 
   const navigate = useNavigate();
 
@@ -47,7 +44,7 @@ const features = [
                   alt=""
                   src={
                     'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/images/' +
-                    loggedInUser.profile?.id +
+                    userInfo.profile?.id +
                     '/profileImage'
                   }
                 />
@@ -64,14 +61,14 @@ const features = [
               </figcaption>
             </figure>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              {loggedInUser?.profile ? loggedInUser.profile.first_name : 'FN'}{' '}
-              {loggedInUser?.profile
-                ? loggedInUser.profile.last_name
+              {userInfo?.profile ? userInfo.profile.first_name : 'FN'}{' '}
+              {userInfo?.profile
+                ? userInfo.profile.last_name
                 : 'LN'}
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              {loggedInUser?.profile
-                ? loggedInUser.profile.bio
+              {userInfo?.profile
+                ? userInfo.profile.bio
                 : `Bio`}
             </p>
           </div>

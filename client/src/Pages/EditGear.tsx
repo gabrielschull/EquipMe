@@ -5,10 +5,9 @@ import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../services/supabase.service';
 
-
-
 const EditGear: React.FC = (): JSX.Element => {
   const navigate = useNavigate()
+
   return (
     <>
 <NavBar></NavBar>

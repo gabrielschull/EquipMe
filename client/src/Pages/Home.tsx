@@ -5,15 +5,10 @@ import GearListings from '../Components/gear/GearListings';
 import AddGear from './AddGear';
 import Chat from '../Components/rentals/Chat';
 import Payment from '../Components/rentals/Payment';
-import { UserContext } from '../App';
 // import EditUser from './EditUser';
 
 const Home: React.FC = (): JSX.Element => {
-  const loggedInUser = useContext(UserContext);
 
-  useEffect(() => {
-    console.log('🔥 Home component loggedInUser=', loggedInUser);
-  });
 
   return (
     <>

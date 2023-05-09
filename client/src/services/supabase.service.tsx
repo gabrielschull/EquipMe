@@ -94,6 +94,34 @@ export const supabase = {
     }
   },
 
+  uploadUserProfileTextFields: async function (
+    id: string | undefined,
+    newBio: string | undefined,
+    newEmail: string | undefined,
+    newFirstName: string | undefined,
+    newLastName: string | undefined,
+    newLocation: string | undefined,
+    newPhone: string | undefined
+  ) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({
+          bio: newBio,
+          email: newEmail,
+          first_name: newFirstName,
+          last_name: newLastName,
+          location: newLocation,
+          phone: newPhone,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update profile info`);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
   getGearId: async function getGearId(id: string | undefined) {
     try {
       const data = await supabaseClient.from('Gear').select().eq('id', id);

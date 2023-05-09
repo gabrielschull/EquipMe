@@ -5,7 +5,9 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { supabase } from '../../services/supabase.service';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../../App';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../Redux/store';
+
 
 const navigation = [
   { name: 'Home', href: '/home', current: false },
@@ -19,7 +21,7 @@ function classNames(...classes: any) {
 }
 
 const NavBar: React.FC = (): JSX.Element => {
-  const loggedInUser = useContext(UserContext);
+  const userInfo = useSelector ((state: RootState) => state.User);
   const navigate = useNavigate();
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -76,7 +78,7 @@ const NavBar: React.FC = (): JSX.Element => {
                         className="h-8 w-8 rounded-full"
                         src={
                           'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/images/' +
-                          loggedInUser.profile?.id +
+                          userInfo.profile?.id +
                           '/profileImage'
                         }
                         alt=""
