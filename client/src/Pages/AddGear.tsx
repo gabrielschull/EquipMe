@@ -10,7 +10,10 @@ const AddGear: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [files, setFiles] = useState<File[] | null>(null);
   const [formState, setFormState] = useState({
-    description: ""
+    description: "",
+    pricehour:"",
+    priceday:"",
+    deposit:"",
   })
 
   const handleChange = (event: any) => {
@@ -28,8 +31,10 @@ const AddGear: React.FC = (): JSX.Element => {
   const handleSubmit = () => {
     supabase.addGear(
       userInfo.profile.id,
-      formState.description
-
+      formState.description,
+      formState.pricehour,
+      formState.priceday,
+      formState.deposit
     );
   };
 
@@ -45,7 +50,6 @@ const AddGear: React.FC = (): JSX.Element => {
         fileArray = [...files];
       }
       const fileUploads = fileArray.map((file) =>
-        // supabase.uploadGear(file, userInfo?.session?.user.id + '/raul')
         supabase.uploadGear(file, userInfo?.session?.user.id)
       );
       console.log('promises', fileUploads);
@@ -68,7 +72,7 @@ const AddGear: React.FC = (): JSX.Element => {
                 <label
                   htmlFor="username"
                   className="block text-sm font-medium leading-6 text-gray-900">
-                  Name
+                  Owner
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -130,9 +134,9 @@ const AddGear: React.FC = (): JSX.Element => {
                           type="file"
                           className="sr-only"
                           multiple
-                          onChange={(e) => {
-                            setFiles(e.target.files);
-                          }}
+                          // onChange={(e) => {
+                          //   setFiles(e.target.files);
+                          // }}
                         />
                         <hr></hr>
                       </label>
@@ -166,7 +170,7 @@ const AddGear: React.FC = (): JSX.Element => {
                 <div className="mt-2">
                   <select
                     id="country"
-                    name="country"
+                    name="geartype"
                     autoComplete="country-name"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                     <option>Bike</option>
@@ -186,12 +190,14 @@ const AddGear: React.FC = (): JSX.Element => {
                 <label
                   htmlFor="first-name"
                   className="block text-sm font-medium leading-6 text-gray-900">
-                  Price per hour
+                  Price per hour /€
                 </label>
                 <div className="mt-2">
                   <input
+                  value={formState.pricehour}
+                  onChange={handleChange}
                     type="text"
-                    name="first-name"
+                    name="pricehour"
                     id="first-name"
                     autoComplete="given-name"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -203,14 +209,34 @@ const AddGear: React.FC = (): JSX.Element => {
                 <label
                   htmlFor="last-name"
                   className="block text-sm font-medium leading-6 text-gray-900">
-                  Price per day
+                  Price per day /€
                 </label>
                 <div className="mt-2">
                   <input
+                  value={formState.priceday}
+                  onChange={handleChange}
                     type="text"
-                    name="last-name"
+                    name="priceday"
                     id="last-name"
                     autoComplete="family-name"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="first-name"
+                  className="block text-sm font-medium leading-6 text-gray-900">
+                  Deposit /€
+                </label>
+                <div className="mt-2">
+                  <input
+                  value={formState.deposit}
+                  onChange={handleChange}
+                    type="text"
+                    name="deposit"
+                    id="first-name"
+                    autoComplete="given-name"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -232,7 +258,7 @@ const AddGear: React.FC = (): JSX.Element => {
                     <div className="flex h-6 items-center">
                       <input
                         id="comments"
-                        name="comments"
+                        name="notifications"
                         type="checkbox"
                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       />

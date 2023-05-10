@@ -191,18 +191,17 @@ export const supabase = {
     }
   },
 
-  addGear: async function addGear(id :string, description:string | null | undefined) {
+  addGear: async function addGear(id :string, description:string | null | undefined, pricehour:any,  priceday:any, deposit:any) {
     try {
       const { data, error } = await supabaseClient
         .from('Gear')
         .insert({
           availability:[""],
-          deposit: 5,
+          deposit: deposit,
           description: description,
           owner_id: id,
-          price_day: 5,
-          price_hr: 5,
-          rating: null,
+          price_day: priceday,
+          price_hr: pricehour,
         })
 
       if (error) {
