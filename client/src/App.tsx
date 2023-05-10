@@ -6,6 +6,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import Home from './Pages/Home';
+import Calendar from './Components/gear/Calendar';
 import Login from './Components/auth/Login';
 import GearDetailsPage from './Pages/GearDetails';
 import MyGear from './Pages/MyGear';
@@ -37,7 +38,7 @@ const App: React.FC = (): JSX.Element => {
         <Routes>
           <>
             <Route
-              path="/"
+              path='/'
               element={
                 !userInfo.profile ? (
                   <Login />
@@ -60,11 +61,11 @@ const App: React.FC = (): JSX.Element => {
             <Route path='/login' element={<Login />} />
             <Route path='/geardetails:id' element={<GearDetailsPage />} />
             <Route path='/mygear' element={<MyGear />} />
-            <Route path="/editgear/:gearId" element={<EditGear />} />
+            <Route path='/editgear/:gearId' element={<EditGear />} />
             <Route path='/addgear' element={<AddGear />} />
             <Route path='/myprofile' element={<UserProfile />} />
             <Route path='/edituser' element={<EditUser />} />
-
+            <Route path='/calendar' element={<Calendar />} />
           </>
         </Routes>
       </Router>

@@ -140,7 +140,7 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      [_ in string]: string;
     };
     Enums: {
       [_ in never]: never;
