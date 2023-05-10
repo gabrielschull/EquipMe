@@ -21,6 +21,18 @@ export const supabase = {
     }
   },
 
+  calendarTest: async function () {
+    try {
+      const { data, error } = await supabaseClient.rpc('testFunc', {
+        start_date: '2023-05-10',
+        end_date: '2023-06-01',
+      });
+      return data;
+    } catch (e: any) {
+      console.log(e, 'Cannot run that function');
+    }
+  },
+
   getUsers: async function () {
     try {
       const data = await supabaseClient.from('Users').select();
