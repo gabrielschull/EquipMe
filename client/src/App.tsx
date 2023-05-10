@@ -37,8 +37,9 @@ const App: React.FC = (): JSX.Element => {
       <Router>
         <Routes>
           <>
-            <Route
-              path='/'
+
+             <Route
+              path="/"
               element={
                 !userInfo.profile ? (
                   <Login />
@@ -59,7 +60,7 @@ const App: React.FC = (): JSX.Element => {
             <Route path='/landingpage' element={<LandingPage />} />
             <Route path='/home' element={<Home />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/geardetails:id' element={<GearDetailsPage />} />
+            <Route path='/geardetails/:id' element={<GearDetailsPage />} />
             <Route path='/mygear' element={<MyGear />} />
             <Route path='/editgear/:gearId' element={<EditGear />} />
             <Route path='/addgear' element={<AddGear />} />
