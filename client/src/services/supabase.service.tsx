@@ -17,8 +17,7 @@ export const supabase = {
     try {
       await supabaseClient.auth.signOut();
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot log out');
+      console.log(e, 'Cannot log out');
     }
   },
 
@@ -29,8 +28,7 @@ export const supabase = {
         return data.data;
       }
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot get users from Supabase');
+      console.log(e, 'Cannot get users from Supabase');
     }
   },
 
@@ -45,8 +43,7 @@ export const supabase = {
         return data.data;
       }
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot find the user in Supabase');
+      console.log(e, 'Cannot find the user in Supabase');
     }
   },
 
@@ -57,8 +54,7 @@ export const supabase = {
         return data.data;
       }
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot get gear from Supabase');
+      console.log(e, 'Cannot get gear from Supabase');
     }
   },
 
@@ -130,8 +126,7 @@ export const supabase = {
         return data.data;
       }
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot get gear from Supabase');
+      console.log(e, 'Cannot get gear from Supabase');
     }
   },
 
@@ -151,8 +146,8 @@ export const supabase = {
 
       return data;
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot update user location in Supabase');
+      console.log(e, 'Cannot update user location in Supabase');
+    
     }
   },
 
@@ -169,8 +164,7 @@ export const supabase = {
 
       return data;
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot delete item in Supabase');
+      console.log(e, 'Cannot delete item in Supabase');
     }
 
 
@@ -187,7 +181,6 @@ export const supabase = {
       return data
     } catch (e: any) {
       console.log(e)
-      alert('Cannot fetch User by ID')
     }
   },
   
@@ -210,8 +203,7 @@ export const supabase = {
 
       return data;
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot create gear in Supabase');
+      console.log(e, 'Cannot create gear in Supabase');
     }
 },
 };

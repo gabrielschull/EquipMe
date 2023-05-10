@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Gear } from '../../types/gear.type';
 import { RootState, AppDispatch } from '../../Redux/store';
@@ -9,15 +9,19 @@ import { supabase } from '../../services/supabase.service';
 const GearListings: React.FC = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const gear = useSelector((state: RootState) => state.Gear);
-  const userInfo = useSelector ((state: RootState) => state.User);
-  console.log("MYINFO", userInfo)
-  console.log(gear, "GEAR")
+  const userInfo = useSelector((state: RootState) => state.User);
+  const [filteredGear, setFilteredGear] = useState<any[]>([])
+  console.log(userInfo, "hahaha")
 
   useEffect(() => {
-    supabase.getGear().then((gear) => {
-      dispatch(setAllGear(gear))
+    supabase.getGear().then((data) => {
+      dispatch(setAllGear(data))
     })
   }, []);
+  
+  useEffect(() => {
+  setFilteredGear(gear!.filter((g: Gear) => g.owner_id !== userInfo.profile.id))
+  }, [gear])
 
   const [owners, setOwners] = useState<{[key: string]: string}>({});
   const [distances, setDistances] = useState<{[key: string]: string}>({});
@@ -59,23 +63,19 @@ const GearListings: React.FC = (): JSX.Element => {
       }));
     }
   };
-  
-  const filteredGear = gear.filter((g: Gear) => g.owner_id !== userInfo.profile.id);
-  
+
   useEffect(() => {
+    
     filteredGear.forEach((g: Gear) => {
       if (!owners[g.owner_id!]) {
         getOwnerFirstName(g.owner_id!);
         getOwnerDistanceFromUser(g.owner_id!)
       }
     });
-  }, [filteredGear]);
-
-  useEffect(() => {
-    console.log('distances', distances);
-  }, [distances]);
-
+  }, [filteredGear, owners]);
+  
   return (
+
     <>
       <ul role="list" className="divide-y divide-gray-100 mx-12">
         {filteredGear && filteredGear.map((gear: Gear) => (
