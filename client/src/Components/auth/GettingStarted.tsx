@@ -4,9 +4,14 @@ import { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../Redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { supabase } from '../../services/supabase.service';
+import { RootState, AppDispatch } from '../../Redux/store';
+import {
+  UserSlice,
+  toggleIsOwner,
+  toggleIsRenter,
+} from '../../Redux/UserSlice';
 
 const people = [
   {
@@ -79,11 +84,18 @@ const GettingStarted: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [selected, setSelected] = useState(people[3]);
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+
   return (
     <>
       <button
         type='submit'
-        onClick={() => supabase.updateIsOwnerToTrue(userInfo.profile.id)}
+        onClick={() => {
+          userInfo.profile.is_owner
+            ? supabase.updateIsOwnerToFalse(userInfo.profile.id)
+            : supabase.updateIsOwnerToTrue(userInfo.profile.id);
+          dispatch(toggleIsOwner(userInfo.profile.id));
+        }}
         className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-pink-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
       >
         {userInfo.profile.is_owner ? '✔' : ''} I want to lease my sports gear to
@@ -91,7 +103,12 @@ const GettingStarted: React.FC = (): JSX.Element => {
       </button>
       <button
         type='submit'
-        onClick={() => supabase.updateIsRenterToTrue(userInfo.profile.id)}
+        onClick={() => {
+          userInfo.profile.is_renter
+            ? supabase.updateIsRenterToFalse(userInfo.profile.id)
+            : supabase.updateIsRenterToTrue(userInfo.profile.id);
+          dispatch(toggleIsRenter(userInfo.profile.id));
+        }}
         className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-green-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
       >
         {userInfo.profile.is_renter ? '✔' : ''} I'm looking to rent some gear
