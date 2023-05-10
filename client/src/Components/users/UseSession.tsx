@@ -38,9 +38,9 @@ export function useSession(): GearhubUserInfo {
     supabaseClient.auth.getSession().then(({ data: { session } }) => {
       console.log(session)
       dispatch(setUserInfo({ ...userInfo, session }))
-      supabaseClient.auth.onAuthStateChange((_event: any, session: any) => {
-        dispatch(setUserInfo({ session, profile: null }))
-      });
+      // supabaseClient.auth.onAuthStateChange((event: any, session: any) => {
+      //   console.log("EVENT == > ", event,"\nSession == > ", session)
+      // });
 
       // if user exists in Users db, get their profile
       supabaseClient
