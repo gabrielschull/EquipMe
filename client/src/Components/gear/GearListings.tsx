@@ -36,12 +36,6 @@ const GearListings: React.FC = (): JSX.Element => {
     const owner = await supabase.getUserById(ownerId);
     const ownerLocation = owner?.location;
     const userLocation = userInfo.profile.location; 
-
-    // console.log('ownerId', ownerId);
-    // console.log('owner', owner);
-    // console.log('ownerLocation', ownerLocation);
-    // console.log('userLocation', userLocation);
-    console.log('userLocation', userInfo);
   
     if (ownerLocation && userInfo.profile.location) {
       const [ownerLat, ownerLng] = ownerLocation.split(',').map(parseFloat);
