@@ -25,6 +25,7 @@ import { useSession } from './Components/users/UseSession';
 const App: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const whatAmI = useSession();
+
   useEffect(() => {
     console.log('I AM IN HERE ==> ', whatAmI);
     console.log('🙋🏻 userInfo=', userInfo);
@@ -46,6 +47,8 @@ const App: React.FC = (): JSX.Element => {
                   !userInfo.profile.last_name ||
                   !userInfo.profile.phone ? (
                   <EditUser />
+                ) : userInfo.location ? (
+                  <Home />
                 ) : (
                   <LandingPage />
                 )

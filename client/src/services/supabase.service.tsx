@@ -119,6 +119,36 @@ export const supabase = {
     }
   },
 
+  updateIsOwnerToTrue: async function (id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({
+          is_owner: true,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update user status`);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
+  updateIsRenterToTrue: async function (id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({
+          is_renter: true,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update user status`);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
   getGearId: async function getGearId(id: string | undefined) {
     try {
       const data = await supabaseClient.from('Gear').select().eq('id', id);
@@ -166,20 +196,20 @@ export const supabase = {
     } catch (e: any) {
       console.log(e, 'Cannot delete item in Supabase');
     }
-
-
-},
-  getUserById: async function getUserById(id:string)
-  {
+  },
+  getUserById: async function getUserById(id: string) {
     try {
-      const {data, error}  = await supabaseClient
-      .from("Users")
-      .select('*').eq('id', id).single();
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .select('*')
+        .eq('id', id)
+        .single();
       if (error) {
-        throw error
+        throw error;
       }
-      return data
+      return data;
     } catch (e: any) {
+
       console.log(e)
     }
   },
@@ -206,6 +236,7 @@ export const supabase = {
     } catch (e: any) {
       console.log(e, 'Cannot create gear in Supabase');
     }
+
 },
 
 editGear: async function (
