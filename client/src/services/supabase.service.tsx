@@ -196,18 +196,19 @@ export const supabase = {
       const { data, error } = await supabaseClient
         .from('Gear')
         .insert({
-          availability:[""],
+          availability: [''],
           deposit: deposit,
           description: description,
           owner_id: id,
           price_day: priceday,
           price_hr: pricehour,
         })
+        .select();
 
       if (error) {
         throw error;
       }
-
+      // console.log('data returned by addGear', data);
       return data;
     } catch (e: any) {
       console.log(e);
