@@ -17,8 +17,7 @@ export const supabase = {
     try {
       await supabaseClient.auth.signOut();
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot log out');
+      console.log(e, 'Cannot log out');
     }
   },
 
@@ -29,8 +28,7 @@ export const supabase = {
         return data.data;
       }
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot get users from Supabase');
+      console.log(e, 'Cannot get users from Supabase');
     }
   },
 
@@ -45,8 +43,7 @@ export const supabase = {
         return data.data;
       }
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot find the user in Supabase');
+      console.log(e, 'Cannot find the user in Supabase');
     }
   },
 
@@ -57,8 +54,7 @@ export const supabase = {
         return data.data;
       }
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot get gear from Supabase');
+      console.log(e, 'Cannot get gear from Supabase');
     }
   },
 
@@ -160,8 +156,7 @@ export const supabase = {
         return data.data;
       }
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot get gear from Supabase');
+      console.log(e, 'Cannot get gear from Supabase');
     }
   },
 
@@ -181,8 +176,8 @@ export const supabase = {
 
       return data;
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot update user location in Supabase');
+      console.log(e, 'Cannot update user location in Supabase');
+    
     }
   },
 
@@ -199,8 +194,7 @@ export const supabase = {
 
       return data;
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot delete item in Supabase');
+      console.log(e, 'Cannot delete item in Supabase');
     }
   },
   getUserById: async function getUserById(id: string) {
@@ -215,18 +209,12 @@ export const supabase = {
       }
       return data;
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot fetch User by ID');
+
+      console.log(e)
     }
   },
 
-  addGear: async function addGear(
-    id: string,
-    description: string | null | undefined,
-    pricehour: any,
-    priceday: any,
-    deposit: any
-  ) {
+  addGear: async function addGear(id :string, description:string | null | undefined, pricehour:any,  priceday:any, deposit:any) {
     try {
       const { data, error } = await supabaseClient
         .from('Gear')
@@ -246,9 +234,35 @@ export const supabase = {
       // console.log('data returned by addGear', data);
       return data;
     } catch (e: any) {
-      console.log(e);
-      alert('Cannot create gear in Supabase');
+      console.log(e, 'Cannot create gear in Supabase');
     }
-  },
+
+},
+
+editGear: async function (
+  id: string | undefined,
+  newDescription: string | undefined,
+  newPricehour: number | undefined,
+  newPriceday: number | undefined,
+  newDeposit: number | undefined,
+
+) {
+  try {
+    const { data, error } = await supabaseClient
+      .from('Gear')
+      .update({
+        description: newDescription,
+        price_hr: newPricehour,
+        price_day: newPriceday,
+        deposit: newDeposit,
+      })
+      .eq('id', id);
+    if (error) throw new Error(`Couldn't update gear info`);
+    console.log(error);
+    return data;
+  } catch (e: any) {
+    console.log(e);
+  }
+},
 };
 

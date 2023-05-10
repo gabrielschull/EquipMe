@@ -15,8 +15,11 @@ const MyGear : React.FC = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const gear = useSelector((state: RootState) => state.Gear);
   const userInfo = useSelector((state: RootState) => state.User);
+  const [filteredGear, setFilteredGear] = useState<any[]>([])
 
-  const filteredGear = gear.filter((g: Gear) => g.owner_id === userInfo.profile.id);
+  useEffect(() => {
+    setFilteredGear(gear!.filter((g: Gear) => g.owner_id === userInfo.profile.id))
+    }, [gear])
 
   useEffect(() => {
     supabase.getGear().then((gear) => {
@@ -53,7 +56,7 @@ const MyGear : React.FC = (): JSX.Element => {
           <div className="mt-6 flex items-center justify-end gap-x-6">
         <button
           type="submit"
-          onClick={() => navigate(`/editgear`)}
+          onClick={() => navigate(`/editgear/${gear.id}`)}
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Edit Gear
