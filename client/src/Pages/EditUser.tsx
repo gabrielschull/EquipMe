@@ -3,11 +3,14 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../services/supabase.service';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
+import { updateUser } from '../Redux/UserSlice';
 
 const EditUser: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
+  const dispatch = useDispatch()
+
   const [formState, setFormState] = useState({
     bio: userInfo.profile.bio,
     email: userInfo.profile.email,
@@ -16,9 +19,9 @@ const EditUser: React.FC = (): JSX.Element => {
     location: userInfo.profile.location,
     phone: userInfo.profile.phone,
   });
+
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
-
   const handleChange = (event: any) => {
     const inputName = event.target.name;
     const value = event.target.value;
@@ -29,19 +32,53 @@ const EditUser: React.FC = (): JSX.Element => {
         [inputName]: value,
       };
     });
+
   };
 
-  const handleSubmit = () => {
-    supabase.uploadUserProfileTextFields(
-      userInfo.profile.id,
-      formState.bio,
-      formState.email,
-      formState.first_name,
-      formState.last_name,
-      formState.location,
-      formState.phone
-    );
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (
+      formState.first_name &&
+      formState.last_name &&
+      formState.email &&
+      formState.phone &&
+      formState.bio
+    ) {
+      supabase.uploadUserProfileTextFields(
+        userInfo.profile.id,
+        formState.bio,
+        formState.email,
+        formState.first_name,
+        formState.last_name,
+        formState.location,
+        formState.phone
+      );
+
+      dispatch(
+        updateUser({
+          profile: {
+            ...userInfo.profile,
+            first_name: formState.first_name,
+            last_name: formState.last_name,
+            email: formState.email,
+            phone: formState.phone,
+            bio: formState.bio,
+          },
+        })
+      );
+
+      if (file) {
+        supabase.uploadUserProfileImage(file, userInfo?.session?.user?.id);
+      }
+
+      userInfo.location ? navigate(`/myprofile`) : navigate(`/landingpage`);
+    } else {
+      alert('Please fill in all the fields.');
+      navigate(`/edituser`);
+    }
   };
+
 
   return (
     <>
@@ -131,23 +168,6 @@ const EditUser: React.FC = (): JSX.Element => {
                   />
                 </div>
               </div>
-              {/* <div className='sm:col-span-3'>
-                <label
-                  htmlFor='last-name'
-                  className='block text-sm font-medium leading-6 text-gray-900'
-                >
-                  Password
-                </label>
-                <div className='mt-2'>
-                  <input
-                    type='password'
-                    name='password'
-                    id='password'
-                    autoComplete='password'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-                  />
-                </div>
-              </div> */}
             </div>
           </div>
           <div className='pb-12'>
@@ -219,80 +239,6 @@ const EditUser: React.FC = (): JSX.Element => {
               </div>
             </div>
           </div>
-
-          {/* <div className='border-b border-gray-900/10 pb-12'>
-            <h2 className='text-base font-semibold leading-7 text-gray-900'>
-              Notifications
-            </h2>
-            <div className='mt-10 space-y-10'>
-              <fieldset>
-                <legend className='text-sm font-semibold leading-6 text-gray-900'>
-                  By Email
-                </legend>
-                <div className='mt-6 space-y-6'>
-                  <div className='relative flex gap-x-3'>
-                    <div className='flex h-6 items-center'>
-                      <input
-                        id='comments'
-                        name='comments'
-                        type='checkbox'
-                        className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600'
-                      />
-                    </div>
-                    <div className='text-sm leading-6'>
-                      <label
-                        htmlFor='comments'
-                        className='font-medium text-gray-900'
-                      >
-                        Rentals
-                      </label>
-                      <p className='text-gray-500'>
-                        Get notified when someone chooses your gear.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend className='text-sm font-semibold leading-6 text-gray-900'>
-                  Push Notifications
-                </legend>
-                <p className='mt-1 text-sm leading-6 text-gray-600'>
-                  These are delivered via SMS to your phone.
-                </p>
-                <div className='mt-6 space-y-6'>
-                  <div className='flex items-center gap-x-3'>
-                    <input
-                      id='push-email'
-                      name='push-notifications'
-                      type='radio'
-                      className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
-                    />
-                    <label
-                      htmlFor='push-email'
-                      className='block text-sm font-medium leading-6 text-gray-900'
-                    >
-                      Same as email
-                    </label>
-                  </div>
-                  <div className='flex items-center gap-x-3'>
-                    <input
-                      id='push-nothing'
-                      name='push-notifications'
-                      type='radio'
-                      className='h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600'
-                    />
-                    <label
-                      htmlFor='push-nothing'
-                      className='block text-sm font-medium leading-6 text-gray-900'
-                    >
-                      No push notifications
-                    </label>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-          </div> */}
         </div>
         <div className='pb-12'>
           <div className='mt-6 flex items-center justify-end gap-x-6'>
@@ -305,19 +251,7 @@ const EditUser: React.FC = (): JSX.Element => {
             </button>
             <button
               type='submit'
-              onClick={(e) => {
-                e.preventDefault();
-                handleSubmit();
-                if (file) {
-                  supabase.uploadUserProfileImage(
-                    file,
-                    userInfo?.session?.user?.id
-                  );
-                }
-                userInfo.location
-                  ? navigate(`/myprofile`)
-                  : navigate(`/landingpage`);
-              }}
+              onClick={handleSubmit}
               className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
             >
               Update
