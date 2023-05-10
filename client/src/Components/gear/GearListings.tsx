@@ -20,6 +20,7 @@ const GearListings: React.FC = (): JSX.Element => {
   }, []);
 
   const [owners, setOwners] = useState<{[key: string]: string}>({});
+  const [distances, setDistances] = useState<{[key: string]: string}>({});
 
   const navigate = useNavigate()
 
@@ -30,6 +31,40 @@ const GearListings: React.FC = (): JSX.Element => {
       [ownerId]: owner?.first_name ?? '',
     }));
   };
+
+  const getOwnerDistanceFromUser = async (ownerId: string) => {
+    const owner = await supabase.getUserById(ownerId);
+    const ownerLocation = owner?.location;
+    const userLocation = userInfo.profile.location; 
+
+    // console.log('ownerId', ownerId);
+    // console.log('owner', owner);
+    // console.log('ownerLocation', ownerLocation);
+    // console.log('userLocation', userLocation);
+    console.log('userLocation', userInfo);
+  
+    if (ownerLocation && userInfo.profile.location) {
+      const [ownerLat, ownerLng] = ownerLocation.split(',').map(parseFloat);
+      const [userLat, userLng] = userLocation.split(',').map(parseFloat);
+  
+      const earthRadius = 6371;
+      const dLat = ((userLat - ownerLat) * Math.PI) / 180;
+      const dLng = ((userLng - ownerLng) * Math.PI) / 180;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos((ownerLat * Math.PI) / 180) *
+          Math.cos((userLat * Math.PI) / 180) *
+          Math.sin(dLng / 2) *
+          Math.sin(dLng / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = earthRadius * c;
+  
+      setDistances((prevState) => ({
+        ...prevState,
+        [ownerId]: `${distance.toFixed(1)} km`,
+      }));
+    }
+  };
   
   const filteredGear = gear.filter((g: Gear) => g.owner_id !== userInfo.profile.id);
   
@@ -37,9 +72,14 @@ const GearListings: React.FC = (): JSX.Element => {
     filteredGear.forEach((g: Gear) => {
       if (!owners[g.owner_id!]) {
         getOwnerFirstName(g.owner_id!);
+        getOwnerDistanceFromUser(g.owner_id!)
       }
     });
   }, [filteredGear]);
+
+  useEffect(() => {
+    console.log('distances', distances);
+  }, [distances]);
 
   return (
     <>
@@ -55,7 +95,8 @@ const GearListings: React.FC = (): JSX.Element => {
               </div>
             </div>
             <div className="hidden sm:flex sm:flex-col sm:items-end">
-              <p className="text-sm leading-6 text-gray-900">{owners[gear.owner_id!]}</p>
+              <p className="text-sm leading-6 text-gray-900">Gear owner: {owners[gear.owner_id!]}</p>
+              <p className="mt-1 text-xs leading-5 text-gray-500"> Distance: {distances[gear.owner_id!]? distances[gear.owner_id!] : 'unknown'}</p>
               <p className="mt-1 text-xs leading-5 text-gray-500">&#9733; {gear.rating}</p>
               <form className="mt-10">
                 <button

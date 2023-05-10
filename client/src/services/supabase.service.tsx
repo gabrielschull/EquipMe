@@ -190,7 +190,7 @@ export const supabase = {
       alert('Cannot fetch User by ID')
     }
   },
-
+  
   addGear: async function addGear(id :string, description:string | null | undefined, pricehour:any,  priceday:any, deposit:any) {
     try {
       const { data, error } = await supabaseClient
