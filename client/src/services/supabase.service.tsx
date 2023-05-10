@@ -190,7 +190,7 @@ export const supabase = {
       alert('Cannot fetch User by ID')
     }
   },
-  
+
   addGear: async function addGear(id :string, description:string | null | undefined, pricehour:any,  priceday:any, deposit:any) {
     try {
       const { data, error } = await supabaseClient
@@ -214,6 +214,32 @@ export const supabase = {
       console.log(e);
       alert('Cannot create gear in Supabase');
     }
+},
+
+editGear: async function (
+  id: string | undefined,
+  newDescription: string | undefined,
+  newPricehour: number | undefined,
+  newPriceday: number | undefined,
+  newDeposit: number | undefined,
+
+) {
+  try {
+    const { data, error } = await supabaseClient
+      .from('Gear')
+      .update({
+        description: newDescription,
+        price_hr: newPricehour,
+        price_day: newPriceday,
+        deposit: newDeposit,
+      })
+      .eq('id', id);
+    if (error) throw new Error(`Couldn't update gear info`);
+    console.log(error);
+    return data;
+  } catch (e: any) {
+    console.log(e);
+  }
 },
 };
 
