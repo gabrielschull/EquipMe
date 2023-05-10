@@ -23,9 +23,10 @@ import { useEffect } from 'react';
 import { useSession } from './Components/users/UseSession';
 
 const App: React.FC = (): JSX.Element => {
-  useSession();
   const userInfo = useSelector((state: RootState) => state.User);
+  const whatAmI = useSession();
   useEffect(() => {
+    console.log("I AM IN HERE ==> ", whatAmI)
     console.log('🙋🏻 userInfo=', userInfo);
   }, [userInfo]);
 
