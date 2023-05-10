@@ -22,7 +22,7 @@ const MyGear : React.FC = (): JSX.Element => {
   const navigate = useNavigate();
 
   const handleDelete = (gear:Gear) => {
-      supabase.deleteGear(gear.id)
+      supabase.deleteGear(gear.id as string)
         .then(() => {
           dispatch(deleteGear(gear.id));
         })
