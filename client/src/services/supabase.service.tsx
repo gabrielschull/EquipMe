@@ -123,6 +123,36 @@ export const supabase = {
     }
   },
 
+  updateIsOwnerToTrue: async function (id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({
+          is_owner: true,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update user status`);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
+  updateIsRenterToTrue: async function (id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({
+          is_renter: true,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update user status`);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
   getGearId: async function getGearId(id: string | undefined) {
     try {
       const data = await supabaseClient.from('Gear').select().eq('id', id);
@@ -172,26 +202,31 @@ export const supabase = {
       console.log(e);
       alert('Cannot delete item in Supabase');
     }
-
-
-},
-  getUserById: async function getUserById(id:string)
-  {
+  },
+  getUserById: async function getUserById(id: string) {
     try {
-      const {data, error}  = await supabaseClient
-      .from("Users")
-      .select('*').eq('id', id).single();
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .select('*')
+        .eq('id', id)
+        .single();
       if (error) {
-        throw error
+        throw error;
       }
-      return data
+      return data;
     } catch (e: any) {
-      console.log(e)
-      alert('Cannot fetch User by ID')
+      console.log(e);
+      alert('Cannot fetch User by ID');
     }
   },
-  
-  addGear: async function addGear(id :string, description:string | null | undefined, pricehour:any,  priceday:any, deposit:any) {
+
+  addGear: async function addGear(
+    id: string,
+    description: string | null | undefined,
+    pricehour: any,
+    priceday: any,
+    deposit: any
+  ) {
     try {
       const { data, error } = await supabaseClient
         .from('Gear')
@@ -214,6 +249,6 @@ export const supabase = {
       console.log(e);
       alert('Cannot create gear in Supabase');
     }
-},
+  },
 };
 
