@@ -10,7 +10,15 @@ export const UserSlice = createSlice({
       return action.payload;
     },
     updateUser: (state, action) => {
-      state.profile = action.payload.profile;
+      const { firstname, lastname, email, phone, bio } = action.payload.profile;
+      state.profile = {
+        ...state.profile,
+        firstname,
+        lastname,
+        email,
+        phone,
+        bio,
+      };
     },
     updateLocation: (state, action) => {
       state.profile.location = action.payload;
