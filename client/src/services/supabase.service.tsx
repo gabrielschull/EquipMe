@@ -134,12 +134,42 @@ export const supabase = {
     }
   },
 
+  updateIsOwnerToFalse: async function (id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({
+          is_owner: false,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update user status`);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
   updateIsRenterToTrue: async function (id: string | undefined) {
     try {
       const { data, error } = await supabaseClient
         .from('Users')
         .update({
           is_renter: true,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update user status`);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
+  updateIsRenterToFalse: async function (id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({
+          is_renter: false,
         })
         .eq('id', id);
       if (error) throw new Error(`Couldn't update user status`);
@@ -177,7 +207,6 @@ export const supabase = {
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot update user location in Supabase');
-    
     }
   },
 
@@ -209,12 +238,17 @@ export const supabase = {
       }
       return data;
     } catch (e: any) {
-
-      console.log(e)
+      console.log(e);
     }
   },
 
-  addGear: async function addGear(id :string, description:string | null | undefined, pricehour:any,  priceday:any, deposit:any) {
+  addGear: async function addGear(
+    id: string,
+    description: string | null | undefined,
+    pricehour: any,
+    priceday: any,
+    deposit: any
+  ) {
     try {
       const { data, error } = await supabaseClient
         .from('Gear')
@@ -236,33 +270,31 @@ export const supabase = {
     } catch (e: any) {
       console.log(e, 'Cannot create gear in Supabase');
     }
+  },
 
-},
-
-editGear: async function (
-  id: string | undefined,
-  newDescription: string | undefined,
-  newPricehour: number | undefined,
-  newPriceday: number | undefined,
-  newDeposit: number | undefined,
-
-) {
-  try {
-    const { data, error } = await supabaseClient
-      .from('Gear')
-      .update({
-        description: newDescription,
-        price_hr: newPricehour,
-        price_day: newPriceday,
-        deposit: newDeposit,
-      })
-      .eq('id', id);
-    if (error) throw new Error(`Couldn't update gear info`);
-    console.log(error);
-    return data;
-  } catch (e: any) {
-    console.log(e);
-  }
-},
+  editGear: async function (
+    id: string | undefined,
+    newDescription: string | undefined,
+    newPricehour: number | undefined,
+    newPriceday: number | undefined,
+    newDeposit: number | undefined
+  ) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Gear')
+        .update({
+          description: newDescription,
+          price_hr: newPricehour,
+          price_day: newPriceday,
+          deposit: newDeposit,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update gear info`);
+      console.log(error);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
 };
 
