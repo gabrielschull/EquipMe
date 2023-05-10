@@ -183,28 +183,55 @@ export const supabase = {
       console.log(e)
     }
   },
-  
+
   addGear: async function addGear(id :string, description:string | null | undefined, pricehour:any,  priceday:any, deposit:any) {
     try {
       const { data, error } = await supabaseClient
         .from('Gear')
         .insert({
-          availability:[""],
+          availability: [''],
           deposit: deposit,
           description: description,
           owner_id: id,
           price_day: priceday,
           price_hr: pricehour,
         })
+        .select();
 
       if (error) {
         throw error;
       }
-
+      // console.log('data returned by addGear', data);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot create gear in Supabase');
     }
+},
+
+editGear: async function (
+  id: string | undefined,
+  newDescription: string | undefined,
+  newPricehour: number | undefined,
+  newPriceday: number | undefined,
+  newDeposit: number | undefined,
+
+) {
+  try {
+    const { data, error } = await supabaseClient
+      .from('Gear')
+      .update({
+        description: newDescription,
+        price_hr: newPricehour,
+        price_day: newPriceday,
+        deposit: newDeposit,
+      })
+      .eq('id', id);
+    if (error) throw new Error(`Couldn't update gear info`);
+    console.log(error);
+    return data;
+  } catch (e: any) {
+    console.log(e);
+  }
 },
 };
 
