@@ -51,15 +51,17 @@ const App: React.FC = (): JSX.Element => {
                 )
               }
             />
-            <Route path="/landingpage" element={<LandingPage />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/geardetails/:id" element={<GearDetailsPage />} />
-            <Route path="/mygear" element={<MyGear />} />
-            <Route path="/editgear" element={<EditGear />} />
-            <Route path="/addgear" element={<AddGear />} />
-            <Route path="/myprofile" element={<UserProfile />} />
-            <Route path="/edituser" element={<EditUser />} />
+
+            <Route path='/landingpage' element={<LandingPage />} />
+            <Route path='/home' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/geardetails:id' element={<GearDetailsPage />} />
+            <Route path='/mygear' element={<MyGear />} />
+            <Route path="/editgear/:gearId" element={<EditGear />} />
+            <Route path='/addgear' element={<AddGear />} />
+            <Route path='/myprofile' element={<UserProfile />} />
+            <Route path='/edituser' element={<EditUser />} />
+
           </>
         </Routes>
       </Router>

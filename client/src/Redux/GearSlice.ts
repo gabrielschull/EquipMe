@@ -17,15 +17,17 @@ export const AllGearSlice = createSlice({
         return state.filter((gear) => gear.id !== action.payload);
       },
 
-    // updateGear: (state, action) => {
-    //     const indexToUpd = state.findIndex(
-    //       (gear) => gear.id === action.payload.id
-    //     );
-    //     state[indexToUpd].bio = action.payload.bio
-    //     state[indexToUpd].price = action.payload.price
-    //   },
+    updateGear: (state, action) => {
+        const indexToUpd = state.findIndex(
+          (gear) => gear.id === action.payload.id
+        );
+        state[indexToUpd].description = action.payload.description
+        state[indexToUpd].price_hr = action.payload.price_hr
+        state[indexToUpd].price_day = action.payload.price_day
+        state[indexToUpd].deposit = action.payload.deposit
+      },
 
   },
 });
-export const { setAllGear, deleteGear, addGear} = AllGearSlice.actions;
+export const { setAllGear, deleteGear, addGear, updateGear} = AllGearSlice.actions;
 export default AllGearSlice.reducer;
