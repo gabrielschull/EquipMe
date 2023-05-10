@@ -15,8 +15,11 @@ const MyGear : React.FC = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const gear = useSelector((state: RootState) => state.Gear);
   const userInfo = useSelector((state: RootState) => state.User);
+  const [filteredGear, setFilteredGear] = useState<any[]>([])
 
-  const filteredGear = gear.filter((g: Gear) => g.owner_id === userInfo.profile.id);
+  useEffect(() => {
+    setFilteredGear(gear!.filter((g: Gear) => g.owner_id === userInfo.profile.id))
+    }, [gear])
 
   useEffect(() => {
     supabase.getGear().then((gear) => {
