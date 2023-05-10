@@ -26,7 +26,7 @@ const App: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const whatAmI = useSession();
   useEffect(() => {
-    console.log("I AM IN HERE ==> ", whatAmI)
+    console.log('I AM IN HERE ==> ', whatAmI);
     console.log('🙋🏻 userInfo=', userInfo);
   }, [userInfo]);
 
@@ -36,7 +36,7 @@ const App: React.FC = (): JSX.Element => {
         <Routes>
           <>
             <Route
-              path='/'
+              path="/"
               element={
                 !userInfo.profile ? (
                   <Login />
@@ -51,15 +51,17 @@ const App: React.FC = (): JSX.Element => {
                 )
               }
             />
+
             <Route path='/landingpage' element={<LandingPage />} />
             <Route path='/home' element={<Home />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/geardetails' element={<GearDetailsPage />} />
+            <Route path='/geardetails:id' element={<GearDetailsPage />} />
             <Route path='/mygear' element={<MyGear />} />
             <Route path="/editgear/:gearId" element={<EditGear />} />
             <Route path='/addgear' element={<AddGear />} />
             <Route path='/myprofile' element={<UserProfile />} />
             <Route path='/edituser' element={<EditUser />} />
+
           </>
         </Routes>
       </Router>
