@@ -3,11 +3,14 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../services/supabase.service';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
+import { updateUser } from '../Redux/UserSlice';
 
 const EditUser: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
+  const dispatch = useDispatch
+  const [isFormValid, setIsFormValid] = useState(false);
   const [formState, setFormState] = useState({
     bio: userInfo.profile.bio,
     email: userInfo.profile.email,
@@ -16,6 +19,24 @@ const EditUser: React.FC = (): JSX.Element => {
     location: userInfo.profile.location,
     phone: userInfo.profile.phone,
   });
+
+  useEffect(() => {
+    setFormState({
+      bio: userInfo.profile.bio,
+      email: userInfo.profile.email,
+      first_name: userInfo.profile.first_name,
+      last_name: userInfo.profile.last_name,
+      location: userInfo.profile.location,
+      phone: userInfo.profile.phone,
+    });
+    checkFormValidity();
+  }, [userInfo]);
+
+  const checkFormValidity = () => {
+    const isFormValid = Object.values(formState).every((value) => value.trim() !== '');
+    setIsFormValid(isFormValid);
+  };
+
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
@@ -29,6 +50,7 @@ const EditUser: React.FC = (): JSX.Element => {
         [inputName]: value,
       };
     });
+    checkFormValidity();
   };
 
   const handleSubmit = () => {
@@ -40,7 +62,7 @@ const EditUser: React.FC = (): JSX.Element => {
       formState.last_name,
       formState.location,
       formState.phone
-    );
+    )
   };
 
   return (
@@ -307,6 +329,10 @@ const EditUser: React.FC = (): JSX.Element => {
               type='submit'
               onClick={(e) => {
                 e.preventDefault();
+                if (!isFormValid) {
+                  alert('Please fill in all required fields.');
+                  return;
+                }
                 handleSubmit();
                 if (file) {
                   supabase.uploadUserProfileImage(
@@ -319,6 +345,7 @@ const EditUser: React.FC = (): JSX.Element => {
                   : navigate(`/landingpage`);
               }}
               className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+              disabled={!isFormValid}
             >
               Update
             </button>
