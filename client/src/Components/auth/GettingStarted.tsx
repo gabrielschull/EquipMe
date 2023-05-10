@@ -5,8 +5,8 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { supabase } from '../../services/supabase.service';
 import { RootState, AppDispatch } from '../../Redux/store';
+import { supabase } from '../../services/supabase.service';
 import {
   UserSlice,
   toggleIsOwner,

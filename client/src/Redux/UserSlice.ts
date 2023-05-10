@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { User } from '../types/user.type';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState: any = { session: null, profile: null };
 
@@ -13,14 +12,14 @@ export const UserSlice = createSlice({
     updateLocation: (state, action) => {
       state.profile.location = action.payload;
     },
-    toggleIsOwner: (state, action) => {
+    toggleIsOwner: (state) => {
       if (state.profile.is_owner) {
         state.profile.is_owner = false;
       } else {
         state.profile.is_owner = true;
       }
     },
-    toggleIsRenter: (state, action) => {
+    toggleIsRenter: (state) => {
       if (state.profile.is_renter) {
         state.profile.is_renter = false;
       } else {
@@ -29,5 +28,6 @@ export const UserSlice = createSlice({
     },
   },
 });
-export const { setUserInfo, toggleIsOwner, toggleIsRenter } = UserSlice.actions;
+export const { setUserInfo, toggleIsOwner, toggleIsRenter, updateLocation } =
+  UserSlice.actions;
 export default UserSlice.reducer;
