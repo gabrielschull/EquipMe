@@ -39,17 +39,20 @@ const AddGear: React.FC = (): JSX.Element => {
         formState.priceday,
         formState.deposit
       );
-      let fileArray: File[] = [];
+      // let fileArray: File[] = [];
+      // if (files) {
+      //   fileArray = Array.prototype.slice.call(files);
+      //   console.log('fileArray', fileArray);
+      // }
       if (files) {
-        fileArray = [...files];
+        const fileUploads = files.map((file) =>
+          supabase.uploadGear(
+            file,
+            userInfo?.session?.user.id + '/gear/' + gearJustAddedInfo[0].id
+          )
+        );
+        await Promise.all(fileUploads);
       }
-      const fileUploads = fileArray.map((file) =>
-        supabase.uploadGear(
-          file,
-          userInfo?.session?.user.id + '/gear/' + gearJustAddedInfo[0].id
-        )
-      );
-      await Promise.all(fileUploads);
     } catch (e) {
       console.log('Some files failed to upload', e);
     }
@@ -115,14 +118,32 @@ const AddGear: React.FC = (): JSX.Element => {
                 </label>
                 <div className='mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10'>
                   <div className='text-center'>
-                    <PhotoIcon
-                      className='mx-auto h-12 w-12 text-gray-300'
-                      aria-hidden='true'
-                    />
+                    {!files && (
+                      <PhotoIcon
+                        className='mx-auto h-12 w-12 text-gray-300'
+                        aria-hidden='true'
+                      />
+                    )}
+                    <div className='container grid grid-cols-10 gap-2'>
+                      {files &&
+                        files.map((image) => {
+                          console.log('image', image);
+                          console.log(
+                            'URL.createObjectURL(image)',
+                            URL.createObjectURL(image)
+                          );
+                          return (
+                            <img
+                              src={URL.createObjectURL(image)}
+                              className='w-50 rounded-lg'
+                            />
+                          );
+                        })}
+                    </div>
                     <div className='mt-4 flex text-sm leading-6 text-gray-600'>
                       <label
                         htmlFor='file-upload'
-                        className='relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
+                        className='text-center relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
                       >
                         <span>Upload a file</span>
                         <input
@@ -132,7 +153,14 @@ const AddGear: React.FC = (): JSX.Element => {
                           className='sr-only'
                           multiple
                           onChange={(e) => {
-                            setFiles(e.target.files);
+                            const fileArray = Array.prototype.slice.call(
+                              e.target.files
+                            );
+                            if (files) {
+                              setFiles([...files, ...fileArray]);
+                            } else {
+                              setFiles(fileArray);
+                            }
                           }}
                         />
                         <hr></hr>
