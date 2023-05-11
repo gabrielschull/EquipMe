@@ -72,7 +72,7 @@ const EditUser: React.FC = (): JSX.Element => {
         supabase.uploadUserProfileImage(file, userInfo?.session?.user?.id);
       }
 
-      userInfo.location ? navigate(`/myprofile`) : navigate(`/landingpage`);
+      userInfo.location ? navigate(`/myprofile`) : navigate(`/home`);
     } else {
       alert('Please fill in all the fields.');
       navigate(`/edituser`);
@@ -245,7 +245,7 @@ const EditUser: React.FC = (): JSX.Element => {
             <button
               type='button'
               className='text-sm font-semibold leading-6 text-gray-900'
-              onClick={() => navigate(`/myprofile`)}
+              onClick={() => navigate(`/home`)}
             >
               Cancel
             </button>
