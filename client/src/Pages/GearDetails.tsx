@@ -8,16 +8,17 @@ import { supabase, supabaseClient } from '../services/supabase.service';
 import { useParams, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
-  
+import Calendar from '../Components/gear/Calendar';
+
 
 const reviews = { href: '#', average: 4, totalCount: 117 };
 
-const CDNURL = "https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/"
+const CDNURL =
+  'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
-
 
 const GearDetails: React.FC = (): JSX.Element => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -26,17 +27,26 @@ const GearDetails: React.FC = (): JSX.Element => {
   const [gearInfo, setGearInfo] = useState<any>([]);
   const [gearImages, setGearImages] = useState<any[]>([]);
   const userInfo = useSelector((state: RootState) => state.User);
+  const [rentalStartDate, setRentalStartDate] = useState<Date>(new Date());
+  const [rentalEndDate, setRentalEndDate] = useState<Date>(new Date());
 
   const location = useLocation();
   const gear = location.state?.gear;
   const { id } = useParams();
-  console.log(gearInfo, 'gearinfo');
+  console.log('gearinfo', { gearInfo });
 
   console.log('OWNERID ==>', gear.owner_id);
 
   // console.log('PARAMS ==> ', id);
 
   const handleReservationClick = () => {
+    supabase.startRentalContract(
+      id,
+      gearInfo.owner_id,
+      userInfo.profile.id,
+      rentalStartDate,
+      rentalEndDate
+    );
     setShowPaymentModal(true);
   };
 
@@ -128,6 +138,7 @@ const GearDetails: React.FC = (): JSX.Element => {
             </div>
 
             {/* Image gallery */}
+
 
             <div id="image-track" style={{display: "flex", gap: "4vmin", position: "absolute", left: "50%", top: "50%", transform: "translate(0%, -50%)", }}>
             {gearImages.map((image, index) => {
@@ -298,6 +309,12 @@ const GearDetails: React.FC = (): JSX.Element => {
                     <p className='text-base text-gray-900'>
                       {gearInfo.description}
                     </p>
+                    <Calendar
+                      rentalStartDate={rentalStartDate}
+                      setRentalStartDate={setRentalStartDate}
+                      rentalEndDate={rentalEndDate}
+                      setRentalEndDate={setRentalEndDate}
+                    />
                   </div>
                 </div>
               </div>
