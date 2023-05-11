@@ -355,10 +355,31 @@ export const supabase = {
       if (error) {
         throw error;
       }
-      console.log('data returned by startRentalContract', data);
+      // console.log('data returned by startRentalContract', data);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot create a new rental contract');
+    }
+  },
+
+  getContractsByRenterId: async function (renter_id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        // .from('Users')
+        // .select('*, RentalContracts!RentalContracts_renter_id_fkey(*)')
+        // .eq('id', renter_id);
+        .from('RentalContracts')
+        .select('*, Gear!RentalContracts_gear_id_fkey(*)')
+        .eq('renter_id', renter_id);
+        //
+      // .single();
+      if (error) {
+        throw error;
+      }
+      console.log('data returned by startRentalContract', data);
+      return data;
+    } catch (e: any) {
+      console.log(e, 'Cannot find contracts in the db');
     }
   },
 };

@@ -6,19 +6,35 @@ import AddGear from './AddGear';
 import Chat from '../Components/rentals/Chat';
 import Payment from '../Components/rentals/Payment';
 import GettingStarted from '../Components/auth/GettingStarted';
+import { useDispatch, useSelector } from 'react-redux';
+import { supabase } from '../services/supabase.service';
+import { setActiveRentals } from '../Redux/UserSlice';
+import { RootState } from '../Redux/store';
+import CurrentRentalBanner from '../Components/rentals/CurrentRentalBanner';
 // import EditUser from './EditUser';
 
 const Home: React.FC = (): JSX.Element => {
+  const userInfo = useSelector((state: RootState) => state.User);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getContractsOnRender = async () => {
+      const data = await supabase.getContractsByRenterId(userInfo.profile.id);
+      dispatch(setActiveRentals(data));
+    };
+
+    getContractsOnRender();
+  }, []);
 
   return (
     <>
-      <div className="component-container">
-        <NavBar/>
-        <GettingStarted/>
-        {/* <CurrentRental></CurrentRental> */}
-        <Chat/>
-        <GearListings/>
+      <div className='component-container'>
+        <NavBar />
+        {userInfo.activeRentals && <CurrentRentalBanner />}
+        <GettingStarted />
+        <Chat />
+        <GearListings />
       </div>
     </>
   );
