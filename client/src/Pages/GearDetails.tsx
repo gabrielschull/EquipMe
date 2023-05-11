@@ -5,8 +5,8 @@ import Payment from '../Components/rentals/Payment';
 import { useState } from 'react';
 import { RootState, AppDispatch } from '../Redux/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { supabase } from '../services/supabase.service';
-import { useNavigate, useParams } from 'react-router-dom';
+import { supabase, supabaseClient } from '../services/supabase.service';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Gear } from '../types/gear.type';
 import { type } from 'os';
 
