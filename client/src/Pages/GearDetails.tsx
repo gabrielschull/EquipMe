@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
 import Calendar from '../Components/gear/Calendar';
 
+
 const reviews = { href: '#', average: 4, totalCount: 117 };
 
 const CDNURL =
@@ -138,45 +139,27 @@ const GearDetails: React.FC = (): JSX.Element => {
 
             {/* Image gallery */}
 
-            <div
-              id='image-track'
-              style={{
-                display: 'flex',
-                gap: '4vmin',
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(0%, -50%)',
-              }}
-            >
-              {gearImages.map((image, index) => {
-                return (
-                  <div
-                    key={image.name}
-                    className='aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block'
-                  >
-                    <img
-                      src={
-                        CDNURL +
-                        gear.owner_id +
-                        '/gear/' +
-                        id +
-                        '/' +
-                        image.name
-                      }
-                      alt=''
-                      className='h-full w-full object-cover object-center'
-                      style={{
-                        width: '40vmin',
-                        height: '56vmin',
-                        objectFit: 'cover',
-                        objectPosition: 'center',
-                      }}
-                    />
-                  </div>
-                );
-              })}
+
+            <div id="image-track" style={{display: "flex", gap: "4vmin", position: "absolute", left: "50%", top: "50%", transform: "translate(0%, -50%)", }}>
+            {gearImages.map((image, index) => {
+    return (
+      <div
+        key={image.name}
+        className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block"
+      >
+        <img
+          src={CDNURL + gear.owner_id + "/gear/" + id + "/" + image.name}
+          alt=""
+          className="h-full w-full object-cover object-center"
+          style={{width: "40vmin", height: "56vmin", objectFit: "cover", objectPosition: "center"}}
+        />
+      </div>
+          );
+            }
+            )}
+
             </div>
+            
 
             {/* <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
             {gearImages.map((image, index) => {

@@ -26,6 +26,7 @@ const AddGear: React.FC = (): JSX.Element => {
   const handleChange = (event: any) => {
     const inputName = event.target.name;
     const value = event.target.value;
+    // const selectedValue = event.target.value;
 
     setFormState((prevalue) => {
       return {
@@ -87,14 +88,29 @@ const AddGear: React.FC = (): JSX.Element => {
                     </label>
                     <div className="mt-2">
                       <select
-                        id="country"
-                        name="geartype"
+                        onChange={handleChange}
+                        id="type"
+                        name="type"
                         autoComplete="country-name"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                        <option>Bike</option>
-                        <option>SurfBoard</option>
-                        <option>Snowboard</option>
-                        <option>Football</option>
+                        className="block w-full md:w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        value={formState.type}>
+                        <option value="Snowboarding">Snowboarding</option>
+                        <option value="Skiing">Skiing</option>
+                        <option value="Surfing">Surfing</option>
+                        <option value="Motocross">Motocross</option>
+                        <option value="Skateboarding">Skateboarding</option>
+                        <option value="Wakeboarding">Wakeboarding</option>
+                        <option value="Kiteboarding">Kiteboarding</option>
+                        <option value="Sailing">Sailing</option>
+                        <option value="Windsurfing">Windsurfing</option>
+                        <option value="Kayaking">Kayaking</option>
+                        <option value="Rafting">Rafting</option>
+                        <option value="Rock Climbing">Rock Climbing</option>
+                        <option value="Mountain Biking">Mountain Biking</option>
+                        <option value="Ice Climbing">Ice Climbing</option>
+                        <option value="Parkour">Parkour</option>
+                        <option value="Cycling">Cycling</option>
+                        <option value="Camping">Camping</option>
                       </select>
                     </div>
                   </div>
@@ -339,7 +355,7 @@ const AddGear: React.FC = (): JSX.Element => {
             </button>
             <button
               type="button"
-              onClick={() => navigate(`/landingpage`)}
+              onClick={() => navigate(`/myprofile`)}
               className="text-sm font-semibold leading-6 text-gray-900">
               Cancel
             </button>
