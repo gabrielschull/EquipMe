@@ -12,8 +12,6 @@ import { RootState } from '../../Redux/store';
 const navigation = [
   { name: 'Home', href: '/home', current: false },
   { name: 'My Profile', href: '/myprofile', current: false },
-  { name: 'My Gear', href: '/mygear', current: false },
-  { name: 'Find some gear', href: '/landingpage', current: false },
   { name: 'Rentals', href: '/geardetails', current: false },
 ];
 function classNames(...classes: any) {

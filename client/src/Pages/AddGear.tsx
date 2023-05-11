@@ -339,7 +339,7 @@ const AddGear: React.FC = (): JSX.Element => {
             </button>
             <button
               type="button"
-              onClick={() => navigate(`/landingpage`)}
+              onClick={() => navigate(`/myprofile`)}
               className="text-sm font-semibold leading-6 text-gray-900">
               Cancel
             </button>

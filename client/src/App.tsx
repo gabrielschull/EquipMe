@@ -11,7 +11,6 @@ import Login from './Components/auth/Login';
 import GearDetailsPage from './Pages/GearDetails';
 import MyGear from './Components/gear/MyGear';
 import AddGear from './Pages/AddGear';
-import LandingPage from './Pages/LandingPage';
 import UserProfile from './Pages/UserProfile';
 import EditUser from './Pages/EditUser';
 import EditGear from './Pages/EditGear';
@@ -50,12 +49,10 @@ const App: React.FC = (): JSX.Element => {
                 ) : userInfo.location ? (
                   <Home />
                 ) : (
-                  <LandingPage />
+                  <Home />
                 )
               }
             />
-
-            <Route path='/landingpage' element={<LandingPage />} />
             <Route path='/home' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/geardetails/:id' element={<GearDetailsPage />} />
