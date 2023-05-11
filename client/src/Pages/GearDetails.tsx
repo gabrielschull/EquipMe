@@ -3,9 +3,12 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
 import Payment from '../Components/rentals/Payment';
 import { useState } from 'react';
+import { RootState, AppDispatch } from '../Redux/store';
+import { useSelector, useDispatch } from 'react-redux';
 import { supabase } from '../services/supabase.service';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Gear } from '../types/gear.type';
+import { type } from 'os';
 
 const product = {
   //{gearInfo.description}
@@ -46,10 +49,9 @@ function classNames(...classes: any) {
 const GearDetails: React.FC = (): JSX.Element => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [gearInfo, setGearInfo] = useState<any>(undefined);
-
   const { id } = useParams();
 
-  console.log('PARAMS ==> ', id);
+  // console.log('PARAMS ==> ', id);
 
   const handleReservationClick = () => {
     setShowPaymentModal(true);

@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { Gear } from '../types/gear.type';
 import { Database } from '../types/supabase';
 import { User } from '../types/user.type';
 
@@ -59,12 +60,12 @@ export const supabase = {
     }
   },
 
-  getGear: async function () {
+  getGear: async function (): Promise<Gear[] | undefined> {
     try {
       const data = await supabaseClient.from('Gear').select();
       if (data && data.data) {
-        return data.data;
-      }
+        return data.data as unknown as Gear[];
+      } else throw new Error('no data');
     } catch (e: any) {
       console.log(e, 'Cannot get gear from Supabase');
     }
@@ -259,7 +260,8 @@ export const supabase = {
     description: string | null | undefined,
     pricehour: any,
     priceday: any,
-    deposit: any
+    deposit: any,
+    type: string | null
   ) {
     try {
       const { data, error } = await supabaseClient
@@ -271,6 +273,7 @@ export const supabase = {
           owner_id: id,
           price_day: priceday,
           price_hr: pricehour,
+          type: type,
         })
         .select();
 
@@ -289,7 +292,8 @@ export const supabase = {
     newDescription: string | undefined,
     newPricehour: number | undefined,
     newPriceday: number | undefined,
-    newDeposit: number | undefined
+    newDeposit: number | undefined,
+    newType: string | null
   ) {
     try {
       const { data, error } = await supabaseClient
@@ -299,6 +303,7 @@ export const supabase = {
           price_hr: newPricehour,
           price_day: newPriceday,
           deposit: newDeposit,
+          type: newType,
         })
         .eq('id', id);
       if (error) throw new Error(`Couldn't update gear info`);
@@ -309,4 +314,3 @@ export const supabase = {
     }
   },
 };
-
