@@ -5,7 +5,6 @@ import { RootState, AppDispatch } from '../../Redux/store';
 import { setAllGear } from '../../Redux/GearSlice';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../services/supabase.service';
-import { Parallax, ParallaxLayer } from "@react-spring/parallax"
 
 const GearListings: React.FC = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
@@ -73,10 +72,7 @@ const GearListings: React.FC = (): JSX.Element => {
 
 
   return (
-    <Parallax
-    pages = {filteredGear.length}
-    style={{backgroundImage: "linear-gradient(#64a9e6, #FFFFFF"}}
-    >
+    
     <ul role="list" className="divide-y divide-gray-100 mx-12">
       {filteredGear
       .filter((gear: Gear) => {
@@ -130,7 +126,6 @@ const GearListings: React.FC = (): JSX.Element => {
         </li>
       ))}
     </ul>
-    </Parallax>
   );
 };
 
