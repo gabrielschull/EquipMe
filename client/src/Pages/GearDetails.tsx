@@ -3,11 +3,13 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
 import Payment from '../Components/rentals/Payment';
 import { useState } from 'react';
+
 import { supabase, supabaseClient } from '../services/supabase.service';
 import { useParams, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
   
+
 const reviews = { href: '#', average: 4, totalCount: 117 };
 
 const CDNURL = "https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/"
@@ -19,20 +21,20 @@ function classNames(...classes: any) {
 
 const GearDetails: React.FC = (): JSX.Element => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  // Raul & Xavi's version;
+  // const [gearInfo, setGearInfo] = useState<any>(undefined);
   const [gearInfo, setGearInfo] = useState<any>([]);
   const [gearImages, setGearImages] = useState<any[]>([]);
   const userInfo = useSelector((state: RootState) => state.User);
 
-  const location = useLocation()
-  const gear = location.state?.gear
+  const location = useLocation();
+  const gear = location.state?.gear;
   const { id } = useParams();
-  console.log(gearInfo,"gearinfo")
-  
+  console.log(gearInfo, 'gearinfo');
 
-  console.log("OWNERID ==>", gear.owner_id)
+  console.log('OWNERID ==>', gear.owner_id);
 
-
-  console.log('PARAMS ==> ', id);
+  // console.log('PARAMS ==> ', id);
 
   const handleReservationClick = () => {
     setShowPaymentModal(true);
@@ -49,50 +51,47 @@ const GearDetails: React.FC = (): JSX.Element => {
     }
   };
 
-  async function getGearImages () {
-    console.log(gear.owner_id,"OWOWOWOOWOWOWO")// CHECK HERE IN AM
+  async function getGearImages() {
+    console.log(gear.owner_id, 'OWOWOWOOWOWOWO'); // CHECK HERE IN AM
     try {
-    const { data, error } = await supabaseClient
-    .storage
-    .from('gearImagesBucket')
-    .list(`${gear.owner_id}/gear/${id}`, {
-      limit: 4,
-      offset: 0,
-      sortBy: { column: "name", order: "asc"}
-    })
+      const { data, error } = await supabaseClient.storage
+        .from('gearImagesBucket')
+        .list(`${gear.owner_id}/gear/${id}`, {
+          limit: 4,
+          offset: 0,
+          sortBy: { column: 'name', order: 'asc' },
+        });
 
-    console.log(`${gear.owner_id}/gear/${id}`)
+      console.log(`${gear.owner_id}/gear/${id}`);
 
-    if (error) console.log("ERROR IN IMAGE FETCH ==> ", error)
-    
-    if(data !== null){
-      console.log(data, "YARRRR")
-      setGearImages(data)
+      if (error) console.log('ERROR IN IMAGE FETCH ==> ', error);
 
+      if (data !== null) {
+        console.log(data, 'YARRRR');
+        setGearImages(data);
+      }
+    } catch (e: any) {
+      console.log(e, 'Error getting gear images');
     }
-  } catch (e: any){
-    console.log(e, "Error getting gear images")
-  }
   }
 
   useEffect(() => {
     handleSeeMoreDetails();
-    getGearImages()
+    getGearImages();
   }, []);
 
-  console.log(gearImages, "GEARIMAGES")
+  console.log(gearImages, 'GEARIMAGES');
 
-  gearImages.map((image) => (
-    console.log(image.name, "IMGNAME")))
+  gearImages.map((image) => console.log(image.name, 'IMGNAME'));
 
   return (
     <>
       <NavBar></NavBar>
       {gearInfo && (
-        <div className="bg-white">
-          <div className="pt-6">
+        <div className='bg-white'>
+          <div className='pt-6'>
             <div>
-            {/* <nav aria-label="Breadcrumb"> //THIS IS TO BE COMMENTED BACK IN WHEN WE CREATE GEAR TYPES. DISPLAY GEAR TYPE INSTEAD OF BREADCRUMB.NAME
+              {/* <nav aria-label="Breadcrumb"> //THIS IS TO BE COMMENTED BACK IN WHEN WE CREATE GEAR TYPES. DISPLAY GEAR TYPE INSTEAD OF BREADCRUMB.NAME
               <ol
                 role="list"
                 className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -129,6 +128,7 @@ const GearDetails: React.FC = (): JSX.Element => {
             </div>
 
             {/* Image gallery */}
+
             <div id="image-track" style={{display: "flex", gap: "4vmin", position: "absolute", left: "50%", top: "50%", transform: "translate(0%, -50%)", }}>
             {gearImages.map((image, index) => {
     return (
@@ -149,6 +149,7 @@ const GearDetails: React.FC = (): JSX.Element => {
 
             </div>
             
+
             {/* <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
             {gearImages.map((image, index) => {
   if (gearImages.length === 1) {
@@ -229,31 +230,31 @@ const GearDetails: React.FC = (): JSX.Element => {
 })} 
 </div> */}
             {/* Product info */}
-            <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
-              <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+            <div className='mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16'>
+              <div className='lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
+                <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>
                   {gearInfo.description}
                 </h1>
               </div>
 
               {/* Options */}
-              <div className="mt-4 lg:row-span-3 lg:mt-0">
-                <h2 className="sr-only">Product information</h2>
-                <p className="text-3xl tracking-tight text-gray-900">
+              <div className='mt-4 lg:row-span-3 lg:mt-0'>
+                <h2 className='sr-only'>Product information</h2>
+                <p className='text-3xl tracking-tight text-gray-900'>
                   Price/day: ${gearInfo.price_day}
                 </p>
-                <p className="text-3xl tracking-tight text-gray-900">
+                <p className='text-3xl tracking-tight text-gray-900'>
                   Price/hr: ${gearInfo.price_hr}
                 </p>
-                <p className="text-3xl tracking-tight text-gray-900">
+                <p className='text-3xl tracking-tight text-gray-900'>
                   Deposit: ${gearInfo.deposit}
                 </p>
 
                 {/* Reviews */}
-                <div className="mt-6">
-                  <h3 className="sr-only">Reviews</h3>
-                  <div className="flex items-center">
-                    <div className="flex items-center">
+                <div className='mt-6'>
+                  <h3 className='sr-only'>Reviews</h3>
+                  <div className='flex items-center'>
+                    <div className='flex items-center'>
                       {[0, 1, 2, 3, 4].map((rating) => (
                         <StarIcon
                           key={rating}
@@ -263,36 +264,38 @@ const GearDetails: React.FC = (): JSX.Element => {
                               : 'text-gray-200',
                             'h-5 w-5 flex-shrink-0'
                           )}
-                          aria-hidden="true"
+                          aria-hidden='true'
                         />
                       ))}
                     </div>
-                    <p className="sr-only">{reviews.average} out of 5 stars</p>
+                    <p className='sr-only'>{reviews.average} out of 5 stars</p>
                     <a
                       href={reviews.href}
-                      className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                      className='ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500'
+                    >
                       {reviews.totalCount} reviews
                     </a>
                   </div>
                 </div>
 
-                <form className="mt-10">
+                <form className='mt-10'>
                   <button
-                    type="button"
+                    type='button'
                     onClick={handleReservationClick}
-                    className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                  >
                     Reserve this gear
                   </button>
                 </form>
               </div>
 
-              <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+              <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
                 Description and details
                 <div>
-                  <h3 className="sr-only">Description</h3>
+                  <h3 className='sr-only'>Description</h3>
 
-                  <div className="space-y-6">
-                    <p className="text-base text-gray-900">
+                  <div className='space-y-6'>
+                    <p className='text-base text-gray-900'>
                       {gearInfo.description}
                     </p>
                   </div>

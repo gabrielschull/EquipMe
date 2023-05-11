@@ -4,7 +4,7 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json }
-  | Json[]
+  | Json[];
 
 export interface Database {
   public: {
@@ -21,6 +21,7 @@ export interface Database {
           price_hr: number;
           rating: number | null;
           rentals: string[] | null;
+          type: string | null;
         };
         Insert: {
           availability?: string[] | null;
@@ -33,6 +34,7 @@ export interface Database {
           price_hr: number;
           rating?: number | null;
           rentals?: string[] | null;
+          type: string | null;
         };
         Update: {
           availability?: string[] | null;
@@ -45,6 +47,7 @@ export interface Database {
           price_hr?: number;
           rating?: number | null;
           rentals?: string[] | null;
+          type: string | null;
         };
       };
       RentalContracts: {
@@ -140,7 +143,7 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      [_ in string]: string;
     };
     Enums: {
       [_ in never]: never;

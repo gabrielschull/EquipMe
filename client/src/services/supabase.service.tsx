@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
+import { Gear } from '../types/gear.type';
 import { Database } from '../types/supabase';
 import { User } from '../types/user.type';
+import { format } from 'date-fns';
 
 export const supabaseClient = createClient<Database>(
   process.env.REACT_APP_SUPABASE_URL!,
@@ -18,6 +20,32 @@ export const supabase = {
       await supabaseClient.auth.signOut();
     } catch (e: any) {
       console.log(e, 'Cannot log out');
+    }
+  },
+
+  calendarSetGearAvailability: async function (
+    gear_id: string,
+    start_date: Date,
+    end_date: Date
+  ) {
+    try {
+      console.log(
+        'service gear_id=',
+        gear_id,
+        'service start=',
+        start_date,
+        'service end=',
+        end_date
+      );
+      const { data, error } = await supabaseClient.rpc('dateAvailability', {
+        gear_id: gear_id,
+        start_date: format(start_date, 'yyyy-MM-dd'),
+        end_date: format(end_date, 'yyyy-MM-dd'),
+      });
+      console.log(error);
+      return data;
+    } catch (e: any) {
+      console.log(e, 'Cannot run that function');
     }
   },
 
@@ -47,12 +75,12 @@ export const supabase = {
     }
   },
 
-  getGear: async function () {
+  getGear: async function (): Promise<Gear[] | undefined> {
     try {
       const data = await supabaseClient.from('Gear').select();
       if (data && data.data) {
-        return data.data;
-      }
+        return data.data as unknown as Gear[];
+      } else throw new Error('no data');
     } catch (e: any) {
       console.log(e, 'Cannot get gear from Supabase');
     }
@@ -134,12 +162,42 @@ export const supabase = {
     }
   },
 
+  updateIsOwnerToFalse: async function (id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({
+          is_owner: false,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update user status`);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
   updateIsRenterToTrue: async function (id: string | undefined) {
     try {
       const { data, error } = await supabaseClient
         .from('Users')
         .update({
           is_renter: true,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update user status`);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
+
+  updateIsRenterToFalse: async function (id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Users')
+        .update({
+          is_renter: false,
         })
         .eq('id', id);
       if (error) throw new Error(`Couldn't update user status`);
@@ -177,7 +235,6 @@ export const supabase = {
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot update user location in Supabase');
-    
     }
   },
 
@@ -209,12 +266,18 @@ export const supabase = {
       }
       return data;
     } catch (e: any) {
-
-      console.log(e)
+      console.log(e);
     }
   },
 
-  addGear: async function addGear(id :string, description:string | null | undefined, pricehour:any,  priceday:any, deposit:any) {
+  addGear: async function addGear(
+    id: string,
+    description: string | null | undefined,
+    pricehour: any,
+    priceday: any,
+    deposit: any,
+    type: string | null
+  ) {
     try {
       const { data, error } = await supabaseClient
         .from('Gear')
@@ -225,6 +288,7 @@ export const supabase = {
           owner_id: id,
           price_day: priceday,
           price_hr: pricehour,
+          type: type,
         })
         .select();
 
@@ -236,33 +300,32 @@ export const supabase = {
     } catch (e: any) {
       console.log(e, 'Cannot create gear in Supabase');
     }
+  },
 
-},
-
-editGear: async function (
-  id: string | undefined,
-  newDescription: string | undefined,
-  newPricehour: number | undefined,
-  newPriceday: number | undefined,
-  newDeposit: number | undefined,
-
-) {
-  try {
-    const { data, error } = await supabaseClient
-      .from('Gear')
-      .update({
-        description: newDescription,
-        price_hr: newPricehour,
-        price_day: newPriceday,
-        deposit: newDeposit,
-      })
-      .eq('id', id);
-    if (error) throw new Error(`Couldn't update gear info`);
-    console.log(error);
-    return data;
-  } catch (e: any) {
-    console.log(e);
-  }
-},
+  editGear: async function (
+    id: string | undefined,
+    newDescription: string | undefined,
+    newPricehour: number | undefined,
+    newPriceday: number | undefined,
+    newDeposit: number | undefined,
+    newType: string | null
+  ) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Gear')
+        .update({
+          description: newDescription,
+          price_hr: newPricehour,
+          price_day: newPriceday,
+          deposit: newDeposit,
+          type: newType,
+        })
+        .eq('id', id);
+      if (error) throw new Error(`Couldn't update gear info`);
+      console.log(error);
+      return data;
+    } catch (e: any) {
+      console.log(e);
+    }
+  },
 };
-

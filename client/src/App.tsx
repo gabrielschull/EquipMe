@@ -6,9 +6,10 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import Home from './Pages/Home';
+import Calendar from './Components/gear/Calendar';
 import Login from './Components/auth/Login';
 import GearDetailsPage from './Pages/GearDetails';
-import MyGear from './Pages/MyGear';
+import MyGear from './Components/gear/MyGear';
 import AddGear from './Pages/AddGear';
 import LandingPage from './Pages/LandingPage';
 import UserProfile from './Pages/UserProfile';
@@ -32,11 +33,10 @@ const App: React.FC = (): JSX.Element => {
   }, [userInfo]);
 
   return (
-    <>
       <Router>
         <Routes>
           <>
-            <Route
+             <Route
               path="/"
               element={
                 !userInfo.profile ? (
@@ -60,15 +60,14 @@ const App: React.FC = (): JSX.Element => {
             <Route path='/login' element={<Login />} />
             <Route path='/geardetails/:id' element={<GearDetailsPage />} />
             <Route path='/mygear' element={<MyGear />} />
-            <Route path="/editgear/:gearId" element={<EditGear />} />
+            <Route path='/editgear/:gearId' element={<EditGear />} />
             <Route path='/addgear' element={<AddGear />} />
             <Route path='/myprofile' element={<UserProfile />} />
             <Route path='/edituser' element={<EditUser />} />
-
+            <Route path='/calendar' element={<Calendar />} />
           </>
         </Routes>
       </Router>
-    </>
   );
 };
 
