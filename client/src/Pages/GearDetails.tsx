@@ -3,52 +3,21 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
 import Payment from '../Components/rentals/Payment';
 import { useState } from 'react';
-import { RootState, AppDispatch } from '../Redux/store';
-import { useSelector, useDispatch } from 'react-redux';
+
 import { supabase, supabaseClient } from '../services/supabase.service';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { Gear } from '../types/gear.type';
-import { type } from 'os';
+import { useParams, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/store';
+import Calendar from '../Components/gear/Calendar';
 
-
-const product = {
-  //{gearInfo.description}
-  name: 'Surfboard',
-  price: '$200',
-  href: '#',
-  breadcrumbs: [
-    { id: 1, name: 'Gearhub', href: '#' },
-    { id: 2, name: 'Gear Details', href: '#' },
-  ],
-  images: [
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-      alt: 'Two each of gray, white, and black shirts laying flat.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-      alt: 'Model wearing plain black basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-      alt: 'Model wearing plain gray basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-      alt: 'Model wearing plain white basic tee.',
-    },
-  ],
-
-  description: 'Details here about the surfboard',
-};
 const reviews = { href: '#', average: 4, totalCount: 117 };
 
-const CDNURL = "https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/"
+const CDNURL =
+  'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
-
 
 const GearDetails: React.FC = (): JSX.Element => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -57,17 +26,26 @@ const GearDetails: React.FC = (): JSX.Element => {
   const [gearInfo, setGearInfo] = useState<any>([]);
   const [gearImages, setGearImages] = useState<any[]>([]);
   const userInfo = useSelector((state: RootState) => state.User);
+  const [rentalStartDate, setRentalStartDate] = useState<Date>(new Date());
+  const [rentalEndDate, setRentalEndDate] = useState<Date>(new Date());
 
   const location = useLocation();
   const gear = location.state?.gear;
   const { id } = useParams();
-  console.log(gearInfo, 'gearinfo');
+  console.log('gearinfo', { gearInfo });
 
   console.log('OWNERID ==>', gear.owner_id);
 
   // console.log('PARAMS ==> ', id);
 
   const handleReservationClick = () => {
+    supabase.startRentalContract(
+      id,
+      gearInfo.owner_id,
+      userInfo.profile.id,
+      rentalStartDate,
+      rentalEndDate
+    );
     setShowPaymentModal(true);
   };
 
@@ -78,7 +56,7 @@ const GearDetails: React.FC = (): JSX.Element => {
       setGearInfo(gearData[0]);
       return gearData;
     } else {
-      alert('Cannot find gear details');
+      console.log('Cannot find gear details');
     }
   };
 
@@ -159,6 +137,7 @@ const GearDetails: React.FC = (): JSX.Element => {
             </div>
 
             {/* Image gallery */}
+
             <div
               id='image-track'
               style={{
@@ -347,6 +326,12 @@ const GearDetails: React.FC = (): JSX.Element => {
                     <p className='text-base text-gray-900'>
                       {gearInfo.description}
                     </p>
+                    <Calendar
+                      rentalStartDate={rentalStartDate}
+                      setRentalStartDate={setRentalStartDate}
+                      rentalEndDate={rentalEndDate}
+                      setRentalEndDate={setRentalEndDate}
+                    />
                   </div>
                 </div>
               </div>

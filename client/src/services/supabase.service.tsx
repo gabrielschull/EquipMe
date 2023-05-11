@@ -328,4 +328,37 @@ export const supabase = {
       console.log(e);
     }
   },
+
+  startRentalContract: async function (
+    gear_id: string | undefined,
+    owner_id: string,
+    renter_id: string,
+    start_date: Date,
+    end_date: Date
+  ) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('RentalContracts')
+        .insert({
+          is_active: true,
+          gear_id: gear_id,
+          owner_id: owner_id,
+          renter_id: renter_id,
+          rental_start: start_date,
+          rental_end: end_date,
+          deposit: 100,
+          rental_price: 120,
+          location: '41.3950027,2.1977311',
+        })
+        .select();
+
+      if (error) {
+        throw error;
+      }
+      console.log('data returned by startRentalContract', data);
+      return data;
+    } catch (e: any) {
+      console.log(e, 'Cannot create a new rental contract');
+    }
+  },
 };
