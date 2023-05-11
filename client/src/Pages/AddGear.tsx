@@ -3,12 +3,15 @@ import { PhotoIcon } from '@heroicons/react/24/solid';
 import { supabase } from '../services/supabase.service';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../Redux/store';
+import { useSelector, useDispatch } from 'react-redux';
 import { Gear } from '../types/gear.type';
+import Calendar from '../Components/gear/Calendar';
+import { RootState, AppDispatch } from '../Redux/store';
 
 const AddGear: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
   const [files, setFiles] = useState<File[] | null>(null);
   const [formState, setFormState] = useState({
     description: '',
@@ -32,6 +35,7 @@ const AddGear: React.FC = (): JSX.Element => {
 
   async function handleSubmit() {
     try {
+      // create a new Gear in db and return its ID
       gearJustAddedInfo = await supabase.addGear(
         userInfo.profile.id,
         formState.description,
@@ -39,11 +43,8 @@ const AddGear: React.FC = (): JSX.Element => {
         formState.priceday,
         formState.deposit
       );
-      // let fileArray: File[] = [];
-      // if (files) {
-      //   fileArray = Array.prototype.slice.call(files);
-      //   console.log('fileArray', fileArray);
-      // }
+
+      // upload the files to the storage bucket
       if (files) {
         const fileUploads = files.map((file) =>
           supabase.uploadGear(
@@ -53,6 +54,13 @@ const AddGear: React.FC = (): JSX.Element => {
         );
         await Promise.all(fileUploads);
       }
+
+      // Create availability date in the GearAvailability db
+      supabase.calendarSetGearAvailability(
+        gearJustAddedInfo[0].id,
+        startDate,
+        endDate
+      );
     } catch (e) {
       console.log('Some files failed to upload', e);
     }
@@ -171,14 +179,6 @@ const AddGear: React.FC = (): JSX.Element => {
                     <p className='text-xs leading-5 text-gray-600'>
                       PNG, JPG, GIF up to 10MB
                     </p>
-                    {/* <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleUpload();
-                      }}
-                    >
-                      Upload gear pictures
-                    </button> */}
                   </div>
                 </div>
               </div>
@@ -245,6 +245,12 @@ const AddGear: React.FC = (): JSX.Element => {
                   />
                 </div>
               </div>
+              <Calendar
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+              />
             </div>
           </div>
 
@@ -328,10 +334,7 @@ const AddGear: React.FC = (): JSX.Element => {
               type='submit'
               onClick={(e) => {
                 e.preventDefault();
-                // submitting the text input to db
                 handleSubmit();
-                // uploading images to the bucket
-                // handleUpload();
                 navigate(`/mygear`);
               }}
               className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'

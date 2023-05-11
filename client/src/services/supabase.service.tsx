@@ -28,11 +28,14 @@ export const supabase = {
     end_date: Date
   ) {
     try {
-      console.log({
+      console.log(
+        'service gear_id=',
         gear_id,
+        'service start=',
         start_date,
-        end_date,
-      });
+        'service end=',
+        end_date
+      );
       const { data, error } = await supabaseClient.rpc('dateAvailability', {
         gear_id: gear_id,
         start_date: format(start_date, 'yyyy-MM-dd'),

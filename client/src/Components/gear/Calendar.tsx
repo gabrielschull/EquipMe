@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { supabase } from '../../services/supabase.service';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../Redux/store';
 
-const Calendar: React.FC = (): JSX.Element => {
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
+const Calendar: React.FC<any> = ({
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+}): JSX.Element => {
+  const { id } = useParams();
 
   const handleStartDateChange = (date: Date) => {
     setStartDate(date);
@@ -13,14 +20,6 @@ const Calendar: React.FC = (): JSX.Element => {
 
   const handleEndDateChange = (date: Date) => {
     setEndDate(date);
-  };
-
-  const handleSaveClick = () => {
-    supabase.calendarSetGearAvailability(
-      'da4ff057-fd38-453a-a854-53b615b5ceb3',
-      startDate,
-      endDate
-    );
   };
 
   return (
@@ -53,13 +52,13 @@ const Calendar: React.FC = (): JSX.Element => {
             className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
           />
         </div>
-        <button
+        {/* <button
           className='bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-600'
           onClick={handleSaveClick}
           disabled={!startDate || !endDate}
         >
           Save
-        </button>
+        </button> */}
       </div>
     </div>
   );
