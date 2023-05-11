@@ -27,7 +27,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
   const [allGear, setAllGear] = useState<any[]>([]);
 
   const gearTypesArray = [
-    '----',
+    '--------',
     ...allGear
       .map((gear) => gear.type)
       .filter(Boolean)
@@ -97,7 +97,6 @@ const GettingStarted: React.FC = (): JSX.Element => {
           Add Gear
         </button>
       )}
-
       <button
         type="submit"
         onClick={() => {
@@ -219,8 +218,8 @@ const GettingStarted: React.FC = (): JSX.Element => {
               />
             </div>
           </div>
-          <div className="map-style"></div>
-          <button
+          {/* <div className="map-style"></div> */}
+          {/* <button
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mx-12"
             onClick={(e) => {
@@ -228,10 +227,13 @@ const GettingStarted: React.FC = (): JSX.Element => {
               handleSearchButton();
             }}>
             Search
-          </button>
+          </button> */}
         </>
       )}
+
       <MapContainer />
+
+      {/*THE GOOGLE MAPS CONTAINER IS HERE IN CASE WE WANT IT BACK */}
     </>
   );
 };

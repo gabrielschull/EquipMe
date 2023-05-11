@@ -9,5 +9,5 @@ export interface Gear {
   price_hr?: string;
   rating?: number | null;
   rentals?: string[] | null;
-  type: string | null;
+  type?: string | null;
 }
