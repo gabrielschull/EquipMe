@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { supabase } from '../../services/supabase.service';
@@ -11,15 +11,28 @@ const Calendar: React.FC<any> = ({
   setStartDate,
   endDate,
   setEndDate,
+  rentalStartDate,
+  setRentalStartDate,
+  rentalEndDate,
+  setRentalEndDate,
 }): JSX.Element => {
   const { id } = useParams();
+  console.log('location.pathname=', location.pathname);
 
   const handleStartDateChange = (date: Date) => {
-    setStartDate(date);
+    if (location.pathname === '/addgear') {
+      setStartDate(date);
+    } else {
+      setRentalStartDate(date);
+    }
   };
 
   const handleEndDateChange = (date: Date) => {
-    setEndDate(date);
+    if (location.pathname === '/addgear') {
+      setEndDate(date);
+    } else {
+      setRentalEndDate(date);
+    }
   };
 
   return (
@@ -35,7 +48,9 @@ const Calendar: React.FC<any> = ({
           <DatePicker
             dateFormat='yyyy/MM/dd'
             id='start-date-picker'
-            selected={startDate}
+            selected={
+              location.pathname == '/addgear' ? startDate : rentalStartDate
+            }
             onChange={handleStartDateChange}
             className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
           />
@@ -47,7 +62,7 @@ const Calendar: React.FC<any> = ({
           <DatePicker
             dateFormat='yyyy/MM/dd'
             id='end-date-picker'
-            selected={endDate}
+            selected={location.pathname == '/addgear' ? endDate : rentalEndDate}
             onChange={handleEndDateChange}
             className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
           />
