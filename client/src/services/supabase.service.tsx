@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import { Gear } from '../types/gear.type';
 import { Database } from '../types/supabase';
 import { User } from '../types/user.type';
+import { format } from 'date-fns';
 
 export const supabaseClient = createClient<Database>(
   process.env.REACT_APP_SUPABASE_URL!,
@@ -22,12 +23,26 @@ export const supabase = {
     }
   },
 
-  calendarTest: async function () {
+  calendarSetGearAvailability: async function (
+    gear_id: string,
+    start_date: Date,
+    end_date: Date
+  ) {
     try {
-      const { data, error } = await supabaseClient.rpc('testFunc', {
-        start_date: '2023-05-10',
-        end_date: '2023-06-01',
+      console.log(
+        'service gear_id=',
+        gear_id,
+        'service start=',
+        start_date,
+        'service end=',
+        end_date
+      );
+      const { data, error } = await supabaseClient.rpc('dateAvailability', {
+        gear_id: gear_id,
+        start_date: format(start_date, 'yyyy-MM-dd'),
+        end_date: format(end_date, 'yyyy-MM-dd'),
       });
+      console.log(error);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot run that function');

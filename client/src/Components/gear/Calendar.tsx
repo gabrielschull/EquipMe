@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { supabase } from '../../services/supabase.service';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../Redux/store';
 
-const Calendar: React.FC = (): JSX.Element => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+const Calendar: React.FC<any> = ({
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+}): JSX.Element => {
+  const { id } = useParams();
 
-  const handleStartDateChange = (date: Date | null) => {
+  const handleStartDateChange = (date: Date) => {
     setStartDate(date);
   };
 
-  const handleEndDateChange = (date: Date | null) => {
+  const handleEndDateChange = (date: Date) => {
     setEndDate(date);
-  };
-
-  const handleSaveClick = () => {
-    console.log('Start Date:', startDate);
-    console.log('End Date:', endDate);
   };
 
   return (
@@ -31,11 +33,10 @@ const Calendar: React.FC = (): JSX.Element => {
             Start Date and Time:
           </label>
           <DatePicker
+            dateFormat='yyyy/MM/dd'
             id='start-date-picker'
             selected={startDate}
             onChange={handleStartDateChange}
-            showTimeSelect
-            dateFormat='Pp'
             className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
           />
         </div>
@@ -44,22 +45,20 @@ const Calendar: React.FC = (): JSX.Element => {
             End Date and Time:
           </label>
           <DatePicker
+            dateFormat='yyyy/MM/dd'
             id='end-date-picker'
             selected={endDate}
             onChange={handleEndDateChange}
-            showTimeSelect
-            dateFormat='Pp'
             className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
           />
         </div>
-        <button
+        {/* <button
           className='bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-600'
           onClick={handleSaveClick}
           disabled={!startDate || !endDate}
         >
           Save
-        </button>
-        <button onClick={() => supabase.calendarTest()}>test</button>
+        </button> */}
       </div>
     </div>
   );

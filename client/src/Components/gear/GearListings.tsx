@@ -118,6 +118,7 @@ const GearListings: React.FC = (): JSX.Element => {
         </li>
       ))}
     </ul>
+
   );
 };
 
