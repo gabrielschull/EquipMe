@@ -3,11 +3,13 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
 import Payment from '../Components/rentals/Payment';
 import { useState } from 'react';
+import { RootState, AppDispatch } from '../Redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { supabase } from '../services/supabase.service';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Gear } from '../types/gear.type';
+import { type } from 'os';
 
-import { supabase, supabaseClient } from '../services/supabase.service';
-import { useParams, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../Redux/store';
 
 const product = {
   //{gearInfo.description}
@@ -50,6 +52,8 @@ function classNames(...classes: any) {
 
 const GearDetails: React.FC = (): JSX.Element => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  // Raul & Xavi's version;
+  // const [gearInfo, setGearInfo] = useState<any>(undefined);
   const [gearInfo, setGearInfo] = useState<any>([]);
   const [gearImages, setGearImages] = useState<any[]>([]);
   const userInfo = useSelector((state: RootState) => state.User);
@@ -61,7 +65,7 @@ const GearDetails: React.FC = (): JSX.Element => {
 
   console.log('OWNERID ==>', gear.owner_id);
 
-  console.log('PARAMS ==> ', id);
+  // console.log('PARAMS ==> ', id);
 
   const handleReservationClick = () => {
     setShowPaymentModal(true);
