@@ -3,9 +3,10 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
 import Payment from '../Components/rentals/Payment';
 import { useState } from 'react';
-import { supabase } from '../services/supabase.service';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Gear } from '../types/gear.type';
+import { supabase, supabaseClient } from '../services/supabase.service';
+import { useParams, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/store';
 
 const product = {
   //{gearInfo.description}
@@ -39,15 +40,27 @@ const product = {
 };
 const reviews = { href: '#', average: 4, totalCount: 117 };
 
+const CDNURL = "https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/"
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
 
+
 const GearDetails: React.FC = (): JSX.Element => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [gearInfo, setGearInfo] = useState<any>(undefined);
+  const [gearInfo, setGearInfo] = useState<any>([]);
+  const [gearImages, setGearImages] = useState<any[]>([]);
+  const userInfo = useSelector((state: RootState) => state.User);
 
+  const location = useLocation()
+  const gear = location.state?.gear
   const { id } = useParams();
+  console.log(gearInfo,"gearinfo")
+  
+
+  console.log("OWNERID ==>", gear.owner_id)
+
 
   console.log('PARAMS ==> ', id);
 
@@ -66,9 +79,41 @@ const GearDetails: React.FC = (): JSX.Element => {
     }
   };
 
+  async function getGearImages () {
+    console.log(gear.owner_id,"OWOWOWOOWOWOWO")// CHECK HERE IN AM
+    try {
+    const { data, error } = await supabaseClient
+    .storage
+    .from('gearImagesBucket')
+    .list(`${gear.owner_id}/gear/${id}`, {
+      limit: 4,
+      offset: 0,
+      sortBy: { column: "name", order: "asc"}
+    })
+
+    console.log(`${gear.owner_id}/gear/${id}`)
+
+    if (error) console.log("ERROR IN IMAGE FETCH ==> ", error)
+    
+    if(data !== null){
+      console.log(data, "YARRRR")
+      setGearImages(data)
+
+    }
+  } catch (e: any){
+    console.log(e, "Error getting gear images")
+  }
+  }
+
   useEffect(() => {
     handleSeeMoreDetails();
+    getGearImages()
   }, []);
+
+  console.log(gearImages, "GEARIMAGES")
+
+  gearImages.map((image) => (
+    console.log(image.name, "IMGNAME")))
 
   return (
     <>
@@ -76,7 +121,8 @@ const GearDetails: React.FC = (): JSX.Element => {
       {gearInfo && (
         <div className="bg-white">
           <div className="pt-6">
-            <nav aria-label="Breadcrumb">
+            <div>
+            {/* <nav aria-label="Breadcrumb"> //THIS IS TO BE COMMENTED BACK IN WHEN WE CREATE GEAR TYPES. DISPLAY GEAR TYPE INSTEAD OF BREADCRUMB.NAME
               <ol
                 role="list"
                 className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -109,41 +155,52 @@ const GearDetails: React.FC = (): JSX.Element => {
                   </a>
                 </li>
               </ol>
-            </nav>
+            </nav> */}
+            </div>
 
             {/* Image gallery */}
             <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-              <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
-                <img
-                  src={product.images[0].src}
-                  alt={product.images[0].alt}
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-              <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-                <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-                  <img
-                    src={product.images[1].src}
-                    alt={product.images[1].alt}
-                    className="h-full w-full object-cover object-center"
-                  />
-                </div>
-                <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-                  <img
-                    src={product.images[2].src}
-                    alt={product.images[2].alt}
-                    className="h-full w-full object-cover object-center"
-                  />
-                </div>
-              </div>
-              <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-                <img
-                  src={product.images[3].src}
-                  alt={product.images[3].alt}
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-            </div>
+  {gearImages.map((image, index) => {
+    if (index === 0) {
+      return (
+        <div
+          key={image.name}
+          className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
+          <img
+            src={CDNURL + gear.owner_id + "/gear/" + id + '/' + image.name}
+            alt=""
+          />
+        </div>
+      );
+    } else if (index >= 1 && index <= 2) {
+      return (
+        <div
+          key={image.name}
+          className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
+          <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
+            <img
+              src={CDNURL + gear.owner_id + "/gear/" + id + '/' + image.name}
+              alt=""
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
+        </div>
+      );
+    } else if (index === 3) {
+      return (
+        <div
+          key={image.name}
+          className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
+          <img
+            src={CDNURL + gear.owner_id + "/gear/" + id + '/' + image.name}
+            alt=""
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
+      );
+    }
+  })}
+</div>
             {/* Product info */}
             <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
               <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
