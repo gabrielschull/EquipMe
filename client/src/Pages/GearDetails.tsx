@@ -7,37 +7,7 @@ import { supabase, supabaseClient } from '../services/supabase.service';
 import { useParams, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
-
-const product = {
-  //{gearInfo.description}
-  name: 'Surfboard',
-  price: '$200',
-  href: '#',
-  breadcrumbs: [
-    { id: 1, name: 'Gearhub', href: '#' },
-    { id: 2, name: 'Gear Details', href: '#' },
-  ],
-  images: [
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-      alt: 'Two each of gray, white, and black shirts laying flat.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-      alt: 'Model wearing plain black basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-      alt: 'Model wearing plain gray basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-      alt: 'Model wearing plain white basic tee.',
-    },
-  ],
-
-  description: 'Details here about the surfboard',
-};
+  
 const reviews = { href: '#', average: 4, totalCount: 117 };
 
 const CDNURL = "https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/"
@@ -75,7 +45,7 @@ const GearDetails: React.FC = (): JSX.Element => {
       setGearInfo(gearData[0]);
       return gearData;
     } else {
-      alert('Cannot find gear details');
+      console.log('Cannot find gear details');
     }
   };
 
@@ -159,16 +129,70 @@ const GearDetails: React.FC = (): JSX.Element => {
             </div>
 
             {/* Image gallery */}
-            <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-  {gearImages.map((image, index) => {
+            <div id="image-track" style={{display: "flex", gap: "4vmin", position: "absolute", left: "50%", top: "50%", transform: "translate(0%, -50%)", }}>
+            {gearImages.map((image, index) => {
+    return (
+      <div
+        key={image.name}
+        className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block"
+      >
+        <img
+          src={CDNURL + gear.owner_id + "/gear/" + id + "/" + image.name}
+          alt=""
+          className="h-full w-full object-cover object-center"
+          style={{width: "40vmin", height: "56vmin", objectFit: "cover", objectPosition: "center"}}
+        />
+      </div>
+          );
+            }
+            )}
+
+            </div>
+            
+            {/* <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+            {gearImages.map((image, index) => {
+  if (gearImages.length === 1) {
+    return (
+      <div
+        key={image.name}
+        className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block"
+      >
+        <img
+          src={CDNURL + gear.owner_id + "/gear/" + id + "/" + image.name}
+          alt=""
+          className="h-full w-full object-cover object-center"
+          style={{objectFit: "contain"}}
+        />
+      </div>
+    );
+  } else if (gearImages.length === 2) {
+    return (
+      <div
+        key={image.name}
+        className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8"
+      >
+        <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
+          <img
+            src={CDNURL + gear.owner_id + "/gear/" + id + "/" + image.name}
+            alt=""
+            className="h-full w-full object-cover object-center"
+            style={{objectFit: "contain"}}
+          />
+        </div>
+      </div>
+    );
+  } else if (gearImages.length >= 3) {
     if (index === 0) {
       return (
         <div
           key={image.name}
-          className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
+          className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block"
+        >
           <img
-            src={CDNURL + gear.owner_id + "/gear/" + id + '/' + image.name}
+            src={CDNURL + gear.owner_id + "/gear/" + id + "/" + image.name}
             alt=""
+            className="h-full w-full object-cover object-center"
+            style={{ objectFit: "contain" }}
           />
         </div>
       );
@@ -176,10 +200,11 @@ const GearDetails: React.FC = (): JSX.Element => {
       return (
         <div
           key={image.name}
-          className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
+          className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8"
+        >
           <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
             <img
-              src={CDNURL + gear.owner_id + "/gear/" + id + '/' + image.name}
+              src={CDNURL + gear.owner_id + "/gear/" + id + "/" + image.name}
               alt=""
               className="h-full w-full object-cover object-center"
             />
@@ -190,17 +215,19 @@ const GearDetails: React.FC = (): JSX.Element => {
       return (
         <div
           key={image.name}
-          className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
+          className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg"
+        >
           <img
-            src={CDNURL + gear.owner_id + "/gear/" + id + '/' + image.name}
+            src={CDNURL + gear.owner_id + "/gear/" + id + "/" + image.name}
             alt=""
             className="h-full w-full object-cover object-center"
           />
         </div>
       );
     }
-  })}
-</div>
+  }
+})} 
+</div> */}
             {/* Product info */}
             <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
               <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
@@ -231,7 +258,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                         <StarIcon
                           key={rating}
                           className={classNames(
-                            reviews.average > rating
+                            gearInfo.rating > rating
                               ? 'text-gray-900'
                               : 'text-gray-200',
                             'h-5 w-5 flex-shrink-0'
