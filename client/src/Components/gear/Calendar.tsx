@@ -4,20 +4,23 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { supabase } from '../../services/supabase.service';
 
 const Calendar: React.FC = (): JSX.Element => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
 
-  const handleStartDateChange = (date: Date | null) => {
+  const handleStartDateChange = (date: Date) => {
     setStartDate(date);
   };
 
-  const handleEndDateChange = (date: Date | null) => {
+  const handleEndDateChange = (date: Date) => {
     setEndDate(date);
   };
 
   const handleSaveClick = () => {
-    console.log('Start Date:', startDate);
-    console.log('End Date:', endDate);
+    supabase.calendarSetGearAvailability(
+      'da4ff057-fd38-453a-a854-53b615b5ceb3',
+      startDate,
+      endDate
+    );
   };
 
   return (
@@ -31,11 +34,10 @@ const Calendar: React.FC = (): JSX.Element => {
             Start Date and Time:
           </label>
           <DatePicker
+            dateFormat='yyyy/MM/dd'
             id='start-date-picker'
             selected={startDate}
             onChange={handleStartDateChange}
-            showTimeSelect
-            dateFormat='Pp'
             className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
           />
         </div>
@@ -44,11 +46,10 @@ const Calendar: React.FC = (): JSX.Element => {
             End Date and Time:
           </label>
           <DatePicker
+            dateFormat='yyyy/MM/dd'
             id='end-date-picker'
             selected={endDate}
             onChange={handleEndDateChange}
-            showTimeSelect
-            dateFormat='Pp'
             className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
           />
         </div>
@@ -59,7 +60,6 @@ const Calendar: React.FC = (): JSX.Element => {
         >
           Save
         </button>
-        <button onClick={() => supabase.calendarTest()}>test</button>
       </div>
     </div>
   );
