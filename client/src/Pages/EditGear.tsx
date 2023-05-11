@@ -43,7 +43,7 @@ const EditGear: React.FC = (): JSX.Element => {
 
   return (
     <>
-<NavBar></NavBar>
+     <NavBar/>
       <form className='mx-12'>
         <div className='space-y-12'>
           <div className='border-b border-gray-900/10 pb-12'>

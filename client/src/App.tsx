@@ -33,11 +33,9 @@ const App: React.FC = (): JSX.Element => {
   }, [userInfo]);
 
   return (
-    <>
       <Router>
         <Routes>
           <>
-
              <Route
               path="/"
               element={
@@ -70,7 +68,6 @@ const App: React.FC = (): JSX.Element => {
           </>
         </Routes>
       </Router>
-    </>
   );
 };
 
