@@ -97,6 +97,7 @@ const GearDetails: React.FC = (): JSX.Element => {
   return (
     <>
       <NavBar></NavBar>
+      
       {gearInfo && (
         <div className='bg-white'>
           <div className='pt-6'>
@@ -140,7 +141,7 @@ const GearDetails: React.FC = (): JSX.Element => {
             {/* Image gallery */}
 
 
-            <div id="image-track" style={{display: "flex", gap: "4vmin", position: "absolute", left: "50%", top: "50%", transform: "translate(0%, -50%)", }}>
+            <div id="image-track" style={{display: "flex", gap: "4vmin", transform: "translate(7%, 0%)", }}>
             {gearImages.map((image, index) => {
     return (
       <div
