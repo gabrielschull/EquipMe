@@ -37,8 +37,9 @@ const App: React.FC = (): JSX.Element => {
       <Router>
         <Routes>
           <>
-            <Route
-              path='/'
+
+             <Route
+              path="/"
               element={
                 !userInfo.profile ? (
                   <Login />

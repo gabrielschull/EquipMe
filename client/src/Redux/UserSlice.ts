@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialState: any = { session: null, profile: null };
 
@@ -8,6 +8,17 @@ export const UserSlice = createSlice({
   reducers: {
     setUserInfo: (_, action) => {
       return action.payload;
+    },
+    updateUser: (state, action) => {
+      const { firstname, lastname, email, phone, bio } = action.payload.profile;
+      state.profile = {
+        ...state.profile,
+        firstname,
+        lastname,
+        email,
+        phone,
+        bio,
+      };
     },
     updateLocation: (state, action) => {
       state.profile.location = action.payload;
@@ -28,6 +39,6 @@ export const UserSlice = createSlice({
     },
   },
 });
-export const { setUserInfo, toggleIsOwner, toggleIsRenter, updateLocation } =
+export const { setUserInfo, toggleIsOwner, toggleIsRenter, updateLocation, updateUser } =
   UserSlice.actions;
 export default UserSlice.reducer;
