@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export const initialState: any = { session: null, profile: null };
+export const initialState: any = {
+  session: null,
+  profile: null,
+  activeRentals: null,
+};
 
 export const UserSlice = createSlice({
   name: 'user',
@@ -8,6 +12,10 @@ export const UserSlice = createSlice({
   reducers: {
     setUserInfo: (_, action) => {
       return action.payload;
+    },
+    setActiveRentals: (state, action) => {
+      const activeRentals = action.payload;
+      state.activeRentals = activeRentals;
     },
     updateUser: (state, action) => {
       const { firstname, lastname, email, phone, bio } = action.payload.profile;
@@ -39,6 +47,12 @@ export const UserSlice = createSlice({
     },
   },
 });
-export const { setUserInfo, toggleIsOwner, toggleIsRenter, updateLocation, updateUser } =
-  UserSlice.actions;
+export const {
+  setUserInfo,
+  setActiveRentals,
+  toggleIsOwner,
+  toggleIsRenter,
+  updateLocation,
+  updateUser,
+} = UserSlice.actions;
 export default UserSlice.reducer;
