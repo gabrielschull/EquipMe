@@ -9,7 +9,7 @@ import Home from './Pages/Home';
 import Calendar from './Components/gear/Calendar';
 import Login from './Components/auth/Login';
 import GearDetailsPage from './Pages/GearDetails';
-import MyGear from './Pages/MyGear';
+import MyGear from './Components/gear/MyGear';
 import AddGear from './Pages/AddGear';
 import LandingPage from './Pages/LandingPage';
 import UserProfile from './Pages/UserProfile';

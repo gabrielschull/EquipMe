@@ -1,12 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Gear } from '../types/gear.type';
-import { supabase } from '../services/supabase.service';
+import { Gear } from '../../types/gear.type';
+import { supabase } from '../../services/supabase.service';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../Components/home/NavBar';
+import NavBar from '../home/NavBar';
 import {useDispatch, useSelector} from "react-redux"
-import { setAllGear,deleteGear } from '../Redux/GearSlice';
-import { RootState, AppDispatch } from "../Redux/store"
+import { setAllGear,deleteGear } from '../../Redux/GearSlice';
+import { RootState, AppDispatch } from "../../Redux/store"
 
 
 
@@ -41,7 +41,7 @@ const MyGear : React.FC = (): JSX.Element => {
 
    return (
     <>
-    <NavBar></NavBar>
+   <h2 className="rounded-md bg-indigo-600 m-12 mx-4 px-12 py-6 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Your Gear </h2>
     <ul role="list" className="divide-y divide-gray-100 mx-12">
         {filteredGear && filteredGear.map((gear) => (
           <li key={gear.id} className="flex justify-between gap-x-6 py-5">
