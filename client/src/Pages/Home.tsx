@@ -8,15 +8,15 @@ import Payment from '../Components/rentals/Payment';
 // import EditUser from './EditUser';
 
 const Home: React.FC = (): JSX.Element => {
-  
+
 
   return (
     <>
       <div className="component-container">
-        <NavBar></NavBar>
+        <NavBar/>
         {/* <CurrentRental></CurrentRental> */}
-        <Chat></Chat>
-        <GearListings></GearListings>
+        <Chat/>
+        <GearListings/>
       </div>
     </>
   );
