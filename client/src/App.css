@@ -16,3 +16,10 @@
   justify-content: center;
   padding-top: 30px;
 }
+
+.image-track > .image {
+  width: 40vmin;
+  height: 56vmin;
+  object-fit: cover;
+  object-position: center;
+}

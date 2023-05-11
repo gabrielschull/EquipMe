@@ -3,44 +3,13 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
 import Payment from '../Components/rentals/Payment';
 import { useState } from 'react';
-import { RootState, AppDispatch } from '../Redux/store';
-import { useSelector, useDispatch } from 'react-redux';
-import { supabase } from '../services/supabase.service';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Gear } from '../types/gear.type';
-import { type } from 'os';
 
+import { supabase, supabaseClient } from '../services/supabase.service';
+import { useParams, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/store';
+  
 
-const product = {
-  //{gearInfo.description}
-  name: 'Surfboard',
-  price: '$200',
-  href: '#',
-  breadcrumbs: [
-    { id: 1, name: 'Gearhub', href: '#' },
-    { id: 2, name: 'Gear Details', href: '#' },
-  ],
-  images: [
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-      alt: 'Two each of gray, white, and black shirts laying flat.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-      alt: 'Model wearing plain black basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-      alt: 'Model wearing plain gray basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-      alt: 'Model wearing plain white basic tee.',
-    },
-  ],
-
-  description: 'Details here about the surfboard',
-};
 const reviews = { href: '#', average: 4, totalCount: 117 };
 
 const CDNURL = "https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/"
@@ -78,7 +47,7 @@ const GearDetails: React.FC = (): JSX.Element => {
       setGearInfo(gearData[0]);
       return gearData;
     } else {
-      alert('Cannot find gear details');
+      console.log('Cannot find gear details');
     }
   };
 
@@ -159,45 +128,27 @@ const GearDetails: React.FC = (): JSX.Element => {
             </div>
 
             {/* Image gallery */}
-            <div
-              id='image-track'
-              style={{
-                display: 'flex',
-                gap: '4vmin',
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(0%, -50%)',
-              }}
-            >
-              {gearImages.map((image, index) => {
-                return (
-                  <div
-                    key={image.name}
-                    className='aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block'
-                  >
-                    <img
-                      src={
-                        CDNURL +
-                        gear.owner_id +
-                        '/gear/' +
-                        id +
-                        '/' +
-                        image.name
-                      }
-                      alt=''
-                      className='h-full w-full object-cover object-center'
-                      style={{
-                        width: '40vmin',
-                        height: '56vmin',
-                        objectFit: 'cover',
-                        objectPosition: 'center',
-                      }}
-                    />
-                  </div>
-                );
-              })}
+
+            <div id="image-track" style={{display: "flex", gap: "4vmin", position: "absolute", left: "50%", top: "50%", transform: "translate(0%, -50%)", }}>
+            {gearImages.map((image, index) => {
+    return (
+      <div
+        key={image.name}
+        className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block"
+      >
+        <img
+          src={CDNURL + gear.owner_id + "/gear/" + id + "/" + image.name}
+          alt=""
+          className="h-full w-full object-cover object-center"
+          style={{width: "40vmin", height: "56vmin", objectFit: "cover", objectPosition: "center"}}
+        />
+      </div>
+          );
+            }
+            )}
+
             </div>
+            
 
             {/* <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
             {gearImages.map((image, index) => {
