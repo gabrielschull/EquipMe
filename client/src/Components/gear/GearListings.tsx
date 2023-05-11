@@ -63,16 +63,21 @@ const GearListings: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     filteredGear.forEach((g: Gear) => {
-      if (!owners[g.owner_id!]) {
+      if (!owners[g.owner_id!] && g.owner_id !== userInfo.id) {
         getOwnerFirstName(g.owner_id!);
         getOwnerDistanceFromUser(g.owner_id!);
       }
     });
-  }, [filteredGear, owners]);
+  }, [filteredGear, owners, userInfo.id]);
+
 
   return (
     <ul role="list" className="divide-y divide-gray-100 mx-12">
-      {filteredGear.map((gear: Gear) => (
+      {filteredGear
+      .filter((gear: Gear) => {
+        return gear.owner_id !== userInfo.profile.id
+      })
+      .map((gear: Gear) => (
         <li key={gear.id} className="flex justify-between gap-x-6 py-5">
           <div className="flex gap-x-4">
             {/* <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={gear.imageUrl} alt="" /> */}
