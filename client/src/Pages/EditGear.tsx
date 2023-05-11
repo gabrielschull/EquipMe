@@ -43,7 +43,7 @@ const EditGear: React.FC = (): JSX.Element => {
 
   return (
     <>
-<NavBar></NavBar>
+     <NavBar/>
       <form className='mx-12'>
         <div className='space-y-12'>
           <div className='border-b border-gray-900/10 pb-12'>
@@ -291,7 +291,7 @@ const EditGear: React.FC = (): JSX.Element => {
               //    userInfo?.session?.user?.id
               //  );
               //  }
-              navigate(`/mygear`);
+              navigate(`/myprofile`);
               }}
             className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
           >
@@ -299,7 +299,6 @@ const EditGear: React.FC = (): JSX.Element => {
           </button>
         </div>
       </form>
-      {/* <Delete></Delete> */}
     </>
   );
 };

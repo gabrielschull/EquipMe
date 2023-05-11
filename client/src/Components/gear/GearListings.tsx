@@ -12,7 +12,6 @@ const GearListings: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
 
   const [filteredGear, setFilteredGear] = useState<any[]>([])
-  console.log(userInfo, "hahaha")
 
   useEffect(() => {
     supabase.getGear().then((data) => {
@@ -20,7 +19,7 @@ const GearListings: React.FC = (): JSX.Element => {
     })
 
   }, []);
-  
+
   useEffect(() => {
   setFilteredGear(gear!.filter((g: Gear) => g.owner_id !== userInfo.profile.id))
   }, [gear])
@@ -68,7 +67,7 @@ const GearListings: React.FC = (): JSX.Element => {
 
 
   useEffect(() => {
-    
+
     filteredGear.forEach((g: Gear) => {
       if (!owners[g.owner_id!]) {
         getOwnerFirstName(g.owner_id!);
@@ -76,13 +75,10 @@ const GearListings: React.FC = (): JSX.Element => {
       }
     });
   }, [filteredGear, owners]);
-  
-  return (
 
-    <>
+  return (
       <ul role="list" className="divide-y divide-gray-100 mx-12">
-        {filteredGear &&
-          filteredGear.map((gear: Gear) => (
+        {filteredGear.map((gear: Gear) => (
             <li key={gear.id} className="flex justify-between gap-x-6 py-5">
               <div className="flex gap-x-4">
                 {/* <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={gear.imageUrl} alt="" /> */}
@@ -116,7 +112,7 @@ const GearListings: React.FC = (): JSX.Element => {
                 <form className="mt-10">
                   <button
                     type="submit"
-                    onClick={() => navigate(`/geardetails/${gear.id}`)}
+                    onClick={() => navigate(`/geardetails/${gear.id}`, {state: {gear}})}
                     className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                     See more details
                   </button>
@@ -125,7 +121,6 @@ const GearListings: React.FC = (): JSX.Element => {
             </li>
           ))}
       </ul>
-    </>
   );
 };
 
