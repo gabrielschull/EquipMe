@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import CurrentRental from '../Components/rentals/CurrentRental';
 import NavBar from '../Components/home/NavBar';
 import GearListings from '../Components/gear/GearListings';
@@ -17,6 +17,7 @@ const Home: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
 
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     const getContractsOnRender = async () => {
