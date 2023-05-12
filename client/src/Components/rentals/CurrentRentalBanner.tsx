@@ -20,7 +20,7 @@ const CurrentRentalBanner: React.FC = (): JSX.Element => {
               <div
                 id='marketing-banner'
                 // tabIndex='-1'
-                className='m-2 flex-col md:flex-row justify-between p-4 bg-white border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600'
+                className='m-2 flex-col md:flex-row justify-between p-4 bg-white border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600 ml-14 mb-8'
               >
                 <div className='flex flex-col items-start mb-3 mr-4 md:items-center md:flex-row md:mb-0'>
                   <div className='flex items-center mb-2 border-gray-200 md:pr-4 md:mr-4 md:border-r md:mb-0 dark:border-gray-600'>
@@ -42,6 +42,7 @@ const CurrentRentalBanner: React.FC = (): JSX.Element => {
                 <div className='flex items-center flex-shrink-0'>
                   <Link to={`/rentals/${rental.id}`}>
                     <a className='px-5 py-2 mr-2 text-xs font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'>
+
                       See details
                     </a>
                   </Link>

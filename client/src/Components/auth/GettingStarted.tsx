@@ -103,7 +103,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
 
   return (
     <>
-      <button
+      {/* <button
         type="submit"
         onClick={() => {
           userInfo.profile.is_owner
@@ -136,7 +136,48 @@ const GettingStarted: React.FC = (): JSX.Element => {
         }}
         className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow">
         {userInfo.profile.is_renter ? '✔' : ''} I'm looking to rent some gear
-      </button>
+      </button> */}
+
+      <div className="flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4 mt-20">
+          <button
+            type="submit"
+            onClick={() => {
+              userInfo.profile.is_owner
+                ? supabase.updateIsOwnerToFalse(userInfo.profile.id)
+                : supabase.updateIsOwnerToTrue(userInfo.profile.id);
+              dispatch(toggleIsOwner(userInfo.profile.id));
+            }}
+            className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow">
+            {userInfo.profile.is_owner ? '✔' : ''} I want to lease my sports
+            gear to others
+          </button>
+          {userInfo.profile.is_owner && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(`/addgear`);
+              }}
+              className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow">
+              Add Gear
+            </button>
+          )}
+          <button
+            type="submit"
+            onClick={() => {
+              userInfo.profile.is_renter
+                ? supabase.updateIsRenterToFalse(userInfo.profile.id)
+                : supabase.updateIsRenterToTrue(userInfo.profile.id);
+              dispatch(toggleIsRenter(userInfo.profile.id));
+            }}
+            className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow">
+            {userInfo.profile.is_renter ? '✔' : ''} I'm looking to rent some
+            gear
+          </button>
+        </div>
+      </div>
+
       {userInfo.profile.is_renter && (
         <>
           <Listbox
@@ -231,7 +272,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
             )}
           </Listbox>
 
-          <div className="sm:col-span-3 mx-12">
+          {/* <div className="sm:col-span-3 mx-12">
             <label
               htmlFor="first-name"
               className="block text-sm text-black font-semibold py-2 px-3">
@@ -246,7 +287,8 @@ const GettingStarted: React.FC = (): JSX.Element => {
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
-          </div>
+          </div> */}
+
           {/* <div className="map-style"></div> */}
           {/* <button
             type="submit"

@@ -20,13 +20,16 @@ const Home: React.FC = (): JSX.Element => {
 
   return (
     <>
-      <div className='component-container'>
-        <NavBar />
-        <GettingStarted />
+
+
+      <div className="component-container">
+        <NavBar/>
         <CurrentRentalBanner></CurrentRentalBanner>
-        <Chat />
-        <div style={{ paddingTop: '80px' }}>
-          <GearListings />
+        <GettingStarted/>
+        {/* <CurrentRental></CurrentRental> */}
+        <Chat/>
+        <div style = {{paddingTop: "80px"}}>
+        <GearListings/>
         </div>
       </div>
     </>
