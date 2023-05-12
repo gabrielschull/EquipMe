@@ -36,8 +36,8 @@ const Calendar: React.FC<any> = ({
   };
 
   return (
-    <div className='flex justify-center items-center h-screen h-64 max-w-fit mb-8'>
-      <div className='w-96 bg-white rounded-lg shadow-md p-4 m-8'>
+    <div>
+      <div className='w-96 bg-white rounded-lg shadow-md p-2 m-2'>
         <h2 className='text-lg font-bold mb-4'>
           Select Start and End Dates and Times
         </h2>

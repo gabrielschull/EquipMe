@@ -21,6 +21,7 @@ const Home: React.FC = (): JSX.Element => {
   return (
     <>
 
+
       <div className="component-container">
         <NavBar/>
         <CurrentRentalBanner></CurrentRentalBanner>
@@ -30,7 +31,6 @@ const Home: React.FC = (): JSX.Element => {
         <div style = {{paddingTop: "80px"}}>
         <GearListings/>
         </div>
-
       </div>
     </>
   );
