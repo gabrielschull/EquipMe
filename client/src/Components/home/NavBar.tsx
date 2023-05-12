@@ -6,7 +6,7 @@ import { supabase } from '../../services/supabase.service';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../Redux/store';
-import logo from "../Assets/Logo.png"
+import logo from '../Assets/Logo.png';
 
 const navigation = [
   { name: 'Home', href: '/home', current: false },
@@ -28,11 +28,10 @@ const NavBar: React.FC = (): JSX.Element => {
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden"></div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
-                </div>
+                <div className="flex flex-shrink-0 items-center"></div>
                 <div className="hidden sm:ml-0 sm:block">
                   <div className="flex space-x-10">
-                  <img src={logo} alt="Logo" className="w-28 h-16 mt-0" />
+                    <img src={logo} alt="Logo" className="w-28 h-16 mt-0" />
                     {navigation.map((item) => (
                       <button
                         key={item.name}
@@ -51,11 +50,10 @@ const NavBar: React.FC = (): JSX.Element => {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* <button
+                <button
                   type="button"
                   className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
-
                 </button>
 
                 <Menu as="div" className="relative ml-3">
