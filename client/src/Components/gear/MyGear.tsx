@@ -40,7 +40,7 @@ const MyGear: React.FC = (): JSX.Element => {
 
   return (
     <>
-      <h2 className="rounded-md bg-indigo-600 m-12 mx-4 px-12 py-6 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+      <h2 className="rounded-md bg-gray-100 text-black font-semibold py-1 px-3 rounded shadow border border-gray-300 m-12 mx-4 px-12 py-6 text-lg font-semibold e focus-visible:outline-2">
         Your Gear{' '}
       </h2>
       <ul role="list" className="divide-y divide-gray-100 mx-12">
@@ -50,7 +50,7 @@ const MyGear: React.FC = (): JSX.Element => {
               <div className="flex gap-x-4">
                 {/* <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={gear.imageUrl} alt="" /> */}
                 <div className="min-w-0 flex-auto">
-                  <p className="text-sm font-semibold leading-6 text-gray-900">
+                  <p className="text-sm font-semibold leading-6 text-gray-900 max-w-xs">
                     {gear.description}
                   </p>
                   <p className="mt-1 truncate text-xs leading-5 text-gray-800">
@@ -69,13 +69,13 @@ const MyGear: React.FC = (): JSX.Element => {
                 <button
                   type="submit"
                   onClick={() => navigate(`/editgear/${gear.id}`)}
-                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  className="bg-white hover:bg-gray-100 text-black font-semibold py-1 px-3 rounded shadow border border-gray-300">
                   Edit Gear
                 </button>
                 <button
                   type="button"
                   onClick={() => handleDelete(gear)}
-                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  className="bg-white hover:bg-gray-100 text-black font-semibold py-1 px-3 rounded">
                   Delete Gear
                 </button>
               </div>

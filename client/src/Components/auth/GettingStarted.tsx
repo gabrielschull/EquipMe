@@ -82,7 +82,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
             : supabase.updateIsOwnerToTrue(userInfo.profile.id);
           dispatch(toggleIsOwner(userInfo.profile.id));
         }}
-        className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-pink-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow">
         {userInfo.profile.is_owner ? '✔' : ''} I want to lease my sports gear to
         others
       </button>
@@ -93,7 +93,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
             e.preventDefault();
             navigate(`/addgear`);
           }}
-          className="mt-4 flex w-full items-center justify-center rounded-md border border-transparent bg-blue-500 px-8 py-3 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+          className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow">
           Add Gear
         </button>
       )}
@@ -105,7 +105,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
             : supabase.updateIsRenterToTrue(userInfo.profile.id);
           dispatch(toggleIsRenter(userInfo.profile.id));
         }}
-        className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-green-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow">
         {userInfo.profile.is_renter ? '✔' : ''} I'm looking to rent some gear
       </button>
       {userInfo.profile.is_renter && (
@@ -119,7 +119,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
             }}>
             {({ open }) => (
               <>
-                <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900 mx-12">
+                <Listbox.Label className="block text-sm text-black font-semibold py-2 px-3">
                   What type of gear you are looking for?
                 </Listbox.Label>
                 <div className="relative mt-2 mx-12">
@@ -205,7 +205,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
           <div className="sm:col-span-3 mx-12">
             <label
               htmlFor="first-name"
-              className="block text-sm font-medium leading-6 text-gray-900">
+              className="block text-sm text-black font-semibold py-2 px-3">
               Location
             </label>
             <div className="mt-2">
