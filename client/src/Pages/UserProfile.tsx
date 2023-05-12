@@ -75,6 +75,9 @@ const UserProfile: React.FC = (): JSX.Element => {
               </div>
             </div>
           </div>
+          <div>
+              <MapContainer/>
+              </div>
         </div>
       </div>
     </>
