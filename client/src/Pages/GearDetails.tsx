@@ -3,6 +3,7 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
 import Payment from '../Components/rentals/Payment';
 import { useState } from 'react';
+import {Carousel,initTE} from "tw-elements"
 
 import { supabase, supabaseClient } from '../services/supabase.service';
 import { useParams, useLocation } from 'react-router-dom';
@@ -21,8 +22,6 @@ function classNames(...classes: any) {
 
 const GearDetails: React.FC = (): JSX.Element => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  // Raul & Xavi's version;
-  // const [gearInfo, setGearInfo] = useState<any>(undefined);
   const [gearInfo, setGearInfo] = useState<any>([]);
   const [gearImages, setGearImages] = useState<any[]>([]);
   const userInfo = useSelector((state: RootState) => state.User);
@@ -35,8 +34,6 @@ const GearDetails: React.FC = (): JSX.Element => {
   console.log('gearinfo', { gearInfo });
 
   console.log('OWNERID ==>', gear.owner_id);
-
-  // console.log('PARAMS ==> ', id);
 
   const handleReservationClick = () => {
     supabase.startRentalContract(
@@ -250,7 +247,7 @@ const GearDetails: React.FC = (): JSX.Element => {
       );
     }
   }
-})} 
+})}
 </div> */}
             {/* Product info */}
 

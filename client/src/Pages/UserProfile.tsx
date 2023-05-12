@@ -12,6 +12,7 @@ import MapContainer from '../Components/misc/MapContainer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
 import MyGear from '../Components/gear/MyGear';
+import Socials from '../Components/misc/Socials';
 
 const UserProfile: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
@@ -36,10 +37,11 @@ const UserProfile: React.FC = (): JSX.Element => {
                 />
               </figcaption>
             </figure>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <p className="mt-10 mb-10 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               {userInfo?.profile ? userInfo.profile.first_name : 'FN'}{' '}
               {userInfo?.profile ? userInfo.profile.last_name : 'LN'}
             </p>
+            <Socials/>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               {userInfo?.profile ? userInfo.profile.bio : `Bio`}
             </p>
