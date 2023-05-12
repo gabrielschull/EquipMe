@@ -1,11 +1,15 @@
 // import { RealtimeChannel, Session } from '@supabase/supabase-js';
 import { Session } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
-import { supabaseClient } from '../../services/supabase.service';
+import { supabase, supabaseClient } from '../../services/supabase.service';
 import { User } from '../../types/user.type';
-import {useDispatch, useSelector} from "react-redux"
-import { UserSlice, setUserInfo } from '../../Redux/UserSlice';
-import { RootState, AppDispatch } from "../../Redux/store"
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  UserSlice,
+  setActiveRentals,
+  setUserInfo,
+} from '../../Redux/UserSlice';
+import { RootState, AppDispatch } from '../../Redux/store';
 
 export interface GearhubUserInfo {
   session: Session | null;
@@ -15,7 +19,6 @@ export interface GearhubUserInfo {
 export function useSession(): GearhubUserInfo {
   const dispatch: AppDispatch = useDispatch();
   const userInfo = useSelector((state: RootState) => state.User);
-
 
   // const [channel, setChannel] = useState<RealtimeChannel | null>(null);
 
@@ -35,9 +38,9 @@ export function useSession(): GearhubUserInfo {
   };
 
   useEffect(() => {
-    supabaseClient.auth.getSession().then(({ data: { session } }) => {
-      console.log(session)
-      dispatch(setUserInfo({ ...userInfo, session }))
+    supabaseClient.auth.getSession().then(async ({ data: { session } }) => {
+      console.log(session);
+      dispatch(setUserInfo({ ...userInfo, session }));
       // supabaseClient.auth.onAuthStateChange((event: any, session: any) => {
       //   console.log("EVENT == > ", event,"\nSession == > ", session)
       // });
@@ -51,6 +54,14 @@ export function useSession(): GearhubUserInfo {
         .then((userData: any) =>
           dispatch(setUserInfo({ session, profile: userData.data }))
         );
+
+      // get active contracts
+      const getContractsOnRender = async () => {
+        const data = await supabase.getContractsByRenterId(userInfo.profile.id);
+        dispatch(setActiveRentals(data));
+      };
+
+      await getContractsOnRender();
 
       // is user is not in Users db, create them
       if (!userInfo.profile?.id) {
