@@ -118,8 +118,8 @@ const EditGear: React.FC = (): JSX.Element => {
                 </label>
                 <div className="mt-2">
                   <select
-                  value={formState.type as string}
-                  onChange={handleChange}
+                    value={formState.type as string}
+                    onChange={handleChange}
                     id="country"
                     name="type"
                     autoComplete="country-name"
@@ -302,7 +302,7 @@ const EditGear: React.FC = (): JSX.Element => {
 
               navigate(`/myprofile`);
             }}
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            className="rounded-md text-black hover:bg-yellow-100 hover:text-black px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
             Update
           </button>
         </div>

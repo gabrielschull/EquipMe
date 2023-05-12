@@ -14,7 +14,7 @@ import { RootState } from '../Redux/store';
 import MyGear from '../Components/gear/MyGear';
 
 const UserProfile: React.FC = (): JSX.Element => {
-  const userInfo = useSelector ((state: RootState) => state.User);
+  const userInfo = useSelector((state: RootState) => state.User);
   const navigate = useNavigate();
 
   return (
@@ -48,34 +48,31 @@ const UserProfile: React.FC = (): JSX.Element => {
             </figure>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               {userInfo?.profile ? userInfo.profile.first_name : 'FN'}{' '}
-              {userInfo?.profile
-                ? userInfo.profile.last_name
-                : 'LN'}
+              {userInfo?.profile ? userInfo.profile.last_name : 'LN'}
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              {userInfo?.profile
-                ? userInfo.profile.bio
-                : `Bio`}
+              {userInfo?.profile ? userInfo.profile.bio : `Bio`}
             </p>
           </div>
           <MyGear></MyGear>
-          <div className="flex justify-center mt-16">
-            <MapContainer></MapContainer>
-            <div className="flex grow m-24 px-1">
-            <button
-                type="submit"
-                onClick={() => navigate(`/edituser`)}
-                className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex-grow"
-              >
-                Edit Profile
-              </button>
-              <button
-                type="submit"
-                onClick={() => navigate(`/addgear`)}
-                className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-4 flex-grow"
-              >
-                Add Gear
-              </button>
+          <div className="flex justify-center mt-2">
+            {/* <MapContainer></MapContainer> */}
+            <div className="h-16">
+              <div className="flex justify-between mx-8 py-2">
+                <button
+                  type="submit"
+                  onClick={() => navigate(`/edituser`)}
+                  className="bg-white hover:bg-gray-100 text-black font-semibold py-1 px-3 rounded shadow border border-gray-300">
+                  Edit Profile
+                </button>
+                <div className="w-4"></div>
+                <button
+                  type="submit"
+                  onClick={() => navigate(`/addgear`)}
+                  className="bg-white hover:bg-gray-100 text-black font-semibold py-1 px-3 rounded shadow border border-gray-300">
+                  Add Gear
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -85,10 +82,3 @@ const UserProfile: React.FC = (): JSX.Element => {
 };
 
 export default UserProfile;
-
-
-
-
-
-
-

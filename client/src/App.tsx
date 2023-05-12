@@ -21,6 +21,8 @@ import { useSelector } from 'react-redux';
 import { RootState, AppDispatch } from './Redux/store';
 import { useEffect } from 'react';
 import { useSession } from './Components/users/UseSession';
+import CurrentRentalBanner from './Components/rentals/CurrentRentalBanner';
+import CurrentRental from './Components/rentals/CurrentRental';
 
 const App: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
@@ -32,39 +34,42 @@ const App: React.FC = (): JSX.Element => {
   }, [userInfo]);
 
   return (
-      <Router>
-        <Routes>
-          <>
-             <Route
-              path="/"
-              element={
-                !userInfo.profile ? (
-                  <Login />
-                ) : !userInfo.profile.bio ||
-                  !userInfo.profile.email ||
-                  !userInfo.profile.first_name ||
-                  !userInfo.profile.last_name ||
-                  !userInfo.profile.phone ? (
-                  <EditUser />
-                ) : userInfo.location ? (
-                  <Home />
-                ) : (
-                  <Home />
-                )
-              }
-            />
-            <Route path='/home' element={<Home />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/geardetails/:id' element={<GearDetailsPage />} />
-            <Route path='/mygear' element={<MyGear />} />
-            <Route path='/editgear/:gearId' element={<EditGear />} />
-            <Route path='/addgear' element={<AddGear />} />
-            <Route path='/myprofile' element={<UserProfile />} />
-            <Route path='/edituser' element={<EditUser />} />
-            <Route path='/calendar' element={<Calendar />} />
-          </>
-        </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        <>
+          <Route
+            path='/'
+            element={
+              !userInfo.profile ? (
+                <Login />
+              ) : !userInfo.profile.bio ||
+                !userInfo.profile.email ||
+                !userInfo.profile.first_name ||
+                !userInfo.profile.last_name ||
+                !userInfo.profile.phone ? (
+                <EditUser />
+              ) : userInfo.location ? (
+                <Home />
+              ) : (
+                <Home />
+              )
+            }
+          />
+          <Route path='/home' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/geardetails/:id' element={<GearDetailsPage />} />
+          <Route path='/mygear' element={<MyGear />} />
+          <Route path='/editgear/:gearId' element={<EditGear />} />
+          <Route path='/rentals/:contractId' element={<CurrentRental />} />
+          <Route path='/addgear' element={<AddGear />} />
+          <Route path='/myprofile' element={<UserProfile />} />
+          <Route path='/edituser' element={<EditUser />} />
+
+          <Route path='/calendar' element={<Calendar />} />
+          <Route path='/fuckyou' element={<CurrentRentalBanner />} />
+        </>
+      </Routes>
+    </Router>
   );
 };
 
