@@ -60,12 +60,13 @@ const App: React.FC = (): JSX.Element => {
           <Route path='/geardetails/:id' element={<GearDetailsPage />} />
           <Route path='/mygear' element={<MyGear />} />
           <Route path='/editgear/:gearId' element={<EditGear />} />
-          <Route path='/rentals/:contractId' element={<CurrentRental />} />
+          <Route path='/rentals/:rental_id' element={<CurrentRental />} />
           <Route path='/addgear' element={<AddGear />} />
           <Route path='/myprofile' element={<UserProfile />} />
           <Route path='/edituser' element={<EditUser />} />
 
           <Route path='/calendar' element={<Calendar />} />
+          <Route path='/test' element={<CurrentRental />} />
         </>
       </Routes>
     </Router>

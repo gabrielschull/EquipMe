@@ -23,7 +23,7 @@ const Home: React.FC = (): JSX.Element => {
       <div className='component-container'>
         <NavBar />
         <GettingStarted />
-        <CurrentRental></CurrentRental>
+        <CurrentRentalBanner></CurrentRentalBanner>
         <Chat />
         <div style={{ paddingTop: '80px' }}>
           <GearListings />
