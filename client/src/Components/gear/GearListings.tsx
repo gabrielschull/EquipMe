@@ -10,6 +10,7 @@ const GearListings: React.FC = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const gear = useSelector((state: RootState) => state.Gear);
   const userInfo = useSelector((state: RootState) => state.User);
+  const [gearImages, setGearImages] = useState<any[]>([]);
 
   const filteredGear = useSelector((state: RootState) => state.FilteredGear);
 
