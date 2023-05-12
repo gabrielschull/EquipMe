@@ -53,7 +53,7 @@ const MapContainer: React.FC = () => {
             type='submit'
             className='mt-10 w-full items-center justify-center rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
           >
-            Get current location
+            Update current location
           </button>
         </div>
 

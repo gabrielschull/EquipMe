@@ -301,16 +301,17 @@ const GettingStarted: React.FC = (): JSX.Element => {
           </button> */}
         </>
       )}
-         <div className="flex justify-center items-center mt-10">
-  <button
-    onClick={handleGeolocation}
-    type="submit"
-    className="rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-  >
-    Update your current location here
-  </button>
+        <div className="flex justify-center items-center mt-10">
+          <button
+            onClick={handleGeolocation}
+            type='submit'
+            className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+          >
+            Update your location
+          </button>
 </div>
-
+        
+         
 
       {/*THE GOOGLE MAPS CONTAINER IS HERE IN CASE WE WANT IT BACK */}
     </>
