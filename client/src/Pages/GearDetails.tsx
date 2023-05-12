@@ -3,6 +3,7 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
 import Payment from '../Components/rentals/Payment';
 import { useState } from 'react';
+import {Carousel,initTE} from "tw-elements"
 
 import { supabase, supabaseClient } from '../services/supabase.service';
 import { useParams, useLocation } from 'react-router-dom';
@@ -29,7 +30,9 @@ const GearDetails: React.FC = (): JSX.Element => {
   const location = useLocation();
   const gear = location.state?.gear;
 
+
   const { id } = useParams();
+
   const handleReservationClick = () => {
     supabase.startRentalContract(
       id,
