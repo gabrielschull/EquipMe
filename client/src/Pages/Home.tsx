@@ -18,16 +18,14 @@ const Home: React.FC = (): JSX.Element => {
   console.log('Home.tsx', userInfo);
   return (
     <>
-
-      <div className="component-container">
-        <NavBar/>
-        <GettingStarted/>
-        {/* <CurrentRental></CurrentRental> */}
-        <Chat/>
-        <div style = {{paddingTop: "80px"}}>
-        <GearListings/>
+      <div className='component-container'>
+        <NavBar />
+        <GettingStarted />
+        <CurrentRental></CurrentRental>
+        <Chat />
+        <div style={{ paddingTop: '80px' }}>
+          <GearListings />
         </div>
-
       </div>
     </>
   );

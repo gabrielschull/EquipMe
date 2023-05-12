@@ -66,7 +66,6 @@ const App: React.FC = (): JSX.Element => {
           <Route path='/edituser' element={<EditUser />} />
 
           <Route path='/calendar' element={<Calendar />} />
-          <Route path='/fuckyou' element={<CurrentRentalBanner />} />
         </>
       </Routes>
     </Router>
