@@ -21,10 +21,10 @@ const NavBar: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const navigate = useNavigate();
   return (
-    <Disclosure as="nav" className="bg-white">
+    <Disclosure as="nav" className="bg-white mt-10 mr-0 mb-14 ml-14">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-10xl px-2 sm:px-6 lg:px-0">
+          <div className="mx-auto max-w-10xl px-2 sm:px-6 lg:px-0 m-0">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden"></div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -32,7 +32,7 @@ const NavBar: React.FC = (): JSX.Element => {
                 </div>
                 <div className="hidden sm:ml-0 sm:block">
                   <div className="flex space-x-10">
-                  <img src={logo} alt="Logo" className="w-28 h-16 mt-0" />
+                  <img src={logo} alt="Logo" className="w-30 h-24" />
                     {navigation.map((item) => (
                       <button
                         key={item.name}
@@ -53,17 +53,15 @@ const NavBar: React.FC = (): JSX.Element => {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <button
                   type="button"
-                  className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                  className="rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
-
                 </button>
-
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <Menu.Button className="flex rounded-full  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2  mr-0">
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-8 w-8 rounded-full mr-20"
+                        className="h-20 w-20 rounded-full mr-20"
                         src={
                           'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/images/' +
                           userInfo.profile?.id +
@@ -81,7 +79,7 @@ const NavBar: React.FC = (): JSX.Element => {
                     leave="transition ease-in duration-75"
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95">
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none mr-10">
                       <Menu.Item>
                         {({ active }) => (
                           <a
