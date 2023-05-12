@@ -24,7 +24,7 @@ const UserProfile: React.FC = (): JSX.Element => {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <figure className="mt-10">
-              <figcaption className="mt-10">
+              <figcaption className="mt-2">
                 <img
                   className="mx-auto h-150 w-150 rounded-full"
                   alt=""
@@ -34,16 +34,6 @@ const UserProfile: React.FC = (): JSX.Element => {
                     '/profileImage'
                   }
                 />
-                <div className="mt-4 flex items-center justify-center space-x-3 text-base">
-                  <svg
-                    viewBox="0 0 2 2"
-                    width={3}
-                    height={3}
-                    aria-hidden="true"
-                    className="fill-gray-900">
-                    <circle cx={1} cy={1} r={1} />
-                  </svg>
-                </div>
               </figcaption>
             </figure>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -62,14 +52,14 @@ const UserProfile: React.FC = (): JSX.Element => {
                 <button
                   type="submit"
                   onClick={() => navigate(`/edituser`)}
-                  className="bg-white hover:bg-gray-100 text-black font-semibold py-1 px-3 rounded shadow border border-gray-300">
+                  className="bg-white hover:bg-indigo-400 text-black font-semibold py-1 px-3 rounded shadow border border-gray-300 hover:text-white">
                   Edit Profile
                 </button>
                 <div className="w-4"></div>
                 <button
                   type="submit"
                   onClick={() => navigate(`/addgear`)}
-                  className="bg-white hover:bg-gray-100 text-black font-semibold py-1 px-3 rounded shadow border border-gray-300">
+                  className="bg-white hover:bg-indigo-400 text-black font-semibold py-1 px-3 rounded shadow border border-gray-300 hover:text-white">
                   Add Gear
                 </button>
               </div>

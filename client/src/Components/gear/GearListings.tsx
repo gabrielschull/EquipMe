@@ -198,6 +198,7 @@ const GearListings: React.FC = (): JSX.Element => {
                   }
                   className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent"
                 >
+
                   See more details
                 </button>
               </form>

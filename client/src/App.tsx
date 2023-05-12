@@ -23,6 +23,7 @@ import { useEffect } from 'react';
 import { useSession } from './Components/users/UseSession';
 import CurrentRentalBanner from './Components/rentals/CurrentRentalBanner';
 import CurrentRental from './Components/rentals/CurrentRental';
+import Rentals from './Pages/Rentals';
 
 const App: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
@@ -60,13 +61,14 @@ const App: React.FC = (): JSX.Element => {
           <Route path='/geardetails/:id' element={<GearDetailsPage />} />
           <Route path='/mygear' element={<MyGear />} />
           <Route path='/editgear/:gearId' element={<EditGear />} />
-          <Route path='/rentals/:contractId' element={<CurrentRental />} />
+          <Route path='/rentals/' element={<Rentals />} />
+          <Route path='/rentals/:rental_id' element={<CurrentRental />} />
           <Route path='/addgear' element={<AddGear />} />
           <Route path='/myprofile' element={<UserProfile />} />
           <Route path='/edituser' element={<EditUser />} />
 
           <Route path='/calendar' element={<Calendar />} />
-          <Route path='/fuckyou' element={<CurrentRentalBanner />} />
+          <Route path='/test' element={<CurrentRental />} />
         </>
       </Routes>
     </Router>
