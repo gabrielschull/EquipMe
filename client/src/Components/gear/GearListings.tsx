@@ -122,7 +122,7 @@ const GearListings: React.FC = (): JSX.Element => {
                   onClick={() =>
                     navigate(`/geardetails/${gear.id}`, { state: { gear } })
                   }
-                  className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent">
+                  className="bg-white hover:bg-indigo-400 text-black font-semibold py-2 px-3  rounded shadow border-transparent hover:text-white">
                   See more details
                 </button>
               </form>
