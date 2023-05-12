@@ -22,7 +22,7 @@ const Rentals: React.FC = (): JSX.Element => {
     <div className='component-container'>
       <NavBar />
       <ul role='list' className='divide-y divide-gray-100 mx-12 '>
-        {activeRentals.map((rental: any) => (
+        {activeRentals?.map((rental: any) => (
           <li key={rental.id} className='flex justify-between gap-x-6 py-5'>
             <div className='flex gap-x-4'>
               {/* <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={gear.imageUrl} alt="" /> */}

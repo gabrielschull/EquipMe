@@ -18,14 +18,22 @@ const Calendar: React.FC<any> = ({
   setRentalEndDate,
 }): JSX.Element => {
   const gearInfo = useSelector((state: RootState) => state.Gear);
-
   const { id } = useParams();
+
   console.log('location.pathname=', location.pathname);
 
-  const [unavailableDates, setUnavailableDates] = useState([
-    addDays(new Date(), 1),
-    addDays(new Date(), 5),
-  ]);
+  const [unavailableDates, setUnavailableDates] = useState<any>([]);
+
+  const handleUnavailableDates = () => {
+    const indexToUpd = gearInfo.findIndex((gear) => gear.id === id);
+    const dateArr: Date[] = [];
+    gearInfo[indexToUpd].unavailableDates?.forEach((element) =>
+      dateArr.push(new Date(element))
+    );
+    console.log('🖤', dateArr);
+    setUnavailableDates(dateArr);
+    console.log('🖤 unavailableDates STATE', unavailableDates);
+  };
 
   const handleStartDateChange = (date: Date) => {
     if (location.pathname === '/addgear') {
@@ -44,8 +52,13 @@ const Calendar: React.FC<any> = ({
   };
 
   useEffect(() => {
-    console.log('!!! gearInfo in Calendar', gearInfo);
-  }, [gearInfo]);
+    handleUnavailableDates();
+    // setUnavailableDates(gearInfo[indexToUpd].unavailableDates);
+    // console.log(
+    //   '!!! gearInfo in Calendar',
+    //   gearInfo[indexToUpd].unavailableDates
+    // );
+  }, []);
 
   return (
     <div>
