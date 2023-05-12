@@ -355,7 +355,7 @@ export const supabase = {
       if (error) {
         throw error;
       }
-      // console.log('data returned by startRentalContract', data);
+      console.log('data returned by startRentalContract', data);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot create a new rental contract');

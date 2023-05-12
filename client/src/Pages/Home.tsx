@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import CurrentRental from '../Components/rentals/CurrentRental';
 import NavBar from '../Components/home/NavBar';
 import GearListings from '../Components/gear/GearListings';
@@ -16,22 +16,14 @@ import CurrentRentalBanner from '../Components/rentals/CurrentRentalBanner';
 const Home: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getContractsOnRender = async () => {
-      const data = await supabase.getContractsByRenterId(userInfo.profile.id);
-      dispatch(setActiveRentals(data));
-    };
-
-    getContractsOnRender();
-  }, []);
+  console.log('Home.tsx', userInfo);
 
   return (
     <>
 
       <div className="component-container">
         <NavBar/>
+        <CurrentRentalBanner></CurrentRentalBanner>
         <GettingStarted/>
         {/* <CurrentRental></CurrentRental> */}
         <Chat/>

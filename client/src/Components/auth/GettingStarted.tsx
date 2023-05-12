@@ -14,6 +14,7 @@ import {
   toggleIsRenter,
 } from '../../Redux/UserSlice';
 import { setFilteredGear } from '../../Redux/filteredGearSlice';
+import { updateLocation } from '../../Redux/UserSlice';
 
 function onlyUnique(value: string, index: number, array: string[]) {
   return array.indexOf(value) === index;
@@ -25,6 +26,8 @@ function classNames(...classes: any) {
 
 const GettingStarted: React.FC = (): JSX.Element => {
   const [allGear, setAllGear] = useState<any[]>([]);
+  const { profile } = useSelector((state: RootState) => state.User);
+  const [center, setCenter] = useState({ lat: 0, lng: 0 });
 
   const gearTypesArray = [
     '--------',
@@ -54,6 +57,25 @@ const GettingStarted: React.FC = (): JSX.Element => {
     }
   };
 
+  const handleGeolocation = async () => {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        setCenter({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        const location = `${position.coords.latitude},${position.coords.longitude}`;
+        if (profile) {
+          await supabase.updateUserLocation(profile, location);
+          dispatch(updateLocation(location));
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+
   useEffect(() => {
     (async () => {
       const allGear = await supabase.getGear();
@@ -71,6 +93,13 @@ const GettingStarted: React.FC = (): JSX.Element => {
       )
     );
   }, [gear, gearType]);
+
+  useEffect(() => {
+    if (profile?.location) {
+      const [lat, lng] = profile.location.split(',');
+      setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) });
+    }
+  }, [profile]);
 
   return (
     <>
@@ -272,8 +301,13 @@ const GettingStarted: React.FC = (): JSX.Element => {
           </button> */}
         </>
       )}
-
-      <MapContainer />
+          <button
+            onClick={handleGeolocation}
+            type='submit'
+            className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+          >
+            Find gear near you!
+          </button>
 
       {/*THE GOOGLE MAPS CONTAINER IS HERE IN CASE WE WANT IT BACK */}
     </>
