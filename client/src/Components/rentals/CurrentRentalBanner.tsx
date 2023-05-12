@@ -8,7 +8,8 @@ import { format } from 'date-fns';
 
 const CurrentRentalBanner: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  console.log('CurrentRentalBanner.tsx', userInfo);
 
   return (
     <>
@@ -29,7 +30,7 @@ const CurrentRentalBanner: React.FC = (): JSX.Element => {
                       alt='Flowbite Logo'
                     />
                     <span className='self-center text-lg font-semibold whitespace-nowrap dark:text-white'>
-                      Your active rental: {rental.Gear.description}
+                      Your active rental: {rental.Gear.name}
                     </span>
                   </div>
                   <p className='flex items-center text-sm font-normal text-gray-500 dark:text-gray-400'>
