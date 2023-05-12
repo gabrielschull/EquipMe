@@ -21,6 +21,7 @@ const Home: React.FC = (): JSX.Element => {
 
       <div className="component-container">
         <NavBar/>
+        <CurrentRentalBanner></CurrentRentalBanner>
         <GettingStarted/>
         {/* <CurrentRental></CurrentRental> */}
         <Chat/>
