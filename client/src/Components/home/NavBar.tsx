@@ -4,9 +4,9 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { supabase } from '../../services/supabase.service';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../Redux/store';
+import logo from "../Assets/Logo.png"
 
 
 const navigation = [
@@ -25,24 +25,15 @@ const NavBar: React.FC = (): JSX.Element => {
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-10xl px-2 sm:px-6 lg:px-0">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden"></div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img // REPLACE WITH OUR COMPANY LOGO
-                    className="block h-8 w-auto lg:hidden"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
-                  />
-                  <img
-                    className="hidden h-8 w-auto lg:block"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
-                  />
                 </div>
-                <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
+                <div className="hidden sm:ml-0 sm:block">
+                  <div className="flex space-x-10">
+                  <img src={logo} alt="Logo" className="w-28 h-16 mt-0" />
                     {navigation.map((item) => (
                       <button
                         key={item.name}
@@ -66,14 +57,12 @@ const NavBar: React.FC = (): JSX.Element => {
                   className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
-
-                {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-8 w-8 rounded-full"
+                        className="h-8 w-8 rounded-full mr-20"
                         src={
                           'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/images/' +
                           userInfo.profile?.id +
