@@ -26,10 +26,10 @@ const CurrentRentalBanner: React.FC = (): JSX.Element => {
                   <div className='flex items-center mb-2 border-gray-200 md:pr-4 md:mr-4 md:border-r md:mb-0 dark:border-gray-600'>
                     <img
                       src='https://flowbite.com/docs/images/logo.svg'
-                      className='h-6 mr-2'
+                      className='h-10 mr-2'
                       alt='Flowbite Logo'
                     />
-                    <span className='self-center text-lg font-semibold whitespace-nowrap dark:text-white'>
+                    <span className='self-center text-lg font-semibold whitespace-nowrap dark:text-white ml-4'>
                       Your active rental: {rental.Gear.name}
                     </span>
                   </div>
@@ -41,8 +41,7 @@ const CurrentRentalBanner: React.FC = (): JSX.Element => {
                 </div>
                 <div className='flex items-center flex-shrink-0'>
                   <Link to={`/rentals/${rental.id}`}>
-                    <a className='px-5 py-2 mr-2 text-xs font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'>
-
+                    <a className='px-5 py-2 mr-8 ml-16 text-xs font-medium text-white bg-indigo-400 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 m-10'>
                       See details
                     </a>
                   </Link>

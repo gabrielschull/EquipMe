@@ -139,7 +139,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
       </button> */}
 
       <div className="flex items-center justify-center">
-        <div className="flex flex-col items-center space-y-4 mt-20">
+        <div className="flex flex-col items-center space-y-12 mt-20 ">
           <button
             type="submit"
             onClick={() => {
@@ -159,7 +159,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                 e.preventDefault();
                 navigate(`/addgear`);
               }}
-              className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow">
+              className="bg-indigo-400 text-white font-semibold py-2 px-3 rounded shadow">
               Add Gear
             </button>
           )}
@@ -301,13 +301,16 @@ const GettingStarted: React.FC = (): JSX.Element => {
           </button> */}
         </>
       )}
-          <button
-            onClick={handleGeolocation}
-            type='submit'
-            className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-          >
-            Find gear near you!
-          </button>
+         <div className="flex justify-center items-center mt-10">
+  <button
+    onClick={handleGeolocation}
+    type="submit"
+    className="rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+  >
+    Update your current location here
+  </button>
+</div>
+
 
       {/*THE GOOGLE MAPS CONTAINER IS HERE IN CASE WE WANT IT BACK */}
     </>
