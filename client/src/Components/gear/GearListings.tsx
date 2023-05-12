@@ -5,6 +5,7 @@ import { RootState, AppDispatch } from "../../Redux/store";
 import { setAllGear } from "../../Redux/GearSlice";
 import { useNavigate } from "react-router-dom";
 import { supabase, supabaseClient } from "../../services/supabase.service";
+import Socials from "../misc/Socials";
 
 const GearListings: React.FC = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
@@ -175,6 +176,7 @@ const GearListings: React.FC = (): JSX.Element => {
               <p className="text-sm leading-6 text-gray-900">
                 Gear owner: {owners[gear.owner_id!]}
               </p>
+              <Socials></Socials>
               <p className="mt-1 text-xs leading-5 text-gray-500">
                 {" "}
                 Distance:{" "}
@@ -198,7 +200,6 @@ const GearListings: React.FC = (): JSX.Element => {
                   }
                   className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent"
                 >
-
                   See more details
                 </button>
               </form>

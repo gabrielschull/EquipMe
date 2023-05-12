@@ -78,6 +78,7 @@ export const supabase = {
     }
   },
 
+
   getUsers: async function () {
     try {
       const data = await supabaseClient.from('Users').select();
