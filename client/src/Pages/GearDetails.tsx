@@ -7,9 +7,10 @@ import {Carousel,initTE} from "tw-elements"
 
 import { supabase, supabaseClient } from '../services/supabase.service';
 import { useParams, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../Redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../Redux/store';
 import Calendar from '../Components/gear/Calendar';
+import { setUnavailableDates } from '../Redux/GearSlice';
 
 const reviews = { href: '#', average: 4, totalCount: 117 };
 const CDNURL =
@@ -27,6 +28,8 @@ const GearDetails: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [rentalStartDate, setRentalStartDate] = useState<Date>(new Date());
   const [rentalEndDate, setRentalEndDate] = useState<Date>(new Date());
+  const dispatch: AppDispatch = useDispatch();
+
   const location = useLocation();
   const gear = location.state?.gear;
 
@@ -34,13 +37,24 @@ const GearDetails: React.FC = (): JSX.Element => {
   const { id } = useParams();
 
   const handleReservationClick = () => {
-    supabase.startRentalContract(
-      id,
-      gearInfo.owner_id,
-      userInfo.profile.id,
-      rentalStartDate,
-      rentalEndDate
-    );
+    supabase
+      .startRentalContract(
+        id,
+        gearInfo.owner_id,
+        userInfo.profile.id,
+        rentalStartDate,
+        rentalEndDate
+      )
+      .then(() => {
+        dispatch(setUnavailableDates({ id, rentalStartDate, rentalEndDate }));
+      });
+    console.log('👯 gearinfo', { gearInfo });
+    id &&
+      supabase.calendarDeleteGearAvailability(
+        id,
+        rentalStartDate,
+        rentalEndDate
+      );
     setShowPaymentModal(true);
   };
 
@@ -95,20 +109,23 @@ const GearDetails: React.FC = (): JSX.Element => {
     <>
       <NavBar></NavBar>
       {gearInfo && (
+
         <div className="bg-white">
           <div className="pt-6">
             <div
-              id="image-track"
+              id='image-track'
               style={{
                 display: 'flex',
                 gap: '4vmin',
                 transform: 'translate(7%, 0%)',
+
               }}>
               {gearImages.map((image) => {
                 return (
                   <div
                     key={image.name}
-                    className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
+                    className='aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block'
+                  >
                     <img
                       src={
                         CDNURL +
@@ -118,8 +135,8 @@ const GearDetails: React.FC = (): JSX.Element => {
                         '/' +
                         image.name
                       }
-                      alt=""
-                      className="h-full w-full object-cover object-center"
+                      alt=''
+                      className='h-full w-full object-cover object-center'
                       style={{
                         width: '40vmin',
                         height: '56vmin',
@@ -137,16 +154,18 @@ const GearDetails: React.FC = (): JSX.Element => {
                   {gearInfo.name}
                 </h1>
               </div>
+
               <div className="mt-4 lg:row-span-3 lg:mt-0">
                 <p className="text-3xl tracking-tight text-gray-900">
                   Price/day: €{gearInfo.price_day}
                 </p>
-                <p className="text-3xl tracking-tight text-gray-900">
+                <p className='text-3xl tracking-tight text-gray-900'>
                   Price/hr: €{gearInfo.price_hr}
                 </p>
-                <p className="text-3xl tracking-tight text-gray-900">
+                <p className='text-3xl tracking-tight text-gray-900'>
                   Deposit: €{gearInfo.deposit}
                 </p>
+
                 <div className="mt-6">
                   <div className="flex items-center">
                     <div className="flex items-center">
@@ -159,27 +178,31 @@ const GearDetails: React.FC = (): JSX.Element => {
                               : 'text-gray-200',
                             'h-5 w-5 flex-shrink-0'
                           )}
-                          aria-hidden="true"
+                          aria-hidden='true'
                         />
                       ))}
                     </div>
-                    <p className="sr-only">{reviews.average} out of 5 stars</p>
+                    <p className='sr-only'>{reviews.average} out of 5 stars</p>
                     <a
                       href={reviews.href}
-                      className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                      className='ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500'
+                    >
                       {reviews.totalCount} reviews
                     </a>
                   </div>
                 </div>
+
                 <form className="mt-10">
                   <button
-                    type="button"
+                    type='button'
                     onClick={handleReservationClick}
-                    className="mt-10 flex w-full items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent">
+                    className='mt-10 flex w-full items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent'
+                  >
                     Reserve this gear
                   </button>
                 </form>
               </div>
+
               <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
                 <div>
                   <h3 className="sr-only">Description</h3>
