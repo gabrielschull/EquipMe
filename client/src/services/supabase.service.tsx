@@ -49,6 +49,33 @@ export const supabase = {
     }
   },
 
+  // calendarRemoveGearAvailability: async function (
+  //   gear_id: string,
+  //   start_date: Date,
+  //   end_date: Date
+  // ) {
+  //   try {
+  //     console.log(
+  //       'service gear_id=',
+  //       gear_id,
+  //       'service start=',
+  //       start_date,
+  //       'service end=',
+  //       end_date
+  //     );
+  //     FIRST IT NEEDS TO MAKE AN ARRAY OF ALL DATES, THEN DELETE EACH
+  //     MAYBE REWRITE THE SQL FUNC???
+  //     const { data, error } = await supabaseClient
+  //       .from('GearAvailability')
+  //       .delete()
+  //       .match({ gear_id: gear_id, date_available: start_date });
+  //     console.log(error);
+  //     return data;
+  //   } catch (e: any) {
+  //     console.log(e, 'Cannot run that function');
+  //   }
+  // },
+
   getUsers: async function () {
     try {
       const data = await supabaseClient.from('Users').select();
@@ -371,7 +398,7 @@ export const supabase = {
         .from('RentalContracts')
         .select('*, Gear!RentalContracts_gear_id_fkey(*)')
         .eq('renter_id', renter_id);
-        //
+      //
       // .single();
       if (error) {
         throw error;
