@@ -33,7 +33,7 @@ const NavBar: React.FC = (): JSX.Element => {
                   <div className='flex space-x-10'>
                     <img src={logo} alt='Logo' className='w-30 h-24' />
 
-                    {navigation.map((item) => (
+                    {navigation?.map((item) => (
                       <button
                         key={item.name}
                         onClick={() => navigate(item.href)}
@@ -123,7 +123,7 @@ const NavBar: React.FC = (): JSX.Element => {
 
           <Disclosure.Panel className='sm:hidden'>
             <div className='space-y-1 px-2 pb-3 pt-2'>
-              {navigation.map((item) => (
+              {navigation?.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as='a'

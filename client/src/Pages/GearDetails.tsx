@@ -48,7 +48,6 @@ const GearDetails: React.FC = (): JSX.Element => {
       .then(() => {
         dispatch(setUnavailableDates({ id, rentalStartDate, rentalEndDate }));
       });
-    console.log('👯 gearinfo', { gearInfo });
     id &&
       supabase.calendarDeleteGearAvailability(
         id,
@@ -61,14 +60,13 @@ const GearDetails: React.FC = (): JSX.Element => {
   const handleSeeMoreDetails = async () => {
     const gearData = await supabase.getGearId(id);
     if (gearData && gearData.length > 0) {
-      console.log('gearData -----> ', gearData);
-      setGearInfo(gearData[0])
+      setGearInfo(gearData[0]);
       const randomReviewCount = Math.floor(Math.random() * 101);
       setReviews({
         average: gearData[0].rating,
         totalCount: randomReviewCount,
-        href: '#reviews'
-      })
+        href: '#reviews',
+      });
       return gearData;
     } else {
       console.log('Cannot find gear details');
@@ -85,12 +83,9 @@ const GearDetails: React.FC = (): JSX.Element => {
           sortBy: { column: 'name', order: 'asc' },
         });
 
-      console.log(`${gear.owner_id}/gear/${id}`);
-
       if (error) console.log('ERROR IN IMAGE FETCH ==> ', error);
 
       if (data !== null) {
-        console.log(data, 'YARRRR');
         setGearImages(data);
       }
     } catch (e: any) {
@@ -103,24 +98,21 @@ const GearDetails: React.FC = (): JSX.Element => {
     getGearImages();
   }, []);
 
-  gearImages.map((image) => console.log(image.name, 'IMGNAME'));
-
   return (
     <>
       <NavBar></NavBar>
       {gearInfo && (
-
-        <div className="bg-white">
-          <div className="pt-6">
+        <div className='bg-white'>
+          <div className='pt-6'>
             <div
               id='image-track'
               style={{
                 display: 'flex',
                 gap: '4vmin',
                 transform: 'translate(7%, 0%)',
-
-              }}>
-              {gearImages.map((image) => {
+              }}
+            >
+              {gearImages?.map((image) => {
                 return (
                   <div
                     key={image.name}
@@ -155,8 +147,8 @@ const GearDetails: React.FC = (): JSX.Element => {
                 </h1>
               </div>
 
-              <div className="mt-4 lg:row-span-3 lg:mt-0">
-                <p className="text-3xl tracking-tight text-gray-900">
+              <div className='mt-4 lg:row-span-3 lg:mt-0'>
+                <p className='text-3xl tracking-tight text-gray-900'>
                   Price/day: €{gearInfo.price_day}
                 </p>
                 <p className='text-3xl tracking-tight text-gray-900'>
@@ -166,10 +158,10 @@ const GearDetails: React.FC = (): JSX.Element => {
                   Deposit: €{gearInfo.deposit}
                 </p>
 
-                <div className="mt-6">
-                  <div className="flex items-center">
-                    <div className="flex items-center">
-                      {[1,2,3,4,5].map((rating) => (
+                <div className='mt-6'>
+                  <div className='flex items-center'>
+                    <div className='flex items-center'>
+                      {[1, 2, 3, 4, 5].map((rating) => (
                         <StarIcon
                           key={rating}
                           className={classNames(
@@ -192,7 +184,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                   </div>
                 </div>
 
-                <form className="mt-10">
+                <form className='mt-10'>
                   <button
                     type='button'
                     onClick={handleReservationClick}
@@ -203,10 +195,10 @@ const GearDetails: React.FC = (): JSX.Element => {
                 </form>
               </div>
 
-              <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+              <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
                 <div>
-                  <h3 className="sr-only">Description</h3>
-                  <div className="space-y-6 my-6">
+                  <h3 className='sr-only'>Description</h3>
+                  <div className='space-y-6 my-6'>
                     <Calendar
                       rentalStartDate={rentalStartDate}
                       setRentalStartDate={setRentalStartDate}

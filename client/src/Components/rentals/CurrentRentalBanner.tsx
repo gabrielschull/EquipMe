@@ -30,7 +30,7 @@ const CurrentRentalBanner: React.FC = (): JSX.Element => {
                       alt='Flowbite Logo'
                     />
                     <span className='self-center text-lg font-semibold whitespace-nowrap dark:text-white ml-4'>
-                      Your active rental: {rental.Gear.name}
+                      Your active rental: {rental.Gear?.name}
                     </span>
                   </div>
                   <p className='flex items-center text-sm font-normal text-gray-500 dark:text-gray-400'>

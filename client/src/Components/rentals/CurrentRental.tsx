@@ -117,7 +117,7 @@ const CurrentRental: React.FC = (): JSX.Element => {
                   transform: 'translate(7%, 0%)',
                 }}
               >
-                {gearImages.map((image, index) => {
+                {gearImages?.map((image, index) => {
                   return (
                     <div
                       key={image.name}
