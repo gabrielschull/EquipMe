@@ -16,17 +16,7 @@ import CurrentRentalBanner from '../Components/rentals/CurrentRentalBanner';
 const Home: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
 
-  const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    const getContractsOnRender = async () => {
-      const data = await supabase.getContractsByRenterId(userInfo.profile.id);
-      dispatch(setActiveRentals(data));
-    };
-
-    getContractsOnRender();
-  }, []);
+  console.log('Home.tsx', userInfo);
 
   return (
     <>

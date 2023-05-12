@@ -10,12 +10,17 @@ export const UserSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserInfo: (_, action) => {
-      return action.payload;
+    setUserInfo: (state, action) => {
+      state.profile = action.payload.profile;
+      state.session = action.payload.session;
     },
     setActiveRentals: (state, action) => {
       const activeRentals = action.payload;
       state.activeRentals = activeRentals;
+    },
+    addOneNewRental: (state, action) => {
+      const newRental = action.payload;
+      state.activeRentals = [...state.activeRentals, newRental];
     },
     updateUser: (state, action) => {
       const { firstname, lastname, email, phone, bio } = action.payload.profile;
@@ -54,5 +59,6 @@ export const {
   toggleIsRenter,
   updateLocation,
   updateUser,
+  addOneNewRental,
 } = UserSlice.actions;
 export default UserSlice.reducer;
