@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../Redux/store';
 import logo from "../Assets/Logo.png"
 
-
 const navigation = [
   { name: 'Home', href: '/home', current: false },
   { name: 'My Profile', href: '/myprofile', current: false },
@@ -19,10 +18,10 @@ function classNames(...classes: any) {
 }
 
 const NavBar: React.FC = (): JSX.Element => {
-  const userInfo = useSelector ((state: RootState) => state.User);
+  const userInfo = useSelector((state: RootState) => state.User);
   const navigate = useNavigate();
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-white">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-10xl px-2 sm:px-6 lg:px-0">
@@ -40,8 +39,8 @@ const NavBar: React.FC = (): JSX.Element => {
                         onClick={() => navigate(item.href)}
                         className={classNames(
                           item.current
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                            ? 'bg-gray-900 text-black'
+                            : 'text-black hover:shadow-md hover:text-black',
                           'rounded-md px-3 py-2 text-sm font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}>
@@ -52,11 +51,13 @@ const NavBar: React.FC = (): JSX.Element => {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
+                {/* <button
                   type="button"
                   className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
+
                 </button>
+
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
