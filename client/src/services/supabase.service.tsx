@@ -383,35 +383,35 @@ export const supabase = {
     }
   },
 
-  addPayment: async function addPayment(
-    gear_id: string | undefined,
-    owner_id: string,
-    renter_id: string,
-    rental_price: string,
-    deposit: any,
-    total: any,
-    success: boolean
-  ) {
-    try {
-      const { data, error } = await supabaseClient
-        .from('Payment')
-        .insert({
-          gear_id: gear_id,
-          owner_id: owner_id,
-          renter_id: renter_id,
-          rental_price: rental_price,
-          deposit: deposit,
-          total: total,
-          payment_success: success,
-        })
-        .select();
+  // addPayment: async function addPayment(
+  //   gear_id: string | undefined,
+  //   owner_id: string,
+  //   renter_id: string,
+  //   rental_price: string,
+  //   deposit: any,
+  //   total: any,
+  //   success: boolean
+  // ) {
+  //   try {
+  //     const { data, error } = await supabaseClient
+  //       .from('Payment')
+  //       .insert({
+  //         gear_id: gear_id,
+  //         owner_id: owner_id,
+  //         renter_id: renter_id,
+  //         rental_price: rental_price,
+  //         deposit: deposit,
+  //         total: total,
+  //         payment_success: success
+  //       })
+  //       .select();
 
-      if (error) {
-        throw error;
-      }
-      return data;
-    } catch (e: any) {
-      console.log(e, ' ❌ Payment not completed ');
-    }
-  },
+  //     if (error) {
+  //       throw error;
+  //     }
+  //     return data;
+  //   } catch (e: any) {
+  //     console.log(e, ' ❌ Payment not completed ');
+  //   }
+  // },
 };

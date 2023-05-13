@@ -2,16 +2,39 @@ import React from 'react';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { supabase, supabaseClient } from '../../services/supabase.service';
 import { useState } from 'react';
+import { Stripe, StripeElement, StripeElements} from '@stripe/stripe-js';
 
 const Payment: React.FC = (): JSX.Element => {
   const [success, setSuccess] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { error, paymentMethod };
-  };
+const handleSubmit = async (
+  e: React.FormEvent<HTMLFormElement>,
+  stripe: Stripe,
+  elements: StripeElements,
+): Promise<void> => {
+  e.preventDefault();
+  const { error, paymentMethod } = await stripe.createPaymentMethod({
+    type: 'card',
+    card: cardElement,
+    billing_details: {
+      name: 'Jenny Rosen',
+    },
+  })
+  .then(function(result) {
+    if (!error) {
+  try {
+const {id} = PaymentMethod
+const response = await axios.post("SOMETHING GOES HE, {
+  amount: 1000,
+  id
+})
+  }catch (error)
+}
+};
+
+//
 
   return (
     // <div className="w-1/3 p-5">
