@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../Redux/store'
+
 
 interface Message {
   id: number;
@@ -7,6 +10,7 @@ interface Message {
 }
 
 const Chat: React.FC = (): JSX.Element => {
+  const userInfo = useSelector((state: RootState) => state.User);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -29,24 +33,9 @@ const Chat: React.FC = (): JSX.Element => {
     setIsChatOpen((prevState) => !prevState);
   };
 
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (
-      chatRef.current &&
-      buttonRef.current &&
-      !chatRef.current.contains(e.target as Node) &&
-      !buttonRef.current.contains(e.target as Node)
-    ) {
-      setIsChatOpen(false);
-    }
+  const handleCloseClick = () => {
+    setIsChatOpen(false);
   };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, []);
 
   return (
     <div className='flex'>
@@ -62,6 +51,12 @@ const Chat: React.FC = (): JSX.Element => {
           ref={chatRef}
           className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'
         >
+          <button
+            onClick={handleCloseClick}
+            className='absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center focus:outline-none'
+          >
+            X
+          </button>
           <div className='flex-grow overflow-y-auto p-4'>
             {messages?.map((message) => (
               <div
