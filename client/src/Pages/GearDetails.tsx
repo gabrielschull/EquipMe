@@ -10,7 +10,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../Redux/store';
 import Calendar from '../Components/gear/Calendar';
-import { setUnavailableDates } from '../Redux/GearSlice';
+import { setAvailableDates, setUnavailableDates } from '../Redux/GearSlice';
 
 const reviews = { href: '#', average: 4, totalCount: 117 };
 const CDNURL =
@@ -33,8 +33,16 @@ const GearDetails: React.FC = (): JSX.Element => {
   const location = useLocation();
   const gear = location.state?.gear;
 
-
   const { id } = useParams();
+
+  const getGearAvailability = async () => {
+    const gearAvailability = await supabase.getAvailabilityByGearId(id);
+    // .then(() => {
+    dispatch(setAvailableDates({ id, gearAvailability }));
+    // });
+    console.log('🐷🐷 GearDetails >>> gearAvailability', gearAvailability);
+    console.log('🐷🐷🐷 GearDetails >>> gearInfo', gearInfo);
+  };
 
   const handleReservationClick = () => {
     supabase
@@ -94,8 +102,9 @@ const GearDetails: React.FC = (): JSX.Element => {
   }
 
   useEffect(() => {
-    handleSeeMoreDetails();
     getGearImages();
+    getGearAvailability();
+    handleSeeMoreDetails();
   }, []);
 
   return (

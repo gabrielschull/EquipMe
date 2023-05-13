@@ -22,7 +22,21 @@ const Calendar: React.FC<any> = ({
 
   console.log('location.pathname=', location.pathname);
 
+  const [availableDates, setAvailableDates] = useState<any>([]);
   const [unavailableDates, setUnavailableDates] = useState<any>([]);
+
+  const handleAvailableDates = () => {
+    const indexToUpd = gearInfo.findIndex((gear) => gear.id === id);
+    const dateArr: Date[] = [];
+    console.log('👀 gearInfo[indexToUpd]', gearInfo[indexToUpd]);
+
+    gearInfo[indexToUpd].availableDates?.forEach((element: any) =>
+      dateArr.push(new Date(element.date_available))
+    );
+    console.log('👀', dateArr);
+    setAvailableDates(dateArr);
+    console.log('👀 availableDates STATE', availableDates);
+  };
 
   const handleUnavailableDates = () => {
     const indexToUpd = gearInfo.findIndex((gear) => gear.id === id);
@@ -53,6 +67,7 @@ const Calendar: React.FC<any> = ({
 
   useEffect(() => {
     handleUnavailableDates();
+    handleAvailableDates();
     // setUnavailableDates(gearInfo[indexToUpd].unavailableDates);
     // console.log(
     //   '!!! gearInfo in Calendar',
@@ -74,7 +89,8 @@ const Calendar: React.FC<any> = ({
             selected={
               location.pathname == '/addgear' ? startDate : rentalStartDate
             }
-            excludeDates={unavailableDates}
+            // excludeDates={unavailableDates}
+            includeDates={availableDates}
             onChange={handleStartDateChange}
             className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
             inline
@@ -87,7 +103,8 @@ const Calendar: React.FC<any> = ({
           <DatePicker
             dateFormat='yyyy/MM/dd'
             id='end-date-picker'
-            excludeDates={unavailableDates}
+            includeDates={availableDates}
+            // excludeDates={unavailableDates}
             selected={location.pathname == '/addgear' ? endDate : rentalEndDate}
             onChange={handleEndDateChange}
             className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'

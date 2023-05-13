@@ -78,7 +78,6 @@ export const supabase = {
     }
   },
 
-
   getUsers: async function () {
     try {
       const data = await supabaseClient.from('Users').select();
@@ -405,6 +404,20 @@ export const supabase = {
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot find contracts in the db');
+    }
+  },
+  getAvailabilityByGearId: async function (gear_id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('GearAvailability')
+        .select('*, Gear!GearAvailability_gear_id_fkey(*)')
+        .eq('gear_id', gear_id);
+      if (error) {
+        throw error;
+      }
+      return data;
+    } catch (e: any) {
+      console.log(e, 'Cannot find availability in the db');
     }
   },
 };

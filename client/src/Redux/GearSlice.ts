@@ -16,6 +16,15 @@ export const AllGearSlice = createSlice({
     deleteGear: (state, action) => {
       return state.filter((gear) => gear.id !== action.payload);
     },
+    setAvailableDates: (state, action) => {
+      console.log('🐷 GearSlice >>> availableDates=', action.payload);
+      const indexToUpd = state.findIndex(
+        (gear) => gear.id === action.payload.id
+      );
+      console.log('🐷 GearSlice >>> indexToUpd=', indexToUpd);
+      state[indexToUpd].availableDates = action.payload.gearAvailability;
+      console.log('🐷 GearSlice >>> state[indexToUpd]=', state[indexToUpd]);
+    },
     setUnavailableDates: (state, action) => {
       const indexToUpd = state.findIndex(
         (gear) => gear.id === action.payload.id
@@ -41,6 +50,7 @@ export const AllGearSlice = createSlice({
 });
 export const {
   setAllGear,
+  setAvailableDates,
   setUnavailableDates,
   deleteGear,
   addGear,
