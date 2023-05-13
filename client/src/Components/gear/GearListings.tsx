@@ -165,7 +165,7 @@ const GearListings: React.FC = (): JSX.Element => {
             ) : (
               <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                 <img
-                  src="https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/fd2239b1-4a23-4fb8-a473-fe6243d7ad18/gear/8223de50-b701-465f-a18b-4682cb27fc90/pexels-krivec-ales-558454.jpg"
+                  src="https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/3ae36b25-4df5-44de-b66e-18eb88458a30/gear/cb7fc4d2-a61d-4427-aa99-8b298258b9ce/Screenshot%202023-05-12%20at%2009.14.47.png"
                   alt=""
                   className="h-full w-full object-cover object-center"
                   style={{ width: "18vmin", height: "24vmin" }}
