@@ -11,4 +11,5 @@ export interface Gear {
   rentals?: string[] | null;
   type?: string | null;
   unavailableDates?: string[] | null;
+  availableDates?: object[] | null;
 }
