@@ -8,7 +8,7 @@ import { supabaseClient } from '../../services/supabase.service';
 import { format } from 'date-fns';
 
 const product = {
-  price: '$200',
+  price: '€200',
   href: '#',
 };
 // const reviews = { href: '#', average: 4, totalCount: 117 };

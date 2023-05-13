@@ -17,16 +17,10 @@ const GearListings: React.FC = (): JSX.Element => {
   const CDNURL =
     "https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/";
 
-  // useEffect(() => {
-  //   supabase.getGear().then((data) => {
-  //     console.log("DATA ==>", data)
-  //     dispatch(setAllGear(data?.slice(0,2)));
-  //   });
-  // }, []);
 
   const [owners, setOwners] = useState<{ [key: string]: string }>({});
   const [distances, setDistances] = useState<{ [key: string]: string }>({});
-  const [gearType, setGearType] = useState<string>("");
+
 
   const navigate = useNavigate();
 
@@ -51,7 +45,7 @@ const GearListings: React.FC = (): JSX.Element => {
       const dLat = ((userLat - ownerLat) * Math.PI) / 180;
       const dLng = ((userLng - ownerLng) * Math.PI) / 180;
       const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLat / 2) * Math.sin(dLat / 2)
         Math.cos((ownerLat * Math.PI) / 180) *
           Math.cos((userLat * Math.PI) / 180) *
           Math.sin(dLng / 2) *
@@ -106,16 +100,29 @@ const GearListings: React.FC = (): JSX.Element => {
   }, [filteredGear, owners, userInfo.id]);
 
   console.log("homegearimg ==>", homeGearImages)
+
+  const sortedGear = filteredGear.slice().sort((gearA: Gear, gearB: Gear) => {
+    const distanceA = parseFloat(distances[gearA.owner_id!] || 'Infinity');
+    const distanceB = parseFloat(distances[gearB.owner_id!] || 'Infinity');
+
+    if (distanceA < distanceB) {
+      return -1;
+    } else if (distanceA > distanceB) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
   return (
     <ul role="list" className="divide-y divide-gray-100 mx-12 ">
-      {filteredGear
+      {sortedGear
         .filter((gear: Gear) => {
           return gear.owner_id !== userInfo.profile.id;
         })
         .map((gear: Gear, index) => (
           <li key={gear.id} className="flex justify-between gap-x-6 py-5">
             <div className="flex gap-x-4">
-              {/* <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={gear.imageUrl} alt="" /> */}
               <div className="min-w-0 flex-auto">
                 <p
                   style={{ width: "450px" }}
@@ -135,7 +142,6 @@ const GearListings: React.FC = (): JSX.Element => {
                 </p>
               </div>
             </div>
-            {/* {console.log(homeGearImages[0])} */}
             {homeGearImages[gear.id!] && homeGearImages ? (
               <div
                 style={{ paddingRight: "20px", paddingLeft: "20px" }}

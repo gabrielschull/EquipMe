@@ -240,7 +240,8 @@ export const supabase = {
     try {
       const data = await supabaseClient.from('Gear').select().eq('id', id);
       if (data && data.data) {
-        return data.data;
+        console.log("THIS IS THE DATA",data.data)
+        return data.data
       }
     } catch (e: any) {
       console.log(e, 'Cannot get gear from Supabase');
@@ -418,6 +419,20 @@ export const supabase = {
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot find availability in the db');
+    }
+  },
+  getLocationByGearId: async function (id: string) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('Gear')
+        .select('location')
+        .eq('id', id);
+      if (error) {
+        throw error;
+      }
+      return data[0]?.location;
+    } catch (e: any) {
+      console.log(e, 'Cannot find location in the db');
     }
   },
 };

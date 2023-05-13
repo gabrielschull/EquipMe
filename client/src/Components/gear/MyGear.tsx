@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Gear } from '../../types/gear.type';
 import { supabase } from '../../services/supabase.service';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../home/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAllGear, deleteGear } from '../../Redux/GearSlice';
 import { RootState, AppDispatch } from '../../Redux/store';

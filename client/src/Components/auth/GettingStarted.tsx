@@ -319,7 +319,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
         </button>
       </div>
 
-      {/*THE GOOGLE MAPS CONTAINER IS HERE IN CASE WE WANT IT BACK */}
+      {/* <MapContainer/> */}
     </>
   );
 };
