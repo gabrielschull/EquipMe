@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
+import { Gear } from '../../types/gear.type';
 
 const Stripe: React.FC = (): JSX.Element => {
   const [product, setProduct] = useState({
@@ -40,10 +41,20 @@ const Stripe: React.FC = (): JSX.Element => {
   };
   return (
     <>
-      <p>{product.name}</p>
+      <div className="bg-white p-8 shadow-md rounded-lg">
+        <p className="text-2xl font-bold mb-4">{product.name}</p>
+        <p className="text-lg mb-4">{product.description}</p>
+        <button
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          onClick={makePayment}>
+          Reserve you gear {product.price}
+        </button>
+      </div>
+
+      {/* <p>{product.name}</p>
       <p>{product.description}</p>
 
-      <button onClick={makePayment}>Buy Now for {product.price}</button>
+      <button onClick={makePayment}>Buy Now for {product.price}</button> */}
     </>
   );
 };
