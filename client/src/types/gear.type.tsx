@@ -10,4 +10,6 @@ export interface Gear {
   rating?: number | null;
   rentals?: string[] | null;
   type?: string | null;
+  unavailableDates?: string[] | null;
+  availableDates?: object[] | null;
 }

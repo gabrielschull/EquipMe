@@ -49,6 +49,35 @@ export const supabase = {
     }
   },
 
+  calendarDeleteGearAvailability: async function (
+    gear_id: string,
+    start_date: Date,
+    end_date: Date
+  ) {
+    try {
+      console.log(
+        'service gear_id=',
+        gear_id,
+        'service start=',
+        start_date,
+        'service end=',
+        end_date
+      );
+      const { data, error } = await supabaseClient.rpc(
+        'deleteDateAvailability',
+        {
+          gear_id: gear_id,
+          start_date: format(start_date, 'yyyy-MM-dd'),
+          end_date: format(end_date, 'yyyy-MM-dd'),
+        }
+      );
+      console.log(error);
+      return data;
+    } catch (e: any) {
+      console.log(e, 'Cannot run that function');
+    }
+  },
+
   getUsers: async function () {
     try {
       const data = await supabaseClient.from('Users').select();
@@ -365,14 +394,9 @@ export const supabase = {
   getContractsByRenterId: async function (renter_id: string | undefined) {
     try {
       const { data, error } = await supabaseClient
-        // .from('Users')
-        // .select('*, RentalContracts!RentalContracts_renter_id_fkey(*)')
-        // .eq('id', renter_id);
         .from('RentalContracts')
         .select('*, Gear!RentalContracts_gear_id_fkey(*)')
         .eq('renter_id', renter_id);
-        //
-      // .single();
       if (error) {
         throw error;
       }
@@ -380,6 +404,20 @@ export const supabase = {
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot find contracts in the db');
+    }
+  },
+  getAvailabilityByGearId: async function (gear_id: string | undefined) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('GearAvailability')
+        .select('*, Gear!GearAvailability_gear_id_fkey(*)')
+        .eq('gear_id', gear_id);
+      if (error) {
+        throw error;
+      }
+      return data;
+    } catch (e: any) {
+      console.log(e, 'Cannot find availability in the db');
     }
   },
 };

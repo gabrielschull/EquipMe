@@ -50,7 +50,7 @@ const AddGear: React.FC = (): JSX.Element => {
 
       // upload the files to the storage bucket
       if (files) {
-        const fileUploads = files.map((file) =>
+        const fileUploads = files?.map((file) =>
           supabase.uploadGear(
             file,
             userInfo?.session?.user.id + '/gear/' + gearJustAddedInfo[0].id

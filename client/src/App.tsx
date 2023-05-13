@@ -23,6 +23,8 @@ import { useEffect } from 'react';
 import { useSession } from './Components/users/UseSession';
 import CurrentRentalBanner from './Components/rentals/CurrentRentalBanner';
 import CurrentRental from './Components/rentals/CurrentRental';
+import Rentals from './Pages/Rentals';
+import Stripe from './Components/misc/Stripe';
 
 const App: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
@@ -38,7 +40,7 @@ const App: React.FC = (): JSX.Element => {
       <Routes>
         <>
           <Route
-            path='/'
+            path="/"
             element={
               !userInfo.profile ? (
                 <Login />
@@ -55,18 +57,20 @@ const App: React.FC = (): JSX.Element => {
               )
             }
           />
-          <Route path='/home' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/geardetails/:id' element={<GearDetailsPage />} />
-          <Route path='/mygear' element={<MyGear />} />
-          <Route path='/editgear/:gearId' element={<EditGear />} />
-          <Route path='/rentals/:rental_id' element={<CurrentRental />} />
-          <Route path='/addgear' element={<AddGear />} />
-          <Route path='/myprofile' element={<UserProfile />} />
-          <Route path='/edituser' element={<EditUser />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/geardetails/:id" element={<GearDetailsPage />} />
+          <Route path="/mygear" element={<MyGear />} />
+          <Route path="/editgear/:gearId" element={<EditGear />} />
+          <Route path="/rentals/" element={<Rentals />} />
+          <Route path="/rentals/:rental_id" element={<CurrentRental />} />
+          <Route path="/addgear" element={<AddGear />} />
+          <Route path="/myprofile" element={<UserProfile />} />
+          <Route path="/edituser" element={<EditUser />} />
 
-          <Route path='/calendar' element={<Calendar />} />
-          <Route path='/test' element={<CurrentRental />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/test" element={<CurrentRental />} />
+          <Route path="/stripe" element={<Stripe />} />
         </>
       </Routes>
     </Router>

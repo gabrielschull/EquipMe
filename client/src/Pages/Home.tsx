@@ -11,6 +11,7 @@ import { supabase } from '../services/supabase.service';
 import { setActiveRentals } from '../Redux/UserSlice';
 import { RootState } from '../Redux/store';
 import CurrentRentalBanner from '../Components/rentals/CurrentRentalBanner';
+import Loading from '../Components/misc/Loading';
 // import EditUser from './EditUser';
 
 const Home: React.FC = (): JSX.Element => {
@@ -24,10 +25,10 @@ const Home: React.FC = (): JSX.Element => {
 
       <div className="component-container">
         <NavBar/>
+        {/* <Loading></Loading> */}
         <CurrentRentalBanner></CurrentRentalBanner>
         <GettingStarted/>
         {/* <CurrentRental></CurrentRental> */}
-        <Chat/>
         <div style = {{paddingTop: "80px"}}>
         <GearListings/>
         </div>

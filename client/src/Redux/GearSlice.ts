@@ -16,7 +16,27 @@ export const AllGearSlice = createSlice({
     deleteGear: (state, action) => {
       return state.filter((gear) => gear.id !== action.payload);
     },
-
+    setAvailableDates: (state, action) => {
+      console.log('🐷 GearSlice >>> availableDates=', action.payload);
+      const indexToUpd = state.findIndex(
+        (gear) => gear.id === action.payload.id
+      );
+      console.log('🐷 GearSlice >>> indexToUpd=', indexToUpd);
+      state[indexToUpd].availableDates = action.payload.gearAvailability;
+      console.log('🐷 GearSlice >>> state[indexToUpd]=', state[indexToUpd]);
+    },
+    setUnavailableDates: (state, action) => {
+      const indexToUpd = state.findIndex(
+        (gear) => gear.id === action.payload.id
+      );
+      // const unavailableDates = action.payload;
+      console.log('GearSlice >>> unavailableDates=', action.payload);
+      state[indexToUpd].unavailableDates = [
+        action.payload.rentalStartDate,
+        action.payload.rentalEndDate,
+      ];
+      console.log('GearSlice >>> state[indexToUpd]=', state[indexToUpd]);
+    },
     updateGear: (state, action) => {
       const indexToUpd = state.findIndex(
         (gear) => gear.id === action.payload.id
@@ -28,6 +48,12 @@ export const AllGearSlice = createSlice({
     },
   },
 });
-export const { setAllGear, deleteGear, addGear, updateGear } =
-  AllGearSlice.actions;
+export const {
+  setAllGear,
+  setAvailableDates,
+  setUnavailableDates,
+  deleteGear,
+  addGear,
+  updateGear,
+} = AllGearSlice.actions;
 export default AllGearSlice.reducer;

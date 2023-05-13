@@ -12,6 +12,7 @@ const Chat: React.FC = (): JSX.Element => {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const chatRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +30,12 @@ const Chat: React.FC = (): JSX.Element => {
   };
 
   const handleOutsideClick = (e: MouseEvent) => {
-    if (chatRef.current && !chatRef.current.contains(e.target as Node)) {
+    if (
+      chatRef.current &&
+      buttonRef.current &&
+      !chatRef.current.contains(e.target as Node) &&
+      !buttonRef.current.contains(e.target as Node)
+    ) {
       setIsChatOpen(false);
     }
   };
@@ -43,27 +49,32 @@ const Chat: React.FC = (): JSX.Element => {
   }, []);
 
   return (
-    <div className="relative">
+    <div className='flex'>
       <button
+        ref={buttonRef}
         onClick={handleButtonClick}
-        className="fixed bottom-4 right-4 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center focus:outline-none">
+        className='fixed bottom-4 right-4 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center focus:outline-none'
+      >
         {isChatOpen ? '-' : '+'}
       </button>
       {isChatOpen && (
         <div
           ref={chatRef}
-          className="fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col">
-          <div className="flex-grow overflow-y-auto p-4">
-            {messages.map((message) => (
+          className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'
+        >
+          <div className='flex-grow overflow-y-auto p-4'>
+            {messages?.map((message) => (
               <div
                 key={message.id}
                 className={`flex justify-${
                   message.sender === 'user' ? 'end' : 'start'
-                } mb-2`}>
+                } mb-2`}
+              >
                 <div
                   className={`bg-blue-500 p-2 rounded-lg text-white max-w-xs ${
                     message.sender === 'user' ? 'ml-2' : 'mr-2'
-                  }`}>
+                  }`}
+                >
                   {message.content}
                 </div>
               </div>
@@ -71,11 +82,11 @@ const Chat: React.FC = (): JSX.Element => {
           </div>
           <form onSubmit={handleSubmit}>
             <input
-              type="text"
+              type='text'
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className="border-2 border-gray-300 p-2 w-full rounded-lg focus:outline-none focus:border-blue-500"
-              placeholder="Type your message..."
+              className='border-2 border-gray-300 p-2 w-full rounded-lg focus:outline-none focus:border-blue-500 whitespace-normal overflow-wrap-normal'
+              placeholder='Type your message...'
               style={{ flex: 'none' }}
             />
           </form>
@@ -86,3 +97,13 @@ const Chat: React.FC = (): JSX.Element => {
 };
 
 export default Chat;
+
+
+
+// Helper function to format timestamp
+const formatTimestamp = (timestamp: number): string => {
+  const date = new Date(timestamp);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  return `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+};
