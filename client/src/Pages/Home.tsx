@@ -29,7 +29,6 @@ const Home: React.FC = (): JSX.Element => {
         <CurrentRentalBanner></CurrentRentalBanner>
         <GettingStarted/>
         {/* <CurrentRental></CurrentRental> */}
-        <Chat/>
         <div style = {{paddingTop: "80px"}}>
         <GearListings/>
         </div>
