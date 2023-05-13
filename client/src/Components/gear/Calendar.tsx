@@ -20,33 +20,17 @@ const Calendar: React.FC<any> = ({
   const gearInfo = useSelector((state: RootState) => state.Gear);
   const { id } = useParams();
 
-  console.log('location.pathname=', location.pathname);
 
   const [availableDates, setAvailableDates] = useState<any>([]);
-  const [unavailableDates, setUnavailableDates] = useState<any>([]);
 
   const handleAvailableDates = () => {
     const indexToUpd = gearInfo.findIndex((gear) => gear.id === id);
     const dateArr: Date[] = [];
-    console.log('👀 gearInfo[indexToUpd]', gearInfo[indexToUpd]);
 
     gearInfo[indexToUpd].availableDates?.forEach((element: any) =>
       dateArr.push(new Date(element.date_available))
     );
-    console.log('👀', dateArr);
     setAvailableDates(dateArr);
-    console.log('👀 availableDates STATE', availableDates);
-  };
-
-  const handleUnavailableDates = () => {
-    const indexToUpd = gearInfo.findIndex((gear) => gear.id === id);
-    const dateArr: Date[] = [];
-    gearInfo[indexToUpd].unavailableDates?.forEach((element) =>
-      dateArr.push(new Date(element))
-    );
-    console.log('🖤', dateArr);
-    setUnavailableDates(dateArr);
-    console.log('🖤 unavailableDates STATE', unavailableDates);
   };
 
   const handleStartDateChange = (date: Date) => {
@@ -66,13 +50,7 @@ const Calendar: React.FC<any> = ({
   };
 
   useEffect(() => {
-    handleUnavailableDates();
-    handleAvailableDates();
-    // setUnavailableDates(gearInfo[indexToUpd].unavailableDates);
-    // console.log(
-    //   '!!! gearInfo in Calendar',
-    //   gearInfo[indexToUpd].unavailableDates
-    // );
+    if (location.pathname !== '/addgear') handleAvailableDates();
   }, []);
 
   return (
@@ -83,41 +61,58 @@ const Calendar: React.FC<any> = ({
           <label className='text-sm mb-1' htmlFor='start-date-picker'>
             Start:
           </label>
-          <DatePicker
-            dateFormat='yyyy/MM/dd'
-            id='start-date-picker'
-            selected={
-              location.pathname == '/addgear' ? startDate : rentalStartDate
-            }
-            // excludeDates={unavailableDates}
-            includeDates={availableDates}
-            onChange={handleStartDateChange}
-            className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
-            inline
-          />
+          {location.pathname == '/addgear' ? (
+            <DatePicker
+              dateFormat='yyyy/MM/dd'
+              id='start-date-picker'
+              selected={startDate}
+              includeDateIntervals={[
+                { start: new Date(), end: addDays(new Date(), 90) },
+              ]}
+              onChange={handleStartDateChange}
+              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+              inline
+            />
+          ) : (
+            <DatePicker
+              dateFormat='yyyy/MM/dd'
+              id='start-date-picker'
+              selected={rentalStartDate}
+              includeDates={availableDates}
+              onChange={handleStartDateChange}
+              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+              inline
+            />
+          )}
         </div>
         <div className='flex flex-col'>
           <label className='text-sm mb-1' htmlFor='end-date-picker'>
             End:
           </label>
-          <DatePicker
-            dateFormat='yyyy/MM/dd'
-            id='end-date-picker'
-            includeDates={availableDates}
-            // excludeDates={unavailableDates}
-            selected={location.pathname == '/addgear' ? endDate : rentalEndDate}
-            onChange={handleEndDateChange}
-            className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
-            inline
-          />
+          {location.pathname == '/addgear' ? (
+            <DatePicker
+              dateFormat='yyyy/MM/dd'
+              id='start-date-picker'
+              selected={endDate}
+              includeDateIntervals={[
+                { start: new Date(), end: addDays(new Date(), 90) },
+              ]}
+              onChange={handleEndDateChange}
+              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+              inline
+            />
+          ) : (
+            <DatePicker
+              dateFormat='yyyy/MM/dd'
+              id='start-date-picker'
+              selected={rentalEndDate}
+              includeDates={availableDates}
+              onChange={handleEndDateChange}
+              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+              inline
+            />
+          )}
         </div>
-        {/* <button
-          className='bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-600'
-          onClick={handleSaveClick}
-          disabled={!startDate || !endDate}
-        >
-          Save
-        </button> */}
       </div>
     </div>
   );
