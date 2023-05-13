@@ -3,16 +3,17 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const Stripe: React.FC = (): JSX.Element => {
   const [product, setProduct] = useState({
-    name: 'Go FullStack with KnowledgeHut',
-    price: 1000,
-    productOwner: 'KnowledgeHut',
-    description:
-      'This beginner-friendly Full-Stack Web Development Course is offered online in blended learning mode, and also in an on-demand self-paced format.',
+    name: 'Gear Rental via GearHub',
+    price: 100,
+    productOwner: 'Raul Barros',
+    description: 'Bicycle model RT200',
     quantity: 1,
   });
 
+  const stripeAPIKey = process.env.REACT_APP_STRIPE_KEY!;
+
   const makePayment = async () => {
-    const stripe = await loadStripe('your-publishable-key');
+    const stripe = await loadStripe(stripeAPIKey);
     const body = { product };
     const headers = {
       'Content-Type': 'application/json',
@@ -33,7 +34,7 @@ const Stripe: React.FC = (): JSX.Element => {
       sessionId: session.id,
     });
 
-    // if (result?.error) {
+    // if (result.error) {
     //   console.log(result?.error);
     // }
   };

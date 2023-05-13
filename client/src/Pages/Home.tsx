@@ -4,7 +4,7 @@ import NavBar from '../Components/home/NavBar';
 import GearListings from '../Components/gear/GearListings';
 import AddGear from './AddGear';
 import Chat from '../Components/rentals/Chat';
-import Payment from '../Components/rentals/Payment';
+import Payment from '../Components/payments/Payment--legacy';
 import GettingStarted from '../Components/auth/GettingStarted';
 import { useDispatch, useSelector } from 'react-redux';
 import { supabase } from '../services/supabase.service';

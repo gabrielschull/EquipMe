@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
-import Payment from '../Components/rentals/Payment';
+import Payment from '../Components/payments/Payment--legacy';
 import { useState } from 'react';
 import Chat from '../Components/rentals/Chat';
 import { supabase, supabaseClient } from '../services/supabase.service';
