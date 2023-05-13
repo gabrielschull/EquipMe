@@ -3,8 +3,7 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
 import Payment from '../Components/rentals/Payment';
 import { useState } from 'react';
-import {Carousel,initTE} from "tw-elements"
-
+import Chat from '../Components/rentals/Chat';
 import { supabase, supabaseClient } from '../services/supabase.service';
 import { useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -157,7 +156,6 @@ const GearDetails: React.FC = (): JSX.Element => {
                 <p className='text-3xl tracking-tight text-gray-900'>
                   Deposit: €{gearInfo.deposit}
                 </p>
-
                 <div className='mt-6'>
                   <div className='flex items-center'>
                     <div className='flex items-center'>
@@ -178,23 +176,23 @@ const GearDetails: React.FC = (): JSX.Element => {
                     <a
                       href={reviews.href}
                       className='ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500'
-                    >
+                      >
                       {reviews.totalCount} reviews
                     </a>
                   </div>
                 </div>
-
                 <form className='mt-10'>
                   <button
                     type='button'
                     onClick={handleReservationClick}
                     className='mt-10 flex w-full items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent'
-                  >
+                    >
                     Reserve this gear
                   </button>
-                </form>
-              </div>
 
+                </form>
+                <Chat/>
+              </div>
               <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
                 <div>
                   <h3 className='sr-only'>Description</h3>
@@ -204,7 +202,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                       setRentalStartDate={setRentalStartDate}
                       rentalEndDate={rentalEndDate}
                       setRentalEndDate={setRentalEndDate}
-                    />
+                      />
                   </div>
                 </div>
               </div>
