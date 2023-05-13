@@ -22,9 +22,10 @@ app.post('/api/create-checkout-session', async (req, res) => {
     line_items: [
       {
         price_data: {
-          currency: 'inr',
+          currency: 'eur',
           product_data: {
             name: product.name,
+            description: product.description,
           },
           unit_amount: product.price * 100,
         },
@@ -32,8 +33,8 @@ app.post('/api/create-checkout-session', async (req, res) => {
       },
     ],
     mode: 'payment',
-    // success_url: 'http://localhost:3000/success',
-    // cancel_url: 'http://localhost:3000/cancel',
+    success_url: 'http://localhost:3000/paymentsuccessful',
+    cancel_url: 'http://localhost:3000/paymentcanceled',
   });
   res.json({ id: session.id });
 });
