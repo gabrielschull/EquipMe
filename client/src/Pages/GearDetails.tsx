@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../Redux/store';
 import Calendar from '../Components/gear/Calendar';
 import { setAvailableDates, setUnavailableDates } from '../Redux/GearSlice';
+import { loadStripe } from '@stripe/stripe-js';
 
 const reviews = { href: '#', average: 4, totalCount: 117 };
 const CDNURL =
@@ -28,6 +29,7 @@ const GearDetails: React.FC = (): JSX.Element => {
   const [rentalStartDate, setRentalStartDate] = useState<Date>(new Date());
   const [rentalEndDate, setRentalEndDate] = useState<Date>(new Date());
   const dispatch: AppDispatch = useDispatch();
+  const stripeAPIKey = process.env.REACT_APP_STRIPE_KEY!;
 
   const location = useLocation();
   const gear = location.state?.gear;
@@ -39,9 +41,10 @@ const GearDetails: React.FC = (): JSX.Element => {
     // .then(() => {
     dispatch(setAvailableDates({ id, gearAvailability }));
     // });
-    console.log('🐷🐷 GearDetails >>> gearAvailability', gearAvailability);
-    console.log('🐷🐷🐷 GearDetails >>> gearInfo', gearInfo);
+    // console.log('🐷🐷 GearDetails >>> gearAvailability', gearAvailability);
   };
+
+  console.log('🐷🐷🐷 GearDetails >>> gearInfo', gearInfo);
 
   const handleReservationClick = () => {
     supabase
@@ -61,7 +64,8 @@ const GearDetails: React.FC = (): JSX.Element => {
         rentalStartDate,
         rentalEndDate
       );
-    setShowPaymentModal(true);
+    // setShowPaymentModal(true);
+    makePayment();
   };
 
   const handleSeeMoreDetails = async () => {
@@ -105,6 +109,33 @@ const GearDetails: React.FC = (): JSX.Element => {
     getGearAvailability();
     handleSeeMoreDetails();
   }, []);
+
+  const makePayment = async () => {
+    const stripe = await loadStripe(stripeAPIKey);
+    const body = { gearInfo };
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    const response = await fetch(
+      'http://localhost:8000/api/create-checkout-session',
+      {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(body),
+      }
+    );
+
+    const session = await response.json();
+
+    const result = stripe!.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    // if (result.error) {
+    //   console.log(result?.error);
+    // }
+  };
 
   return (
     <>
@@ -185,7 +216,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                     <a
                       href={reviews.href}
                       className='ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500'
-                      >
+                    >
                       {reviews.totalCount} reviews
                     </a>
                   </div>
@@ -195,12 +226,11 @@ const GearDetails: React.FC = (): JSX.Element => {
                     type='button'
                     onClick={handleReservationClick}
                     className='mt-10 flex w-full items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent'
-                    >
+                  >
                     Reserve this gear
                   </button>
-
                 </form>
-                <Chat/>
+                <Chat />
               </div>
               <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
                 <div>
@@ -211,7 +241,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                       setRentalStartDate={setRentalStartDate}
                       rentalEndDate={rentalEndDate}
                       setRentalEndDate={setRentalEndDate}
-                      />
+                    />
                   </div>
                 </div>
               </div>

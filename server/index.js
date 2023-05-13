@@ -16,7 +16,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/create-checkout-session', async (req, res) => {
-  const { product } = req.body;
+  console.log('🐆 req.body (what is coming into back-end', req.body);
+  const { gearInfo } = req.body;
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: [
@@ -24,12 +25,12 @@ app.post('/api/create-checkout-session', async (req, res) => {
         price_data: {
           currency: 'eur',
           product_data: {
-            name: product.name,
-            description: product.description,
+            name: gearInfo.name,
+            description: gearInfo.description,
           },
-          unit_amount: product.price * 100,
+          unit_amount: gearInfo.price_day + gearInfo.deposit,
         },
-        quantity: product.quantity,
+        quantity: 1,
       },
     ],
     mode: 'payment',
