@@ -240,8 +240,8 @@ export const supabase = {
     try {
       const data = await supabaseClient.from('Gear').select().eq('id', id);
       if (data && data.data) {
-        console.log("THIS IS THE DATA",data.data)
-        return data.data
+        console.log('THIS IS THE DATA', data.data);
+        return data.data;
       }
     } catch (e: any) {
       console.log(e, 'Cannot get gear from Supabase');
@@ -302,11 +302,13 @@ export const supabase = {
 
   addGear: async function addGear(
     id: string,
+    name: string | null | undefined,
     description: string | null | undefined,
     pricehour: any,
     priceday: any,
     deposit: any,
-    type: string | null
+    type: string | null,
+    location: string | null
   ) {
     try {
       const { data, error } = await supabaseClient
@@ -314,11 +316,13 @@ export const supabase = {
         .insert({
           availability: [''],
           deposit: deposit,
+          name: name,
           description: description,
           owner_id: id,
           price_day: priceday,
           price_hr: pricehour,
           type: type,
+          location: location,
         })
         .select();
 
@@ -334,6 +338,7 @@ export const supabase = {
 
   editGear: async function (
     id: string | undefined,
+    newName: string | undefined,
     newDescription: string | undefined,
     newPricehour: number | undefined,
     newPriceday: number | undefined,
@@ -344,6 +349,7 @@ export const supabase = {
       const { data, error } = await supabaseClient
         .from('Gear')
         .update({
+          name: newName,
           description: newDescription,
           price_hr: newPricehour,
           price_day: newPriceday,
@@ -364,7 +370,8 @@ export const supabase = {
     owner_id: string,
     renter_id: string,
     start_date: Date,
-    end_date: Date
+    end_date: Date,
+    rental_duration_days: number
   ) {
     try {
       const { data, error } = await supabaseClient
@@ -376,6 +383,7 @@ export const supabase = {
           renter_id: renter_id,
           rental_start: start_date,
           rental_end: end_date,
+          rental_duration_days: rental_duration_days,
           deposit: 100,
           rental_price: 120,
           location: '41.3950027,2.1977311',

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { StarIcon } from '@heroicons/react/20/solid';
 import NavBar from '../Components/home/NavBar';
-import Payment from '../Components/payments/Payment--legacy';
 import { useState } from 'react';
 import Chat from '../Components/rentals/Chat';
 import { supabase, supabaseClient } from '../services/supabase.service';
@@ -11,7 +10,7 @@ import { AppDispatch, RootState } from '../Redux/store';
 import Calendar from '../Components/gear/Calendar';
 import { setAvailableDates, setUnavailableDates } from '../Redux/GearSlice';
 import { loadStripe } from '@stripe/stripe-js';
-
+import { differenceInDays } from 'date-fns';
 
 const CDNURL =
   'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
@@ -21,8 +20,6 @@ function classNames(...classes: any) {
 }
 
 const GearDetails: React.FC = (): JSX.Element => {
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [gearInfo, setGearInfo] = useState<any>([]);
   const [gearImages, setGearImages] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any>({});
   const userInfo = useSelector((state: RootState) => state.User);
@@ -32,19 +29,15 @@ const GearDetails: React.FC = (): JSX.Element => {
   const stripeAPIKey = process.env.REACT_APP_STRIPE_KEY!;
 
   const location = useLocation();
-  const gear = location.state?.gear;
+  const gearInfo = location.state?.gear;
 
   const { id } = useParams();
 
   const getGearAvailability = async () => {
     const gearAvailability = await supabase.getAvailabilityByGearId(id);
-    // .then(() => {
     dispatch(setAvailableDates({ id, gearAvailability }));
-    // });
-    // console.log('🐷🐷 GearDetails >>> gearAvailability', gearAvailability);
   };
-
-  console.log('🐷🐷🐷 GearDetails >>> gearInfo', gearInfo);
+  const rentalDays = differenceInDays(rentalEndDate, rentalStartDate);
 
   const handleReservationClick = () => {
     supabase
@@ -53,7 +46,8 @@ const GearDetails: React.FC = (): JSX.Element => {
         gearInfo.owner_id,
         userInfo.profile.id,
         rentalStartDate,
-        rentalEndDate
+        rentalEndDate,
+        rentalDays
       )
       .then(() => {
         dispatch(setUnavailableDates({ id, rentalStartDate, rentalEndDate }));
@@ -64,31 +58,16 @@ const GearDetails: React.FC = (): JSX.Element => {
         rentalStartDate,
         rentalEndDate
       );
-    // setShowPaymentModal(true);
     makePayment();
   };
 
-  const handleSeeMoreDetails = async () => {
-    const gearData = await supabase.getGearId(id);
-    if (gearData && gearData.length > 0) {
-      setGearInfo(gearData[0]);
-      const randomReviewCount = Math.floor(Math.random() * 101);
-      setReviews({
-        average: gearData[0].rating,
-        totalCount: randomReviewCount,
-        href: '#reviews',
-      });
-      return gearData;
-    } else {
-      console.log('Cannot find gear details');
-    }
-  };
+  const randomReviewCount = Math.floor(Math.random() * 101);
 
   async function getGearImages() {
     try {
       const { data, error } = await supabaseClient.storage
         .from('gearImagesBucket')
-        .list(`${gear.owner_id}/gear/${id}`, {
+        .list(`${gearInfo.owner_id}/gear/${id}`, {
           limit: 4,
           offset: 0,
           sortBy: { column: 'name', order: 'asc' },
@@ -107,7 +86,6 @@ const GearDetails: React.FC = (): JSX.Element => {
   useEffect(() => {
     getGearImages();
     getGearAvailability();
-    handleSeeMoreDetails();
   }, []);
 
   const makePayment = async () => {
@@ -160,7 +138,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                     <img
                       src={
                         CDNURL +
-                        gear.owner_id +
+                        gearInfo.owner_id +
                         '/gear/' +
                         id +
                         '/' +
@@ -184,6 +162,11 @@ const GearDetails: React.FC = (): JSX.Element => {
                 <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>
                   {gearInfo.name}
                 </h1>
+              </div>
+              <div className='lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
+                <h3 className='text-1xl tracking-tight text-gray-900 sm:text-3xl'>
+                  {gearInfo.description}
+                </h3>
               </div>
 
               <div className='mt-4 lg:row-span-3 lg:mt-0'>
@@ -217,7 +200,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                       href={reviews.href}
                       className='ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500'
                     >
-                      {reviews.totalCount} reviews
+                      {randomReviewCount} reviews
                     </a>
                   </div>
                 </div>
@@ -230,7 +213,10 @@ const GearDetails: React.FC = (): JSX.Element => {
                     Reserve this gear
                   </button>
                 </form>
-                <Chat />
+                <Chat
+                  ownerId={gearInfo.owner_id}
+                  userId={userInfo.profile.id}
+                />
               </div>
               <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
                 <div>
@@ -246,7 +232,6 @@ const GearDetails: React.FC = (): JSX.Element => {
                 </div>
               </div>
             </div>
-            {showPaymentModal && <Payment />}
           </div>
         </div>
       )}

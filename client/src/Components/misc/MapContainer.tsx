@@ -93,8 +93,9 @@ const MapContainer: React.FC = () => {
       const [lat, lng] = profile.location.split(',');
       setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) });
     }
-    // getGearImages()
-  }, [profile]);
+
+  }, []);
+
 
   const handleMapLoad = () => {
     setMapLoaded(true);
