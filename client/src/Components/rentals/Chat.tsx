@@ -2,38 +2,29 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../Redux/store'
 import { supabase, supabaseClient } from "../../services/supabase.service";
+import { Root } from 'react-dom/client';
+import { addMessage, setMessages } from '../../Redux/MessageSlice';
 
-
-interface ChatProps {
-  ownerId: string | null;
-  userId: string | null;
-}
-interface Message {
-  id: number;
-  content: string;
-  sender: 'user' | 'bot';
-}
-
-const Chat: React.FC<ChatProps> = ({ownerId, userId}): JSX.Element => {
+const Chat: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
-  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isChatOpen, setIsChatOpen] = useState(false);
-
+  const messages = useSelector((state: RootState) => state.Message)
+  const dispatch = useDispatch()
 
   const chatRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  console.log('userInfo!!! =>>>', userInfo)
+
+  
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputValue) return;
+    dispatch(addMessage(inputValue))
 
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { id: Date.now(), content: inputValue, sender: 'user' },
-    ]);
-    setInputValue('');
-  };
+  }
 
   const handleButtonClick = () => {
     setIsChatOpen((prevState) => !prevState);
@@ -42,6 +33,41 @@ const Chat: React.FC<ChatProps> = ({ownerId, userId}): JSX.Element => {
   const handleCloseClick = () => {
     setIsChatOpen(false);
   };
+
+
+useEffect(() => {
+
+  async function getAllConversations() {
+    const { data: conversations, error } = await supabaseClient
+      .from('Conversations')
+      .select('id')
+      .or(`member1.eq.${userInfo.profile.id},member2.eq.${userInfo.profile.id}`);
+  
+    if (error) {
+      console.error("Error fetching conversations: ", error);
+      return [];
+    }
+  
+    return conversations;
+  }
+
+  async function getMessagesByConversation(conversationId: string) {
+    const { data: messages, error } = await supabaseClient
+      .from('Messages')
+      .select('*')
+      .eq('conversation_id', conversationId);
+  
+    if (error) {
+      console.error("Error fetching messages: ", error);
+      return [];
+    }
+  
+    return messages;
+  }
+
+  getAllConversations()
+  
+}, userInfo.profile.id)
 
 
   return (
@@ -78,7 +104,7 @@ const Chat: React.FC<ChatProps> = ({ownerId, userId}): JSX.Element => {
           >
             X
           </button>
-          <div className='flex-grow overflow-y-auto p-4'>
+          {/* <div className='flex-grow overflow-y-auto p-4'>
             {messages?.map((message) => (
               <div
                 key={message.id}
@@ -95,7 +121,7 @@ const Chat: React.FC<ChatProps> = ({ownerId, userId}): JSX.Element => {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
           <form onSubmit={handleSubmit}>
             <input
               type='text'
