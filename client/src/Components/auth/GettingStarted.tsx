@@ -193,11 +193,13 @@ const GettingStarted: React.FC = (): JSX.Element => {
           >
             {({ open }) => (
               <>
-                <Listbox.Label className='block text-sm text-black font-semibold py-2 px-3'>
+              <div className="flex justify-center mt-12">
+                <div className="relative">
+                  <Listbox.Label className='block text-sm text-black font-semibold py-2 px-3'>
                   What type of gear you are looking for?
-                </Listbox.Label>
+                  </Listbox.Label>
                 <div className='relative mt-2 mx-12'>
-                  <Listbox.Button className='relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6'>
+                  <Listbox.Button className='relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6 ml-50 mt-5'>
                     <span className='flex items-center'>
                       <img
                         src={
@@ -217,7 +219,8 @@ const GettingStarted: React.FC = (): JSX.Element => {
                       />
                     </span>
                   </Listbox.Button>
-
+                  </div>
+                </div>
                   <Transition
                     show={open}
                     as={Fragment}
@@ -225,7 +228,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                     leaveFrom='opacity-100'
                     leaveTo='opacity-0'
                   >
-                    <Listbox.Options className='absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+                    <Listbox.Options className='absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm w-1/4'>
                       {gearTypesArray?.map((type) => {
                         return (
                           <Listbox.Option
@@ -233,7 +236,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                             className={({ active }) =>
                               classNames(
                                 active
-                                  ? 'bg-indigo-600 text-white'
+                                  ? 'bg-indigo-400 text-white'
                                   : 'text-gray-900',
                                 'relative cursor-default select-none py-2 pl-3 pr-9'
                               )
@@ -258,7 +261,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                                 {selected ? (
                                   <span
                                     className={classNames(
-                                      active ? 'text-white' : 'text-indigo-600',
+                                      active ? 'text-white' : 'text-indigo-400',
                                       'absolute inset-y-0 right-0 flex items-center pr-4'
                                     )}
                                   >
@@ -313,7 +316,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
         <button
           onClick={handleGeolocation}
           type='submit'
-          className='mt-10 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+          className='mt-10 flex items-center justify-center rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
         >
           Update your location
         </button>
