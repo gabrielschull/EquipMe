@@ -13,7 +13,9 @@ const Rentals: React.FC = (): JSX.Element => {
   const gear = useSelector((state: RootState) => state.Gear);
   const userInfo = useSelector((state: RootState) => state.User);
   const { activeRentals } = userInfo;
-  //console.log('Rentals >>> activeRentals', activeRentals);
+  console.log('🚂 Rentals.tsx > userInfo=', userInfo);
+  console.log('🚂 Rentals.tsx > activeRentals.length=', activeRentals.length);
+
   const [gearImages, setGearImages] = useState<any[]>([]);
 
   const navigate = useNavigate();
@@ -29,6 +31,9 @@ const Rentals: React.FC = (): JSX.Element => {
               <div className='min-w-0 flex-auto'>
                 <p className='text-sm font-semibold leading-6 text-gray-900'>
                   {rental.Gear.name}
+                </p>
+                <p className='text-sm font-semibold leading-6 text-gray-900'>
+                  {rental.Gear.description}
                 </p>
                 <p className='text-base text-gray-900'>
                   Starts {format(new Date(rental.rental_start), 'EEEE, LLL do')}{' '}

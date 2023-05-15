@@ -18,6 +18,7 @@ const UserProfile: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const navigate = useNavigate();
 
+
   return (
     <>
       <NavBar />
