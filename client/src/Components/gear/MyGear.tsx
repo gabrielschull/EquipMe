@@ -44,11 +44,8 @@ const MyGear: React.FC = (): JSX.Element => {
           });
         }
       } catch (e: any) {
-        console.log(e, "Error getting gear images");
+        console.log(e, 'Error getting gear images');
       }
-    } catch (e: any) {
-      console.log(e, 'Error getting gear images');
-    }
   }
 
   useEffect(() => {
