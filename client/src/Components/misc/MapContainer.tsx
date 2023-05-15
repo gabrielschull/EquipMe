@@ -50,7 +50,7 @@ const MapContainer: React.FC = () => {
       const [lat, lng] = profile.location.split(',');
       setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) });
     }
-  }, [profile]);
+  }, []);
 
   const handleMapLoad = () => {
     setMapLoaded(true);
