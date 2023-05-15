@@ -199,7 +199,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                   What type of gear you are looking for?
                   </Listbox.Label>
                 <div className='relative mt-2 mx-12'>
-                  <Listbox.Button className='relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6 ml-50 mt-5'>
+                  <Listbox.Button className='relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6 ml-50 mt-5 w-1/4'>
                     <span className='flex items-center'>
                       <img
                         src={
@@ -212,7 +212,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                       />
                       <span className='ml-3 block truncate'>{selected}</span>
                     </span>
-                    <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
+                    <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2 w-1/4'>
                       <ChevronUpDownIcon
                         className='h-5 w-5 text-gray-400'
                         aria-hidden='true'
@@ -228,7 +228,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                     leaveFrom='opacity-100'
                     leaveTo='opacity-0'
                   >
-                    <Listbox.Options className='absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm w-1/4'>
+                    <Listbox.Options className='absolute z-10 mt-1 max-h-56 w-1/2 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
                       {gearTypesArray?.map((type) => {
                         return (
                           <Listbox.Option

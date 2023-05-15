@@ -19,7 +19,7 @@ const Chat: React.FC = (): JSX.Element => {
 
   console.log('userInfo!!! =>>>', userInfo)
 
-  
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,12 +44,12 @@ useEffect(() => {
       .from('Conversations')
       .select('id')
       .or(`member1.eq.${userInfo.profile.id},member2.eq.${userInfo.profile.id}`);
-  
+
     if (error) {
       console.error("Error fetching conversations: ", error);
       return [];
     }
-  
+
     return conversations;
   }
 
@@ -59,12 +59,12 @@ useEffect(() => {
       .select('*')
       .eq('conversation_id', conversationId);
       console.log("GETMESSAGESBYCONVERSATION ==>", messages)
-  
+
     if (error) {
       console.error("Error fetching messages: ", error);
       return [];
     }
-  
+
     return messages as Message[];
   }
 
@@ -98,15 +98,15 @@ getConversationsAndMessages()
           ref={chatRef}
           className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'
         >
-          
+
           <button
             onClick={handleCloseClick}
             style={{
               color: "darkgrey",
-              border: "none", 
-              borderRadius: "4px", 
-              width: "1.3rem", 
-              height: "1.3rem", 
+              border: "none",
+              borderRadius: "4px",
+              width: "1.3rem",
+              height: "1.3rem",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
