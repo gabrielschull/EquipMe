@@ -25,12 +25,12 @@ const CurrentRental: React.FC = (): JSX.Element => {
     ({ id }: { id: string }) => id === rental_id
   );
 
-  console.log('🔍currentRentalInfo 🔍', currentRentalInfo);
+  //console.log('🔍currentRentalInfo 🔍', currentRentalInfo);
   const totalPaid =
     currentRentalInfo?.rental_price * currentRentalInfo?.rental_duration_days +
     currentRentalInfo?.deposit;
 
-  console.log(`Total Paid: ${totalPaid}`);
+  //console.log(`Total Paid: ${totalPaid}`);
 
   async function getGearImages() {
     try {

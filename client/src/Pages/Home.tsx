@@ -16,7 +16,7 @@ import Loading from '../Components/misc/Loading';
 const Home: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
 
-  console.log('Home.tsx', userInfo);
+  //console.log('Home.tsx', userInfo);
 
   return (
     <>

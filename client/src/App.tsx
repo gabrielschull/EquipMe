@@ -34,8 +34,8 @@ const App: React.FC = (): JSX.Element => {
   const whatAmI = useSession();
 
   useEffect(() => {
-    console.log('I AM IN HERE ==> ', whatAmI);
-    console.log('🙋🏻 userInfo=', userInfo);
+    // console.log('I AM IN HERE ==> ', whatAmI);
+    // console.log('🙋🏻 userInfo=', userInfo);
   }, [userInfo]);
 
   return (

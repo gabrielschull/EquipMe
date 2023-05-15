@@ -9,7 +9,7 @@ import { format } from 'date-fns';
 const CurrentRentalBanner: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   // const navigate = useNavigate();
-  console.log('CurrentRentalBanner.tsx', userInfo);
+  //console.log('CurrentRentalBanner.tsx', userInfo);
 
   return (
     <>

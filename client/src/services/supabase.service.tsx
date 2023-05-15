@@ -240,7 +240,7 @@ export const supabase = {
     try {
       const data = await supabaseClient.from('Gear').select().eq('id', id);
       if (data && data.data) {
-        console.log('THIS IS THE DATA', data.data);
+        //console.log('THIS IS THE DATA', data.data);
         return data.data;
       }
     } catch (e: any) {
@@ -393,7 +393,7 @@ export const supabase = {
       if (error) {
         throw error;
       }
-      console.log('data returned by startRentalContract', data);
+      //console.log('data returned by startRentalContract', data);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot create a new rental contract');
@@ -409,7 +409,7 @@ export const supabase = {
       if (error) {
         throw error;
       }
-      console.log('data returned by startRentalContract', data);
+      //console.log('data returned by startRentalContract', data);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot find contracts in the db');
@@ -426,7 +426,7 @@ export const supabase = {
       if (error) {
         throw error;
       }
-      console.log('data returned by RentalContracts', data);
+      //console.log('data returned by RentalContracts', data);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot find contracts in the db');
