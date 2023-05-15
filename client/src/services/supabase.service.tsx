@@ -240,8 +240,8 @@ export const supabase = {
     try {
       const data = await supabaseClient.from('Gear').select().eq('id', id);
       if (data && data.data) {
-        console.log("THIS IS THE DATA",data.data)
-        return data.data
+        console.log('THIS IS THE DATA', data.data);
+        return data.data;
       }
     } catch (e: any) {
       console.log(e, 'Cannot get gear from Supabase');
@@ -368,7 +368,8 @@ export const supabase = {
     owner_id: string,
     renter_id: string,
     start_date: Date,
-    end_date: Date
+    end_date: Date,
+    rental_duration_days: number
   ) {
     try {
       const { data, error } = await supabaseClient
@@ -380,6 +381,7 @@ export const supabase = {
           renter_id: renter_id,
           rental_start: start_date,
           rental_end: end_date,
+          rental_duration_days: rental_duration_days,
           deposit: 100,
           rental_price: 120,
           location: '41.3950027,2.1977311',

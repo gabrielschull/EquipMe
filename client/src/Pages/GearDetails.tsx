@@ -10,6 +10,7 @@ import { AppDispatch, RootState } from '../Redux/store';
 import Calendar from '../Components/gear/Calendar';
 import { setAvailableDates, setUnavailableDates } from '../Redux/GearSlice';
 import { loadStripe } from '@stripe/stripe-js';
+import { differenceInDays } from 'date-fns';
 
 const CDNURL =
   'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
@@ -36,6 +37,7 @@ const GearDetails: React.FC = (): JSX.Element => {
     const gearAvailability = await supabase.getAvailabilityByGearId(id);
     dispatch(setAvailableDates({ id, gearAvailability }));
   };
+  const rentalDays = differenceInDays(rentalEndDate, rentalStartDate);
 
   const handleReservationClick = () => {
     supabase
@@ -44,7 +46,8 @@ const GearDetails: React.FC = (): JSX.Element => {
         gearInfo.owner_id,
         userInfo.profile.id,
         rentalStartDate,
-        rentalEndDate
+        rentalEndDate,
+        rentalDays
       )
       .then(() => {
         dispatch(setUnavailableDates({ id, rentalStartDate, rentalEndDate }));
@@ -210,7 +213,10 @@ const GearDetails: React.FC = (): JSX.Element => {
                     Reserve this gear
                   </button>
                 </form>
-                <Chat ownerId={gearInfo.owner_id} userId={userInfo.profile.id}/>
+                <Chat
+                  ownerId={gearInfo.owner_id}
+                  userId={userInfo.profile.id}
+                />
               </div>
               <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
                 <div>
