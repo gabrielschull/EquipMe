@@ -301,11 +301,13 @@ export const supabase = {
 
   addGear: async function addGear(
     id: string,
+    name: string | null | undefined,
     description: string | null | undefined,
     pricehour: any,
     priceday: any,
     deposit: any,
-    type: string | null
+    type: string | null,
+    location: string | null
   ) {
     try {
       const { data, error } = await supabaseClient
@@ -313,11 +315,13 @@ export const supabase = {
         .insert({
           availability: [''],
           deposit: deposit,
+          name: name,
           description: description,
           owner_id: id,
           price_day: priceday,
           price_hr: pricehour,
           type: type,
+          location: location,
         })
         .select();
 
