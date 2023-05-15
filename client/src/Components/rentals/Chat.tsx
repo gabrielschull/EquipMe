@@ -1,19 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../Redux/store'
+import { supabase, supabaseClient } from "../../services/supabase.service";
 
 
+interface ChatProps {
+  ownerId: string | null;
+  userId: string | null;
+}
 interface Message {
   id: number;
   content: string;
   sender: 'user' | 'bot';
 }
 
-const Chat: React.FC = (): JSX.Element => {
+const Chat: React.FC<ChatProps> = ({ownerId}): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isChatOpen, setIsChatOpen] = useState(false);
+
 
   const chatRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -37,6 +43,7 @@ const Chat: React.FC = (): JSX.Element => {
     setIsChatOpen(false);
   };
 
+
   return (
     <div className='flex'>
       <button
@@ -51,9 +58,23 @@ const Chat: React.FC = (): JSX.Element => {
           ref={chatRef}
           className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'
         >
+          
           <button
             onClick={handleCloseClick}
-            className='absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center focus:outline-none'
+            style={{
+              color: "darkgrey",
+              border: "none", 
+              borderRadius: "4px", 
+              width: "1.3rem", 
+              height: "1.3rem", 
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              outline: "none",
+              fontWeight: "900",
+              transition: "box-shadow 0.3s",
+            }}
+            className='absolute top-2 right-2 text-white'
           >
             X
           </button>
@@ -92,13 +113,3 @@ const Chat: React.FC = (): JSX.Element => {
 };
 
 export default Chat;
-
-
-
-// Helper function to format timestamp
-const formatTimestamp = (timestamp: number): string => {
-  const date = new Date(timestamp);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  return `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
-};
