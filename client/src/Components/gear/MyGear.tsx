@@ -18,30 +18,33 @@ const MyGear: React.FC = (): JSX.Element => {
   const [owners, setOwners] = useState<{ [key: string]: string }>({});
 
   const CDNURL =
-    'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
 
-  async function getHomeGearImages(
-    ownerid: string | null | undefined,
-    gearid: string | null | undefined
-  ) {
-    try {
-      const { data, error } = await supabaseClient.storage
-        .from('gearImagesBucket')
-        .list(`${ownerid}/gear/${gearid}`, {
-          limit: 1,
-          offset: 0,
-          sortBy: { column: 'name', order: 'asc' },
-        });
+    "https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/";
 
-      console.log(`${ownerid}/gear/${gearid}`);
+    async function getHomeGearImages(
+      ownerid: string | null | undefined,
+      gearid: string | null | undefined
+    ) {
+      try {
+        const { data, error } = await supabaseClient.storage
+          .from("gearImagesBucket")
+          .list(`${ownerid}/gear/${gearid}`, {
+            limit: 1,
+            offset: 0,
+            sortBy: { column: "name", order: "asc" },
+          });
 
-      if (error) console.log('ERROR IN IMAGE FETCH ==> ', error);
+        //console.log(`${ownerid}/gear/${gearid}`);
 
-      if (data !== null && data.length > 0) {
-        console.log(data, 'YARRRR');
-        setHomeGearImages((state: any) => {
-          return { ...state, [gearid as string]: data[0].name };
-        });
+        if (error) console.log("ERROR IN IMAGE FETCH ==> ", error);
+
+        if (data !== null && data.length > 0) {
+          setHomeGearImages((state: any) => {
+            return {...state, [ gearid as string ] : data[0].name}
+          });
+        }
+      } catch (e: any) {
+        console.log(e, "Error getting gear images");
       }
     } catch (e: any) {
       console.log(e, 'Error getting gear images');

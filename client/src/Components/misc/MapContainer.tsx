@@ -50,7 +50,7 @@ const MapContainer: React.FC = () => {
     try {
       const gearData = await supabase.getGear();
       dispatch(setAllGear(gearData));
-      console.log("This is the data", gearData)
+      //console.log("This is the data", gearData)
       if (gearData) {
         setMarkerPositions(
           gearData.map((gearItem) => ({
@@ -63,7 +63,7 @@ const MapContainer: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-    console.log("HI")
+
     setSelectedGear(null);
   };
 
@@ -111,14 +111,15 @@ const MapContainer: React.FC = () => {
           alignItems: 'center',
         }}
       >
+
         <div className='pb-6 flex'>
-          <button
+          {/* <button
             onClick={handleGeolocation}
             type='submit'
             className='mt-10 w-full items-center justify-center rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
           >
             Update current location
-          </button>
+          </button> */}
           <button
             onClick={handleClick}
             type='submit'

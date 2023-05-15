@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { StarIcon } from '@heroicons/react/20/solid';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../Redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch} from '../../Redux/store';
 import NavBar from '../home/NavBar';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { supabase, supabaseClient } from '../../services/supabase.service';
 import { format } from 'date-fns';
+import { Rental } from '../../types/rental.type';
+import { deleteRental } from '../../Redux/rentalSlice';
+
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -17,6 +20,9 @@ const CurrentRental: React.FC = (): JSX.Element => {
   const { activeRentals } = userInfo;
   const [gearImages, setGearImages] = useState<any[]>([]);
   // const [rentalDays, setRentalDays] = useState<any>([]);
+  const dispatch: AppDispatch = useDispatch();
+  const rental = useSelector((state: RootState) => state.Rental);
+  const navigate = useNavigate()
 
   const CDNURL =
     'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
@@ -25,12 +31,12 @@ const CurrentRental: React.FC = (): JSX.Element => {
     ({ id }: { id: string }) => id === rental_id
   );
 
-  console.log('🔍currentRentalInfo 🔍', currentRentalInfo);
+
   const totalPaid =
     currentRentalInfo?.rental_price * currentRentalInfo?.rental_duration_days +
     currentRentalInfo?.deposit;
 
-  console.log(`Total Paid: ${totalPaid}`);
+
 
   async function getGearImages() {
     try {
@@ -61,6 +67,20 @@ const CurrentRental: React.FC = (): JSX.Element => {
     getGearImages();
     // getRentalDays();
   }, []);
+
+  const handleDelete = (rental:Rental) => {
+    console.log("WE ARE GETTING HERE")
+    supabase
+      .deleteRental(rental.id)
+      .then(() => {
+        dispatch(deleteRental(rental.id));
+        console.log("successfully deleted gear")
+        navigate(`/myprofile`)
+      })
+      .catch((error) => {
+        alert('Error: ' + error);
+      });
+  };
 
   return (
     <>
@@ -182,6 +202,12 @@ const CurrentRental: React.FC = (): JSX.Element => {
                       type="submit"
                       className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                       Contact Gear Owner
+                    </button>
+                    <button
+                      type="submit"
+                      className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      onClick={() => handleDelete(currentRentalInfo)}>
+                      Cancel Rental
                     </button>
                   </form>
                 </div>

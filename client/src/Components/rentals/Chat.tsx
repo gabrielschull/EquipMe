@@ -4,6 +4,8 @@ import { AppDispatch, RootState } from '../../Redux/store'
 import { supabase, supabaseClient } from "../../services/supabase.service";
 import { Root } from 'react-dom/client';
 import { addMessage, setMessages } from '../../Redux/MessageSlice';
+import { Message } from '../../types/message.type';
+import { Data } from '@react-google-maps/api';
 
 const Chat: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
@@ -17,7 +19,7 @@ const Chat: React.FC = (): JSX.Element => {
 
   console.log('userInfo!!! =>>>', userInfo)
 
-  
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,32 +44,44 @@ useEffect(() => {
       .from('Conversations')
       .select('id')
       .or(`member1.eq.${userInfo.profile.id},member2.eq.${userInfo.profile.id}`);
-  
+
     if (error) {
       console.error("Error fetching conversations: ", error);
       return [];
     }
-  
+
     return conversations;
   }
 
-  async function getMessagesByConversation(conversationId: string) {
+  async function getMessagesByConversation(conversationId: string): Promise<Message[]>{
     const { data: messages, error } = await supabaseClient
       .from('Messages')
       .select('*')
       .eq('conversation_id', conversationId);
-  
+      console.log("GETMESSAGESBYCONVERSATION ==>", messages)
+
     if (error) {
       console.error("Error fetching messages: ", error);
       return [];
     }
-  
-    return messages;
+
+    return messages as Message[];
   }
 
-  getAllConversations()
-  
-}, userInfo.profile.id)
+  async function getConversationsAndMessages() {
+    const conversations = await getAllConversations();
+    console.log("CONVOS ==>", conversations)
+    const messages = await Promise.all(conversations.map(conversation => getMessagesByConversation(conversation.id)))
+    console.log("MSGS", messages)
+    const messagesByConversation: Record<string, Message[]> = {};
+    for(let i = 0; i < conversations.length; i++) {
+      messagesByConversation[conversations[i].id] = messages[i];
+    }
+    dispatch(setMessages(messagesByConversation));
+    console.log("MESSAGESBYCONVO ==> ", messagesByConversation)
+  }
+getConversationsAndMessages()
+}, [userInfo.profile.id])
 
 
   return (
@@ -84,15 +98,15 @@ useEffect(() => {
           ref={chatRef}
           className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'
         >
-          
+
           <button
             onClick={handleCloseClick}
             style={{
               color: "darkgrey",
-              border: "none", 
-              borderRadius: "4px", 
-              width: "1.3rem", 
-              height: "1.3rem", 
+              border: "none",
+              borderRadius: "4px",
+              width: "1.3rem",
+              height: "1.3rem",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -104,24 +118,24 @@ useEffect(() => {
           >
             X
           </button>
-          {/* <div className='flex-grow overflow-y-auto p-4'>
-            {messages?.map((message) => (
-              <div
-                key={message.id}
-                className={`flex justify-${
-                  message.sender === 'user' ? 'end' : 'start'
-                } mb-2`}
-              >
-                <div
-                  className={`bg-blue-500 p-2 rounded-lg text-white max-w-xs ${
-                    message.sender === 'user' ? 'ml-2' : 'mr-2'
-                  }`}
-                >
-                  {message.content}
-                </div>
-              </div>
-            ))}
-          </div> */}
+          <div className='flex-grow overflow-y-auto p-4'>
+  {messages["a9474d61-2df9-41a9-bb1f-d80daa9b632e"]?.map((message: Message) => (
+    <div
+      key={message.id}
+      className={`flex justify-${
+        message.sender_id === userInfo.profile.id ? 'end' : 'start'
+      } mb-2`}
+    >
+      <div
+        className={`bg-blue-500 p-2 rounded-lg text-white max-w-xs ${
+          message.sender_id === userInfo.profile.id ? 'ml-2' : 'mr-2'
+        }`}
+      >
+        {message.content}
+      </div>
+    </div>
+  ))}
+</div>
           <form onSubmit={handleSubmit}>
             <input
               type='text'
