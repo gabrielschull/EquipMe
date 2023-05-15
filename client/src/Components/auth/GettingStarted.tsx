@@ -89,7 +89,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
   useEffect(() => {
     (async () => {
       const allGear = await supabase.getGear();
-      if (allGear) setAllGear(allGear);
+      if (allGear) allGear;
       if (allGear) dispatch(setFilteredGear(allGear));
     })();
   }, []);

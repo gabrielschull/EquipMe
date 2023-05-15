@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { supabase } from '../../services/supabase.service';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../Redux/store';
+import { setAllGear } from '../../Redux/GearSlice';
 
 const Calendar: React.FC<any> = ({
   startDate,
@@ -16,22 +17,21 @@ const Calendar: React.FC<any> = ({
   setRentalStartDate,
   rentalEndDate,
   setRentalEndDate,
+  gearAvailableDates,
 }): JSX.Element => {
   const gearInfo = useSelector((state: RootState) => state.Gear);
   const { id } = useParams();
 
+  // console.log('🐆 Calendar >>> availableDates', availableDates);
+  const dispatch: AppDispatch = useDispatch();
 
-  const [availableDates, setAvailableDates] = useState<any>([]);
+  // const handleAvailableDates = () => {
+  // const gear = gearInfo.find((gear) => gear.id === id);
+  // console.log('🐆 Calendar >>> gear', gear);
 
-  const handleAvailableDates = () => {
-    const indexToUpd = gearInfo.findIndex((gear) => gear.id === id);
-    const dateArr: Date[] = [];
-
-    gearInfo[indexToUpd]?.availableDates?.forEach((element: any) =>
-      dateArr?.push(new Date(element.date_available))
-    );
-    setAvailableDates(dateArr);
-  };
+  // }
+  // setAvailableDates(dateArr);
+  // };
 
   const handleStartDateChange = (date: Date) => {
     if (location.pathname === '/addgear') {
@@ -50,8 +50,9 @@ const Calendar: React.FC<any> = ({
   };
 
   useEffect(() => {
-    if (location.pathname !== '/addgear') handleAvailableDates();
-  }, []);
+    // if (location.pathname !== '/addgear') handleAvailableDates();
+    console.log('Calendar, gearAvailableDates', gearAvailableDates);
+  }, [gearAvailableDates]);
 
   return (
     <div>
@@ -78,7 +79,7 @@ const Calendar: React.FC<any> = ({
               dateFormat='yyyy/MM/dd'
               id='start-date-picker'
               selected={rentalStartDate}
-              includeDates={availableDates ? availableDates : ''}
+              includeDates={gearAvailableDates}
               onChange={handleStartDateChange}
               className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
               inline
@@ -106,7 +107,7 @@ const Calendar: React.FC<any> = ({
               dateFormat='yyyy/MM/dd'
               id='start-date-picker'
               selected={rentalEndDate}
-              includeDates={availableDates ? availableDates : ''}
+              includeDates={gearAvailableDates}
               onChange={handleEndDateChange}
               className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
               inline
