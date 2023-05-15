@@ -210,7 +210,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                     Reserve this gear
                   </button>
                 </form>
-                <Chat />
+                <Chat ownerId={gearInfo.owner_id} userId={userInfo.profile.id}/>
               </div>
               <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
                 <div>
