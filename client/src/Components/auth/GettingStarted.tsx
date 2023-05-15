@@ -31,13 +31,6 @@ const GettingStarted: React.FC = (): JSX.Element => {
   const [allGear, setAllGear] = useState<any[]>([]);
   const { profile } = useSelector((state: RootState) => state.User);
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
-  const [backgroundIndex, setBackgroundIndex] = useState(0);
-  const backgroundImages = [
-    'Background.jpg',
-    'image2.jpg',
-    'image3.jpg',
-
-  ];
 
   const gearTypesArray = [
     '--------',
@@ -179,7 +172,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
               <>
               <div className="flex justify-center mt-12">
                 <div className="relative">
-                  <Listbox.Label className='block text-sm text-black font-semibold py-2 px-3'>
+                  <Listbox.Label className='block text-lg text-white font-semibold py-2 px-5'>
                   What type of gear you are looking for?
                   </Listbox.Label>
                 <div className='relative mt-2 mx-12'>

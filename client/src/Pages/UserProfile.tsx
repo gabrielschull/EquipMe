@@ -24,7 +24,7 @@ const UserProfile: React.FC = (): JSX.Element => {
       <div className="bg-white py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
-            <figure className="mt-10">
+            <figure className="mt-100">
               <figcaption className="mt-2">
                 <img
                   className="mx-auto h-150 w-150 rounded-full"
