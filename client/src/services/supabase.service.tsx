@@ -460,4 +460,21 @@ export const supabase = {
       console.log(e, 'Cannot find location in the db');
     }
   },
+
+  deleteRental: async function deleteRental(id: string) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('RentalContracts')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (e: any) {
+      console.log(e, 'Cannot delete item in Supabase');
+    }
+  },
 };
