@@ -169,14 +169,14 @@ const GearDetails: React.FC = (): JSX.Element => {
                 );
               })}
             </div>
-            <div className='mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16'>
+            <div className='mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16 ml-14'>
               <div className='lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
-                <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>
+                <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl ml-4 m-2'>
                   {gearInfo.name}
                 </h1>
               </div>
               <div className='lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
-                <h3 className='text-1xl tracking-tight text-gray-900 sm:text-3xl'>
+                <h3 className='text-1xl tracking-tight text-gray-900 sm:text-2xl ml-3'>
                   {gearInfo.description}
                 </h3>
               </div>
@@ -220,9 +220,15 @@ const GearDetails: React.FC = (): JSX.Element => {
                   <button
                     type='button'
                     onClick={handleReservationClick}
-                    className='mt-10 flex w-full items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent'
+                    className='mt-10 flex w-full items-center justify-center bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3  rounded shadow border-transparent'
                   >
                     Reserve this gear
+                  </button>
+                  <button
+                    type='button'
+                    className='mt-10 flex w-full items-center justify-center bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3  rounded shadow border-transparent'
+                  >
+                    Contact Gear Owner
                   </button>
                 </form>
                 <Chat />

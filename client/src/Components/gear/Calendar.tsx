@@ -56,13 +56,10 @@ const Calendar: React.FC<any> = ({
 
   return (
     <div>
-      <div className='w-96 bg-white rounded-lg shadow-md p-2 m-2'>
-        <h2 className='text-lg font-bold mb-4'>Select Start and End dates</h2>
-        <div className='flex flex-col mb-4'>
-          <label className='text-sm mb-1' htmlFor='start-date-picker'>
-            Start:
-          </label>
-          {location.pathname == '/addgear' ? (
+      <div className='grid grid-cols-2 gap-4'>
+        <div className='bg-white rounded-lg shadow-md p-2'>
+          <h2 className='text-lg font-bold mb-4'>Select Start Date</h2>
+          {location.pathname === '/addgear' ? (
             <DatePicker
               dateFormat='yyyy/MM/dd'
               id='start-date-picker'
@@ -86,14 +83,12 @@ const Calendar: React.FC<any> = ({
             />
           )}
         </div>
-        <div className='flex flex-col'>
-          <label className='text-sm mb-1' htmlFor='end-date-picker'>
-            End:
-          </label>
-          {location.pathname == '/addgear' ? (
+        <div className='bg-white rounded-lg shadow-md p-2'>
+          <h2 className='text-lg font-bold mb-4'>Select End Date</h2>
+          {location.pathname === '/addgear' ? (
             <DatePicker
               dateFormat='yyyy/MM/dd'
-              id='start-date-picker'
+              id='end-date-picker'
               selected={endDate}
               includeDateIntervals={[
                 { start: new Date(), end: addDays(new Date(), 90) },
@@ -105,7 +100,7 @@ const Calendar: React.FC<any> = ({
           ) : (
             <DatePicker
               dateFormat='yyyy/MM/dd'
-              id='start-date-picker'
+              id='end-date-picker'
               selected={rentalEndDate}
               includeDates={gearAvailableDates}
               onChange={handleEndDateChange}
@@ -117,6 +112,7 @@ const Calendar: React.FC<any> = ({
       </div>
     </div>
   );
+
 };
 
 export default Calendar;

@@ -36,14 +36,15 @@ const MyGear: React.FC = (): JSX.Element => {
 
       if (error) console.log('ERROR IN IMAGE FETCH ==> ', error);
 
-      if (data !== null && data.length > 0) {
-        setHomeGearImages((state: any) => {
-          return { ...state, [gearid as string]: data[0].name };
-        });
+
+        if (data !== null && data.length > 0) {
+          setHomeGearImages((state: any) => {
+            return {...state, [ gearid as string ] : data[0].name}
+          });
+        }
+      } catch (e: any) {
+        console.log(e, 'Error getting gear images');
       }
-    } catch (e: any) {
-      console.log(e, 'Error getting gear images');
-    }
   }
 
   useEffect(() => {
@@ -90,6 +91,7 @@ const MyGear: React.FC = (): JSX.Element => {
                   <div className="min-w-0 flex-auto">
                     <p className="text-sm font-semibold leading-6 text-gray-900">
                       {gear.description}
+                      {gear.name}
                     </p>
                     <p className="mt-1 text-xs leading-5 text-gray-800">
                       €{gear.price_hr} / hour
