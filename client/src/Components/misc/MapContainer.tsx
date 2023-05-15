@@ -4,6 +4,7 @@ import { supabase } from '../../services/supabase.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../Redux/store';
 import { updateLocation } from '../../Redux/UserSlice';
+import { userInfo } from 'os';
 
 const apiKey = process.env.REACT_APP_MAPS_API_KEY!;
 
@@ -13,6 +14,8 @@ const MapContainer: React.FC = () => {
   const [zoom, setZoom] = useState(13);
   const [mapLoaded, setMapLoaded] = useState(false);
   const dispatch: AppDispatch = useDispatch();
+  const [users, setUsers] = useState([]);
+
 
   const handleGeolocation = async () => {
     navigator.geolocation.getCurrentPosition(
@@ -31,6 +34,15 @@ const MapContainer: React.FC = () => {
         console.error(error);
       }
     );
+  };
+
+  const handleClick = async () => {
+    try {
+      const data : any = await supabase.getUsers();
+      setUsers(data );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -55,8 +67,14 @@ const MapContainer: React.FC = () => {
           >
             Update current location
           </button>
+          {/* <button
+            onClick={handleClick}
+            type='submit'
+            className='mt-10 w-full items-center justify-center rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+          >
+            See gear around you
+          </button> */}
         </div>
-
         <GoogleMap
           mapContainerStyle={{ height: '100%', width: '100%' }}
           center={center}
@@ -64,10 +82,25 @@ const MapContainer: React.FC = () => {
           onLoad={handleMapLoad}
         >
           <Marker position={center} />
+          {/* {users &&
+            users.map((user) => (
+              <Marker
+                key={user}
+                position={{
+                  lat: parseFloat(user.location?.latitude || '0'),
+                  lng: parseFloat(user.location?.longitude || '0'),
+                }}
+                icon={{
+                  url: 'path/to/your/icon.png',
+                  scaledSize: new window.google.maps.Size(30, 30),
+                }}
+              />
+            ))} */}
         </GoogleMap>
       </div>
     </LoadScript>
   );
+
 };
 
 export default MapContainer;
