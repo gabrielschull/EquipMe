@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { supabase } from '../../services/supabase.service';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../Redux/store';
+import { setAllGear } from '../../Redux/GearSlice';
 
 const Calendar: React.FC<any> = ({
   startDate,
@@ -16,22 +17,21 @@ const Calendar: React.FC<any> = ({
   setRentalStartDate,
   rentalEndDate,
   setRentalEndDate,
+  gearAvailableDates,
 }): JSX.Element => {
   const gearInfo = useSelector((state: RootState) => state.Gear);
   const { id } = useParams();
 
+  // console.log('🐆 Calendar >>> availableDates', availableDates);
+  const dispatch: AppDispatch = useDispatch();
 
-  const [availableDates, setAvailableDates] = useState<any>([]);
+  // const handleAvailableDates = () => {
+  // const gear = gearInfo.find((gear) => gear.id === id);
+  // console.log('🐆 Calendar >>> gear', gear);
 
-  const handleAvailableDates = () => {
-    const indexToUpd = gearInfo.findIndex((gear) => gear.id === id);
-    const dateArr: Date[] = [];
-
-    gearInfo[indexToUpd]?.availableDates?.forEach((element: any) =>
-      dateArr?.push(new Date(element.date_available))
-    );
-    setAvailableDates(dateArr);
-  };
+  // }
+  // setAvailableDates(dateArr);
+  // };
 
   const handleStartDateChange = (date: Date) => {
     if (location.pathname === '/addgear') {
@@ -50,18 +50,16 @@ const Calendar: React.FC<any> = ({
   };
 
   useEffect(() => {
-    if (location.pathname !== '/addgear') handleAvailableDates();
-  }, []);
+    // if (location.pathname !== '/addgear') handleAvailableDates();
+    console.log('Calendar, gearAvailableDates', gearAvailableDates);
+  }, [gearAvailableDates]);
 
   return (
     <div>
-      <div className='w-96 bg-white rounded-lg shadow-md p-2 m-2'>
-        <h2 className='text-lg font-bold mb-4'>Select Start and End dates</h2>
-        <div className='flex flex-col mb-4'>
-          <label className='text-sm mb-1' htmlFor='start-date-picker'>
-            Start:
-          </label>
-          {location.pathname == '/addgear' ? (
+      <div className='grid grid-cols-2 gap-4'>
+        <div className='bg-white rounded-lg shadow-md p-2'>
+          <h2 className='text-lg font-bold mb-4'>Select Start Date</h2>
+          {location.pathname === '/addgear' ? (
             <DatePicker
               dateFormat='yyyy/MM/dd'
               id='start-date-picker'
@@ -78,21 +76,19 @@ const Calendar: React.FC<any> = ({
               dateFormat='yyyy/MM/dd'
               id='start-date-picker'
               selected={rentalStartDate}
-              includeDates={availableDates ? availableDates : ''}
+              includeDates={gearAvailableDates}
               onChange={handleStartDateChange}
               className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
               inline
             />
           )}
         </div>
-        <div className='flex flex-col'>
-          <label className='text-sm mb-1' htmlFor='end-date-picker'>
-            End:
-          </label>
-          {location.pathname == '/addgear' ? (
+        <div className='bg-white rounded-lg shadow-md p-2'>
+          <h2 className='text-lg font-bold mb-4'>Select End Date</h2>
+          {location.pathname === '/addgear' ? (
             <DatePicker
               dateFormat='yyyy/MM/dd'
-              id='start-date-picker'
+              id='end-date-picker'
               selected={endDate}
               includeDateIntervals={[
                 { start: new Date(), end: addDays(new Date(), 90) },
@@ -104,9 +100,9 @@ const Calendar: React.FC<any> = ({
           ) : (
             <DatePicker
               dateFormat='yyyy/MM/dd'
-              id='start-date-picker'
+              id='end-date-picker'
               selected={rentalEndDate}
-              includeDates={availableDates ? availableDates : ''}
+              includeDates={gearAvailableDates}
               onChange={handleEndDateChange}
               className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
               inline
@@ -116,6 +112,7 @@ const Calendar: React.FC<any> = ({
       </div>
     </div>
   );
+
 };
 
 export default Calendar;

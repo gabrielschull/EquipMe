@@ -25,39 +25,49 @@ const GearDetails: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [rentalStartDate, setRentalStartDate] = useState<Date>(new Date());
   const [rentalEndDate, setRentalEndDate] = useState<Date>(new Date());
+  const [gearAvailableDates, setGearAvailableDates] = useState<any>([]);
+  const { id } = useParams();
+  const gearInfo = useSelector((state: RootState) =>
+    state.Gear.find((gear) => gear.id === id)
+  );
+
   const dispatch: AppDispatch = useDispatch();
   const stripeAPIKey = process.env.REACT_APP_STRIPE_KEY!;
 
   const location = useLocation();
-  const gearInfo = location.state?.gear;
-
-  const { id } = useParams();
+  // const gearInfo = location.state?.gear;
 
   const getGearAvailability = async () => {
     const gearAvailability = await supabase.getAvailabilityByGearId(id);
-    dispatch(setAvailableDates({ id, gearAvailability }));
+    // dispatch(setAvailableDates({ id, gearAvailability }));
+    const dateArr: Date[] = [];
+    // if (gear && gear.availableDates) {
+    gearAvailability?.forEach((element: any) =>
+      dateArr.push(new Date(element.date_available))
+    );
+    setGearAvailableDates(dateArr);
   };
+
   const rentalDays = differenceInDays(rentalEndDate, rentalStartDate);
 
   const handleReservationClick = () => {
-    supabase
-      .startRentalContract(
-        id,
-        gearInfo.owner_id,
-        userInfo.profile.id,
-        rentalStartDate,
-        rentalEndDate,
-        rentalDays
-      )
-      .then(() => {
-        dispatch(setUnavailableDates({ id, rentalStartDate, rentalEndDate }));
-      });
-    id &&
-      supabase.calendarDeleteGearAvailability(
-        id,
-        rentalStartDate,
-        rentalEndDate
-      );
+    supabase.startRentalContract(
+      id,
+      gearInfo?.owner_id as string,
+      userInfo.profile.id,
+      rentalStartDate,
+      rentalEndDate,
+      rentalDays
+    );
+    //   .then(() => {
+    //     dispatch(setUnavailableDates({ id, rentalStartDate, rentalEndDate }));
+    //   });
+    // id &&
+    //   supabase.calendarDeleteGearAvailability(
+    //     id,
+    //     rentalStartDate,
+    //     rentalEndDate
+    //   );
     makePayment();
   };
 
@@ -67,7 +77,7 @@ const GearDetails: React.FC = (): JSX.Element => {
     try {
       const { data, error } = await supabaseClient.storage
         .from('gearImagesBucket')
-        .list(`${gearInfo.owner_id}/gear/${id}`, {
+        .list(`${gearInfo?.owner_id}/gear/${id}`, {
           limit: 4,
           offset: 0,
           sortBy: { column: 'name', order: 'asc' },
@@ -84,13 +94,15 @@ const GearDetails: React.FC = (): JSX.Element => {
   }
 
   useEffect(() => {
+    console.log('GearDetails ID', id);
+    console.log('GearDetails gearInfo', gearInfo);
     getGearImages();
     getGearAvailability();
   }, []);
 
   const makePayment = async () => {
     const stripe = await loadStripe(stripeAPIKey);
-    const body = { gearInfo };
+    const body = { gearInfo, rental_duration_days: rentalDays };
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -157,14 +169,14 @@ const GearDetails: React.FC = (): JSX.Element => {
                 );
               })}
             </div>
-            <div className='mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16'>
+            <div className='mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16 ml-14'>
               <div className='lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
-                <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>
+                <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl ml-4 m-2'>
                   {gearInfo.name}
                 </h1>
               </div>
               <div className='lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
-                <h3 className='text-1xl tracking-tight text-gray-900 sm:text-3xl'>
+                <h3 className='text-1xl tracking-tight text-gray-900 sm:text-2xl ml-3'>
                   {gearInfo.description}
                 </h3>
               </div>
@@ -186,7 +198,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                         <StarIcon
                           key={rating}
                           className={classNames(
-                            gearInfo.rating >= rating
+                            (gearInfo?.rating as number) >= rating
                               ? 'text-gray-900'
                               : 'text-gray-200',
                             'h-5 w-5 flex-shrink-0'
@@ -208,9 +220,15 @@ const GearDetails: React.FC = (): JSX.Element => {
                   <button
                     type='button'
                     onClick={handleReservationClick}
-                    className='mt-10 flex w-full items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent'
+                    className='mt-10 flex w-full items-center justify-center bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3  rounded shadow border-transparent'
                   >
                     Reserve this gear
+                  </button>
+                  <button
+                    type='button'
+                    className='mt-10 flex w-full items-center justify-center bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3  rounded shadow border-transparent'
+                  >
+                    Contact Gear Owner
                   </button>
                 </form>
                 <Chat />
@@ -220,6 +238,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                   <h3 className='sr-only'>Description</h3>
                   <div className='space-y-6 my-6'>
                     <Calendar
+                      gearAvailableDates={gearAvailableDates}
                       rentalStartDate={rentalStartDate}
                       setRentalStartDate={setRentalStartDate}
                       rentalEndDate={rentalEndDate}

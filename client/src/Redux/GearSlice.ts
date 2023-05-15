@@ -22,7 +22,9 @@ export const AllGearSlice = createSlice({
         (gear) => gear.id === action.payload.id
       );
       console.log('🐷 GearSlice >>> indexToUpd=', indexToUpd);
-      state[indexToUpd].availableDates = action.payload.gearAvailability;
+      console.log('🐷 GearSlice >>> state[indexToUpd]=', state[indexToUpd]);
+      if (indexToUpd !== -1)
+        state[indexToUpd].availableDates = action.payload.gearAvailability;
       console.log('🐷 GearSlice >>> state[indexToUpd]=', state[indexToUpd]);
     },
     setUnavailableDates: (state, action) => {
