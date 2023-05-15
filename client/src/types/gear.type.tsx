@@ -4,6 +4,7 @@ export interface Gear {
   deposit?: string;
   description?: string | null;
   id?: string;
+  location?: string,
   owner_id?: string | null;
   price_day?: string;
   price_hr?: string;

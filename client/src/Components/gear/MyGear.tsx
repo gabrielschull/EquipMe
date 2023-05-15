@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAllGear, deleteGear } from '../../Redux/GearSlice';
 import { RootState, AppDispatch } from '../../Redux/store';
 
+
 const MyGear: React.FC = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
   const gear = useSelector((state: RootState) => state.Gear);
