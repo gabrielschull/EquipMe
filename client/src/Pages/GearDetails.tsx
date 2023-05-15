@@ -119,22 +119,20 @@ const GearDetails: React.FC = (): JSX.Element => {
     <>
       <NavBar></NavBar>
       {gearInfo && (
-        <div className='bg-white'>
-          <div className='pt-6'>
+        <div className="bg-white">
+          <div className="pt-6">
             <div
-              id='image-track'
+              id="image-track"
               style={{
                 display: 'flex',
                 gap: '4vmin',
                 transform: 'translate(7%, 0%)',
-              }}
-            >
+              }}>
               {gearImages?.map((image) => {
                 return (
                   <div
                     key={image.name}
-                    className='aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block'
-                  >
+                    className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                     <img
                       src={
                         CDNURL +
@@ -144,8 +142,8 @@ const GearDetails: React.FC = (): JSX.Element => {
                         '/' +
                         image.name
                       }
-                      alt=''
-                      className='h-full w-full object-cover object-center'
+                      alt=""
+                      className="h-full w-full object-cover object-center"
                       style={{
                         width: '40vmin',
                         height: '56vmin',
@@ -157,31 +155,34 @@ const GearDetails: React.FC = (): JSX.Element => {
                 );
               })}
             </div>
-            <div className='mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16'>
-              <div className='lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
-                <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>
+            <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+              <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+                <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                   {gearInfo.name}
                 </h1>
               </div>
-              <div className='lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
-                <h3 className='text-1xl tracking-tight text-gray-900 sm:text-3xl'>
+              <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+                <h3 className="text-1xl tracking-tight text-gray-900 sm:text-3xl">
                   {gearInfo.description}
                 </h3>
               </div>
 
-              <div className='mt-4 lg:row-span-3 lg:mt-0'>
-                <p className='text-3xl tracking-tight text-gray-900'>
+              <div className="mt-4 lg:row-span-3 lg:mt-0">
+                <p className="text-3xl tracking-tight text-gray-900">
                   Price/day: €{gearInfo.price_day}
                 </p>
-                <p className='text-3xl tracking-tight text-gray-900'>
+                <p className="text-3xl tracking-tight text-gray-900">
                   Price/hr: €{gearInfo.price_hr}
                 </p>
-                <p className='text-3xl tracking-tight text-gray-900'>
+                <p className="text-3xl tracking-tight text-gray-900">
                   Deposit: €{gearInfo.deposit}
                 </p>
-                <div className='mt-6'>
-                  <div className='flex items-center'>
-                    <div className='flex items-center'>
+                {/* <p className="text-3xl tracking-tight text-gray-900">
+                  Total: €{gearInfo.Total}
+                </p> */}
+                <div className="mt-6">
+                  <div className="flex items-center">
+                    <div className="flex items-center">
                       {[1, 2, 3, 4, 5].map((rating) => (
                         <StarIcon
                           key={rating}
@@ -191,25 +192,23 @@ const GearDetails: React.FC = (): JSX.Element => {
                               : 'text-gray-200',
                             'h-5 w-5 flex-shrink-0'
                           )}
-                          aria-hidden='true'
+                          aria-hidden="true"
                         />
                       ))}
                     </div>
-                    <p className='sr-only'>{reviews.average} out of 5 stars</p>
+                    <p className="sr-only">{reviews.average} out of 5 stars</p>
                     <a
                       href={reviews.href}
-                      className='ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500'
-                    >
+                      className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
                       {randomReviewCount} reviews
                     </a>
                   </div>
                 </div>
-                <form className='mt-10'>
+                <form className="mt-10">
                   <button
-                    type='button'
+                    type="button"
                     onClick={handleReservationClick}
-                    className='mt-10 flex w-full items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent'
-                  >
+                    className="mt-10 flex w-full items-center justify-center bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow border-transparent">
                     Reserve this gear
                   </button>
                 </form>
@@ -218,10 +217,10 @@ const GearDetails: React.FC = (): JSX.Element => {
                   userId={userInfo.profile.id}
                 />
               </div>
-              <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
+              <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
                 <div>
-                  <h3 className='sr-only'>Description</h3>
-                  <div className='space-y-6 my-6'>
+                  <h3 className="sr-only">Description</h3>
+                  <div className="space-y-6 my-6">
                     <Calendar
                       rentalStartDate={rentalStartDate}
                       setRentalStartDate={setRentalStartDate}

@@ -16,7 +16,6 @@ const CurrentRental: React.FC = (): JSX.Element => {
   const { rental_id } = useParams();
   const { activeRentals } = userInfo;
   const [gearImages, setGearImages] = useState<any[]>([]);
-  // const [rentalDays, setRentalDays] = useState<any>([]);
 
   const CDNURL =
     'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
