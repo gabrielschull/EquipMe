@@ -137,7 +137,15 @@ const CurrentRental: React.FC = (): JSX.Element => {
                 {/* Options */}
                 <div className="mt-4 lg:row-span-3 lg:mt-0">
                   <h2 className="sr-only">Product information</h2>
-                  <p className="text-3xl tracking-tight text-gray-900">
+                  <h5 className="text-3xs tracking-tight text-gray-900">
+                    Price/day: €{currentRentalInfo?.rental_price},00 <br></br>
+                    Days of Rental: {currentRentalInfo?.rental_duration_days}
+                    <br></br>
+                    Deposit: €{currentRentalInfo?.deposit},00 <br></br>
+                    <br></br>
+                  </h5>
+
+                  <p className="text-base font-bold tracking-tight text-black-900">
                     Total Paid: €{totalPaid},00
                   </p>
 
