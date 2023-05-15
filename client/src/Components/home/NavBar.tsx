@@ -21,7 +21,7 @@ const NavBar: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const navigate = useNavigate();
   return (
-    <Disclosure as='nav' className='bg-white mt-10 mr-0 mb-14 ml-14'>
+    <Disclosure as='nav' className='bg-white mt-10  mb-8 mr-0 ml-14 shadow-sm h-20'>
       {({ open }) => (
         <>
           <div className='mx-auto max-w-10xl px-2 sm:px-6 lg:px-0 m-0'>

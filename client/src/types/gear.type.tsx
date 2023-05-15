@@ -5,6 +5,7 @@ export interface Gear {
   name?: string | null;
   description?: string | null;
   id?: string;
+  location?: string,
   owner_id?: string | null;
   price_day?: string;
   price_hr?: string;
