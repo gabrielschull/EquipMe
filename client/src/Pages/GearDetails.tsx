@@ -25,39 +25,49 @@ const GearDetails: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [rentalStartDate, setRentalStartDate] = useState<Date>(new Date());
   const [rentalEndDate, setRentalEndDate] = useState<Date>(new Date());
+  const [gearAvailableDates, setGearAvailableDates] = useState<any>([]);
+  const { id } = useParams();
+  const gearInfo = useSelector((state: RootState) =>
+    state.Gear.find((gear) => gear.id === id)
+  );
+
   const dispatch: AppDispatch = useDispatch();
   const stripeAPIKey = process.env.REACT_APP_STRIPE_KEY!;
 
   const location = useLocation();
-  const gearInfo = location.state?.gear;
-
-  const { id } = useParams();
+  // const gearInfo = location.state?.gear;
 
   const getGearAvailability = async () => {
     const gearAvailability = await supabase.getAvailabilityByGearId(id);
-    dispatch(setAvailableDates({ id, gearAvailability }));
+    // dispatch(setAvailableDates({ id, gearAvailability }));
+    const dateArr: Date[] = [];
+    // if (gear && gear.availableDates) {
+    gearAvailability?.forEach((element: any) =>
+      dateArr.push(new Date(element.date_available))
+    );
+    setGearAvailableDates(dateArr);
   };
+
   const rentalDays = differenceInDays(rentalEndDate, rentalStartDate);
 
   const handleReservationClick = () => {
-    supabase
-      .startRentalContract(
-        id,
-        gearInfo.owner_id,
-        userInfo.profile.id,
-        rentalStartDate,
-        rentalEndDate,
-        rentalDays
-      )
-      .then(() => {
-        dispatch(setUnavailableDates({ id, rentalStartDate, rentalEndDate }));
-      });
-    id &&
-      supabase.calendarDeleteGearAvailability(
-        id,
-        rentalStartDate,
-        rentalEndDate
-      );
+    supabase.startRentalContract(
+      id,
+      gearInfo?.owner_id as string,
+      userInfo.profile.id,
+      rentalStartDate,
+      rentalEndDate,
+      rentalDays
+    );
+    //   .then(() => {
+    //     dispatch(setUnavailableDates({ id, rentalStartDate, rentalEndDate }));
+    //   });
+    // id &&
+    //   supabase.calendarDeleteGearAvailability(
+    //     id,
+    //     rentalStartDate,
+    //     rentalEndDate
+    //   );
     makePayment();
   };
 
@@ -67,7 +77,7 @@ const GearDetails: React.FC = (): JSX.Element => {
     try {
       const { data, error } = await supabaseClient.storage
         .from('gearImagesBucket')
-        .list(`${gearInfo.owner_id}/gear/${id}`, {
+        .list(`${gearInfo?.owner_id}/gear/${id}`, {
           limit: 4,
           offset: 0,
           sortBy: { column: 'name', order: 'asc' },
@@ -84,13 +94,15 @@ const GearDetails: React.FC = (): JSX.Element => {
   }
 
   useEffect(() => {
+    console.log('GearDetails ID', id);
+    console.log('GearDetails gearInfo', gearInfo);
     getGearImages();
     getGearAvailability();
   }, []);
 
   const makePayment = async () => {
     const stripe = await loadStripe(stripeAPIKey);
-    const body = { gearInfo };
+    const body = { gearInfo, rental_duration_days: rentalDays };
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -186,7 +198,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                         <StarIcon
                           key={rating}
                           className={classNames(
-                            gearInfo.rating >= rating
+                            (gearInfo?.rating as number) >= rating
                               ? 'text-gray-900'
                               : 'text-gray-200',
                             'h-5 w-5 flex-shrink-0'
@@ -226,6 +238,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                   <h3 className='sr-only'>Description</h3>
                   <div className='space-y-6 my-6'>
                     <Calendar
+                      gearAvailableDates={gearAvailableDates}
                       rentalStartDate={rentalStartDate}
                       setRentalStartDate={setRentalStartDate}
                       rentalEndDate={rentalEndDate}

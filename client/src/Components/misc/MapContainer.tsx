@@ -103,7 +103,15 @@ const MapContainer: React.FC = () => {
 
   return (
     <LoadScript googleMapsApiKey={apiKey}>
-      <div style={{ height: '400px', width: '60%', margin: '0 auto', alignItems: 'center'  }}>
+      <div
+        style={{
+          height: '400px',
+          width: '60%',
+          margin: '0 auto',
+          alignItems: 'center',
+        }}
+      >
+
         <div className='pb-6 flex'>
           {/* <button
             onClick={handleGeolocation}
@@ -124,41 +132,57 @@ const MapContainer: React.FC = () => {
           mapContainerStyle={{ height: '100%', width: '100%' }}
           center={center}
           zoom={zoom}
-           onLoad={handleMapLoad}
+          onLoad={handleMapLoad}
         >
-        {/* <Marker position={center}/> */}
-        {markerPositions &&
-         markerPositions.map((position, index) => (
-          <Marker
-            key={index}
-            position={position}
-            onClick={() => setSelectedGear(data[index])}
-          />
-          ))}
+          {/* <Marker position={center}/> */}
+          {markerPositions &&
+            markerPositions.map((position, index) => (
+              <Marker
+                key={index}
+                position={position}
+                onClick={() => setSelectedGear(data[index])}
+              />
+            ))}
           {selectedGear && (
             <InfoWindow
-               position={{
-               lat: selectedGear.location ? parseFloat(selectedGear.location.split(',')[0]) : 0,
-               lng: selectedGear.location ? parseFloat(selectedGear.location.split(',')[1]) : 0,
-          }}
-        onCloseClick={() => setSelectedGear(null)}
-        >
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-2">{selectedGear.name}</h3>
-              <p className="text-gray-600 mb-2">{selectedGear.description}</p>
-                <p className="text-gray-800 mb-1">Price per hour: €{selectedGear.price_hr}</p>
-                <p className="text-gray-800 mb-1">Price per day: €{selectedGear.price_day}</p>
-                <p className="text-gray-800 mb-5">Rating: {selectedGear.rating} stars</p>
-          <Link
-            to={`/geardetails/${selectedGear.id}`}
-            className="text-blue-500 hover:text-blue-700 m-5"
-          >
-          View Details
-         </Link>
-      </div>
-    </InfoWindow>
-    )}
-    </GoogleMap>
+              position={{
+                lat: selectedGear.location
+                  ? parseFloat(selectedGear.location.split(',')[0])
+                  : 0,
+                lng: selectedGear.location
+                  ? parseFloat(selectedGear.location.split(',')[1])
+                  : 0,
+              }}
+              onCloseClick={() => setSelectedGear(null)}
+            >
+              <div className='bg-white p-4 rounded-lg shadow'>
+                <img
+                  className='w-10 rounded-lg'
+                  src='https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/48194651-e701-40f9-affb-885ef7226d47/gear/1b146a9f-f32b-4b7d-8967-5fcd9a506f44/pexels-pixabay-276517.jpg'
+                />
+                <h3 className='text-lg font-semibold mb-2'>
+                  {selectedGear.name}
+                </h3>
+                <p className='text-gray-600 mb-2'>{selectedGear.description}</p>
+                <p className='text-gray-800 mb-1'>
+                  Price per hour: €{selectedGear.price_hr}
+                </p>
+                <p className='text-gray-800 mb-1'>
+                  Price per day: €{selectedGear.price_day}
+                </p>
+                <p className='text-gray-800 mb-5'>
+                  Rating: {selectedGear.rating} stars
+                </p>
+                <Link
+                  to={`/geardetails/${selectedGear.id}`}
+                  className='text-blue-500 hover:text-blue-700 m-5'
+                >
+                  View Details
+                </Link>
+              </div>
+            </InfoWindow>
+          )}
+        </GoogleMap>
       </div>
     </LoadScript>
   );
