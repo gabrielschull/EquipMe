@@ -3,7 +3,7 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch} from '../../Redux/store';
 import NavBar from '../home/NavBar';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { supabase, supabaseClient } from '../../services/supabase.service';
 import { format } from 'date-fns';
 import { Rental } from '../../types/rental.type';
@@ -22,6 +22,7 @@ const CurrentRental: React.FC = (): JSX.Element => {
   // const [rentalDays, setRentalDays] = useState<any>([]);
   const dispatch: AppDispatch = useDispatch();
   const rental = useSelector((state: RootState) => state.Rental);
+  const navigate = useNavigate()
 
   const CDNURL =
     'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
@@ -30,12 +31,12 @@ const CurrentRental: React.FC = (): JSX.Element => {
     ({ id }: { id: string }) => id === rental_id
   );
 
-  //console.log('🔍currentRentalInfo 🔍', currentRentalInfo);
+
   const totalPaid =
     currentRentalInfo?.rental_price * currentRentalInfo?.rental_duration_days +
     currentRentalInfo?.deposit;
 
-  //console.log(`Total Paid: ${totalPaid}`);
+
 
   async function getGearImages() {
     try {
@@ -73,6 +74,8 @@ const CurrentRental: React.FC = (): JSX.Element => {
       .deleteRental(rental.id)
       .then(() => {
         dispatch(deleteRental(rental.id));
+        console.log("successfully deleted gear")
+        navigate(`/myprofile`)
       })
       .catch((error) => {
         alert('Error: ' + error);
