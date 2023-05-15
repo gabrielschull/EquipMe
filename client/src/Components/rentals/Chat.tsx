@@ -17,14 +17,33 @@ const Chat: React.FC = (): JSX.Element => {
   const chatRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  console.log('userInfo!!! =>>>', userInfo)
+  //\console.log('userInfo!!! =>>>', userInfo)
 
 
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputValue) return;
-    dispatch(addMessage(inputValue))
+
+    const newMessage : Message = {
+      content: inputValue,
+      sender_id: userInfo.profile.id,
+      conversation_id: "a9474d61-2df9-41a9-bb1f-d80daa9b632e",
+    }
+
+    console.log("NEWMSG ==>", newMessage)
+
+    const { data: message, error } = await supabaseClient
+    .from('Messages')
+    .insert(newMessage);
+
+    if(error) {
+      console.log("Error sending message", error)
+    } else {
+      dispatch(addMessage(inputValue))
+
+    }
+    setInputValue('')
 
   }
 
@@ -81,7 +100,26 @@ useEffect(() => {
     console.log("MESSAGESBYCONVO ==> ", messagesByConversation)
   }
 getConversationsAndMessages()
-}, [userInfo.profile.id])
+
+
+supabaseClient
+  .channel('messagesChannel')
+  .on(
+    'postgres_changes',
+    {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'Messages',
+      filter: 'conversation_id=eq.a9474d61-2df9-41a9-bb1f-d80daa9b632e',
+    },
+    (payload) => {
+      console.log("PAYLOAD ==>", payload)
+      dispatch(addMessage(payload.new))
+    }
+  )
+  .subscribe()
+
+}, [dispatch, userInfo.profile.id])
 
 
   return (
@@ -127,8 +165,8 @@ getConversationsAndMessages()
       } mb-2`}
     >
       <div
-        className={`bg-blue-500 p-2 rounded-lg text-white max-w-xs ${
-          message.sender_id === userInfo.profile.id ? 'ml-2' : 'mr-2'
+        className={`${
+          message.sender_id === userInfo.profile.id ? 'ml-2 bg-blue-500 p-2 rounded-lg text-white max-w-xs bg-blue-500 p-2 rounded-lg text-white max-w-xs' : 'mr-2 bg-gray-400 p-2 rounded-lg text-white max-w-xs'
         }`}
       >
         {message.content}
