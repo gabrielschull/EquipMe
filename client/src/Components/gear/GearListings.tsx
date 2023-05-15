@@ -73,12 +73,10 @@ const GearListings: React.FC = (): JSX.Element => {
           sortBy: { column: "name", order: "asc" },
         });
 
-      console.log(`${ownerid}/gear/${gearid}`);
 
       if (error) console.log("ERROR IN IMAGE FETCH ==> ", error);
 
       if (data !== null && data.length > 0) {
-        console.log(data, "YARRRR");
         setHomeGearImages((state: any) => {
           return {...state, [ gearid as string ] : data[0].name}
         });
@@ -94,12 +92,9 @@ const GearListings: React.FC = (): JSX.Element => {
         getOwnerFirstName(g.owner_id!);
         getOwnerDistanceFromUser(g.owner_id!);
         getHomeGearImages(g.owner_id, g.id);
-        console.log(g, "GEARHERE")
       }
     });
   }, [filteredGear, owners, userInfo.id]);
-
-  console.log("homegearimg ==>", homeGearImages)
 
   const sortedGear = filteredGear.slice().sort((gearA: Gear, gearB: Gear) => {
     const distanceA = parseFloat(distances[gearA.owner_id!] || 'Infinity');

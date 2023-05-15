@@ -178,11 +178,11 @@ const AddGear: React.FC = (): JSX.Element => {
                     <div className='container grid grid-cols-10 gap-2'>
                       {files &&
                         files.map((image) => {
-                          console.log('image', image);
-                          console.log(
-                            'URL.createObjectURL(image)',
-                            URL.createObjectURL(image)
-                          );
+                          // console.log('image', image);
+                          // console.log(
+                          //   'URL.createObjectURL(image)',
+                          //   URL.createObjectURL(image)
+                          // );
                           return (
                             <img
                               src={URL.createObjectURL(image)}

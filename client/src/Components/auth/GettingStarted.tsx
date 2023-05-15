@@ -50,7 +50,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
   //filter gear by type
   const handleSearchButton = async () => {
     if (gearType) {
-      console.log('gearType 🏂 ----------> ', gearType);
+      //console.log('gearType 🏂 ----------> ', gearType);
       setGearType(gearType);
     } else {
       alert('Cannot find gear type');

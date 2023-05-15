@@ -50,7 +50,7 @@ const MapContainer: React.FC = () => {
     try {
       const gearData = await supabase.getGear();
       dispatch(setAllGear(gearData));
-      console.log("This is the data", gearData)
+      //console.log("This is the data", gearData)
       if (gearData) {
         setMarkerPositions(
           gearData.map((gearItem) => ({
@@ -63,7 +63,7 @@ const MapContainer: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-    console.log("HI")
+  
     setSelectedGear(null);
   };
 

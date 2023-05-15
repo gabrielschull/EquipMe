@@ -211,11 +211,11 @@ const EditGear: React.FC = (): JSX.Element => {
                         })}
                       {files &&
                         files.map((image) => {
-                          console.log('image', image);
-                          console.log(
-                            'URL.createObjectURL(image)',
-                            URL.createObjectURL(image)
-                          );
+                          // console.log('image', image);
+                          // console.log(
+                          //   'URL.createObjectURL(image)',
+                          //   URL.createObjectURL(image)
+                          // );
                           return (
                             <img
                               src={URL.createObjectURL(image)}

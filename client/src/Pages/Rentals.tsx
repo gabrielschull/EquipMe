@@ -13,7 +13,7 @@ const Rentals: React.FC = (): JSX.Element => {
   const gear = useSelector((state: RootState) => state.Gear);
   const userInfo = useSelector((state: RootState) => state.User);
   const { activeRentals } = userInfo;
-  console.log('Rentals >>> activeRentals', activeRentals);
+  //console.log('Rentals >>> activeRentals', activeRentals);
   const [gearImages, setGearImages] = useState<any[]>([]);
 
   const navigate = useNavigate();
