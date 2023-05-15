@@ -63,7 +63,7 @@ const MapContainer: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-  
+
     setSelectedGear(null);
   };
 
@@ -103,15 +103,15 @@ const MapContainer: React.FC = () => {
 
   return (
     <LoadScript googleMapsApiKey={apiKey}>
-      <div style={{ height: '400px', width: '60%', margin: '0 auto', alignItems: 'center' }}>
+      <div style={{ height: '400px', width: '60%', margin: '0 auto', alignItems: 'center'  }}>
         <div className='pb-6 flex'>
-          <button
+          {/* <button
             onClick={handleGeolocation}
             type='submit'
             className='mt-10 w-full items-center justify-center rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
           >
             Update current location
-          </button>
+          </button> */}
           <button
             onClick={handleClick}
             type='submit'
