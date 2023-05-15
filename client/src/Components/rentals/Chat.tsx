@@ -14,7 +14,7 @@ interface Message {
   sender: 'user' | 'bot';
 }
 
-const Chat: React.FC<ChatProps> = ({ownerId}): JSX.Element => {
+const Chat: React.FC<ChatProps> = ({ownerId, userId}): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
