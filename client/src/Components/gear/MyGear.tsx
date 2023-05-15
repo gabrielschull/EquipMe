@@ -99,7 +99,7 @@ const MyGear: React.FC = (): JSX.Element => {
                   {/* <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={gear.imageUrl} alt="" /> */}
                   <div className="min-w-0 flex-auto">
                     <p className="text-sm font-semibold leading-6 text-gray-900">
-                      {gear.description}
+                      {gear.name}
                     </p>
                     <p className="mt-1 text-xs leading-5 text-gray-800">
                       €{gear.price_hr} / hour
