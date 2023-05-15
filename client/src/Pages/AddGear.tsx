@@ -121,7 +121,7 @@ const AddGear: React.FC = (): JSX.Element => {
                   </div>
                 </div>
               </div>
-              <div className='col-span-full'>
+              <div className='col-span-full w-1/2'>
                 <label
                   htmlFor='about'
                   className='block text-sm font-medium leading-6 text-gray-900'
@@ -140,7 +140,7 @@ const AddGear: React.FC = (): JSX.Element => {
                   />
                 </div>
               </div>
-              <div className='col-span-full'>
+              <div className='col-span-full w-1/2'>
                 <label
                   htmlFor='about'
                   className='block text-sm font-medium leading-6 text-gray-900'
@@ -160,7 +160,7 @@ const AddGear: React.FC = (): JSX.Element => {
                 </div>
               </div>
 
-              <div className='col-span-full'>
+              <div className='col-span-full w-1/2'>
                 <label
                   htmlFor='cover-photo'
                   className='block text-sm font-medium leading-6 text-gray-900'
@@ -288,12 +288,14 @@ const AddGear: React.FC = (): JSX.Element => {
                   />
                 </div>
               </div>
+              <div className="col-span-3">
               <Calendar
                 startDate={startDate}
                 setStartDate={setStartDate}
                 endDate={endDate}
                 setEndDate={setEndDate}
               />
+              </div>
             </div>
           </div>
 
@@ -381,7 +383,7 @@ const AddGear: React.FC = (): JSX.Element => {
 
                 navigate(`/myprofile`);
               }}
-              className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+              className='rounded-md bg-indigo-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
             >
               List your gear on the site!
             </button>

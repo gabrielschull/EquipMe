@@ -70,11 +70,11 @@ const CurrentRental: React.FC = (): JSX.Element => {
   const handleDelete = (rental:Rental) => {
     console.log("WE ARE GETTING HERE")
     supabase
-      .deleteRental(rental.id as string)
+      .deleteRental(rental.id)
       .then(() => {
         dispatch(deleteRental(rental.id));
       })
-      .catch((error: any) => {
+      .catch((error) => {
         alert('Error: ' + error);
       });
   };
