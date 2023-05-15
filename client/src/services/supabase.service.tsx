@@ -415,6 +415,23 @@ export const supabase = {
       console.log(e, 'Cannot find contracts in the db');
     }
   },
+  getContractsByContractId: async function (
+    rentalContract_id: string | undefined
+  ) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('RentalContracts')
+        .select('*, Gear!RentalContracts_gear_id_fkey(*)')
+        .eq('id', rentalContract_id);
+      if (error) {
+        throw error;
+      }
+      console.log('data returned by RentalContracts', data);
+      return data;
+    } catch (e: any) {
+      console.log(e, 'Cannot find contracts in the db');
+    }
+  },
   getAvailabilityByGearId: async function (gear_id: string | undefined) {
     try {
       const { data, error } = await supabaseClient
