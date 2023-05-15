@@ -159,6 +159,7 @@ const AddGear: React.FC = (): JSX.Element => {
                   />
                 </div>
               </div>
+
               <div className='col-span-full'>
                 <label
                   htmlFor='cover-photo'

@@ -338,6 +338,7 @@ export const supabase = {
 
   editGear: async function (
     id: string | undefined,
+    newName: string | undefined,
     newDescription: string | undefined,
     newPricehour: number | undefined,
     newPriceday: number | undefined,
@@ -348,6 +349,7 @@ export const supabase = {
       const { data, error } = await supabaseClient
         .from('Gear')
         .update({
+          name: newName,
           description: newDescription,
           price_hr: newPricehour,
           price_day: newPriceday,

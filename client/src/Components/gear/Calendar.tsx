@@ -27,8 +27,8 @@ const Calendar: React.FC<any> = ({
     const indexToUpd = gearInfo.findIndex((gear) => gear.id === id);
     const dateArr: Date[] = [];
 
-    gearInfo[indexToUpd].availableDates?.forEach((element: any) =>
-      dateArr.push(new Date(element.date_available))
+    gearInfo[indexToUpd]?.availableDates?.forEach((element: any) =>
+      dateArr?.push(new Date(element.date_available))
     );
     setAvailableDates(dateArr);
   };
@@ -78,7 +78,7 @@ const Calendar: React.FC<any> = ({
               dateFormat='yyyy/MM/dd'
               id='start-date-picker'
               selected={rentalStartDate}
-              includeDates={availableDates}
+              includeDates={availableDates ? availableDates : ''}
               onChange={handleStartDateChange}
               className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
               inline
@@ -106,7 +106,7 @@ const Calendar: React.FC<any> = ({
               dateFormat='yyyy/MM/dd'
               id='start-date-picker'
               selected={rentalEndDate}
-              includeDates={availableDates}
+              includeDates={availableDates ? availableDates : ''}
               onChange={handleEndDateChange}
               className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
               inline
