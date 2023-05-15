@@ -16,11 +16,12 @@ export const MessageSlice = createSlice({
       return action.payload;
     },
     addMessage: (state, action) => {
-        const {conversationId} = action.payload;
-        if (!state[conversationId]) {
-            state[conversationId] = [];
+        const {conversation_id} = action.payload;
+        if (!state[conversation_id]) {
+            state[conversation_id] = [];
         }
-        state[conversationId].push(action.payload);
+        state[conversation_id].push(action.payload);
+
     },
   },
 });
