@@ -1,12 +1,12 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Gear } from "../../types/gear.type";
-import { RootState, AppDispatch } from "../../Redux/store";
-import { setAllGear } from "../../Redux/GearSlice";
-import { useNavigate } from "react-router-dom";
-import { supabase, supabaseClient } from "../../services/supabase.service";
-import Socials from "../misc/Socials";
-import MapContainer from "../misc/MapContainer";
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Gear } from '../../types/gear.type';
+import { RootState, AppDispatch } from '../../Redux/store';
+import { setAllGear } from '../../Redux/GearSlice';
+import { useNavigate } from 'react-router-dom';
+import { supabase, supabaseClient } from '../../services/supabase.service';
+import Socials from '../misc/Socials';
+import MapContainer from '../misc/MapContainer';
 
 const GearListings: React.FC = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
@@ -108,10 +108,10 @@ const GearListings: React.FC = (): JSX.Element => {
 
   return (
     <>
-      <div className='flex overflow-x-auto mx-12 mt-20'>
+      <div className="flex overflow-x-auto mx-12 mt-20">
         <MapContainer homeGearImages={homeGearImages}></MapContainer>
       </div>
-      <div className='flex overflow-x-auto mx-12 mt-20'>
+      <div className="flex overflow-x-auto mx-12 mt-20">
         {sortedGear
           .filter((gear: Gear) => {
             return gear.owner_id !== userInfo.profile.id;
@@ -119,20 +119,19 @@ const GearListings: React.FC = (): JSX.Element => {
           .map((gear: Gear, index) => (
             <div
               key={gear.id}
-              className='flex flex-col justify-between gap-4 p-4 items-center'
-            >
-              <div className='flex gap-4'>
-                <div className='flex-auto'>
-                  <p className='text-lg font-semibold leading-6 text-gray-900'>
+              className="flex flex-col justify-between gap-4 p-4 items-center">
+              <div className="flex gap-4">
+                <div className="flex-auto">
+                  <p className="text-lg font-semibold leading-6 text-gray-900">
                     {gear.name}
                   </p>
-                  <p className='mt-1 text-sm leading-5 text-gray-800'>
+                  <p className="mt-1 text-sm leading-5 text-gray-800">
                     €{gear.price_hr} / hour
                   </p>
-                  <p className='mt-1 text-sm leading-5 text-gray-800'>
+                  <p className="mt-1 text-sm leading-5 text-gray-800">
                     €{gear.price_day} / day
                   </p>
-                  <p className='mt-1 text-sm leading-5 text-gray-800'>
+                  <p className="mt-1 text-sm leading-5 text-gray-800">
                     Type: {gear.type}
                   </p>
                 </div>
@@ -141,8 +140,7 @@ const GearListings: React.FC = (): JSX.Element => {
                 <div
                   style={{ paddingRight: '20px', paddingLeft: '20px' }}
                   key={homeGearImages[gear.id!]}
-                  className='aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block'
-                >
+                  className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                   <img
                     src={
                       CDNURL +
@@ -152,8 +150,8 @@ const GearListings: React.FC = (): JSX.Element => {
                       '/' +
                       homeGearImages[gear.id!]
                     }
-                    alt=''
-                    className='h-full w-full object-cover object-center'
+                    alt=""
+                    className="h-full w-full object-cover object-center"
                     style={{
                       width: '18vmin',
                       height: '24vmin',
@@ -164,39 +162,38 @@ const GearListings: React.FC = (): JSX.Element => {
                   />
                 </div>
               ) : (
-                <div className='aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block'>
+                <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                   <img
-                    src='https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/3ae36b25-4df5-44de-b66e-18eb88458a30/gear/cb7fc4d2-a61d-4427-aa99-8b298258b9ce/Screenshot%202023-05-12%20at%2009.14.47.png'
-                    alt=''
-                    className='h-full w-full object-cover object-center'
+                    src="https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/3ae36b25-4df5-44de-b66e-18eb88458a30/gear/cb7fc4d2-a61d-4427-aa99-8b298258b9ce/Screenshot%202023-05-12%20at%2009.14.47.png"
+                    alt=""
+                    className="h-full w-full object-cover object-center"
                     style={{ width: '18vmin', height: '24vmin' }}
                   />
                 </div>
               )}
-              <div className='flex flex-col items-end text-center items-center'>
-                <p className='text-sm leading-6 text-gray-900'>
+              <div className="flex flex-col items-end text-center items-center">
+                <p className="text-sm leading-6 text-gray-900">
                   Gear owner: {owners[gear.owner_id!]}
                 </p>
                 <Socials></Socials>
-                <p className='mt-1 text-xs leading-5 text-gray-500'>
+                <p className="mt-1 text-xs leading-5 text-gray-500">
                   Distance: {distances[gear.owner_id!] || 'unknown'}
                 </p>
-                <p className='mt-1 text-xs leading-5 text-gray-500'>
+                <p className="mt-1 text-xs leading-5 text-gray-500">
                   &#9733; {gear.rating}
                 </p>
-                <form className='mt-10'>
+                <form className="mt-10 ">
                   <button
                     style={{
                       height: '80px',
                       width: '200px',
                       whiteSpace: 'nowrap',
                     }}
-                    type='submit'
+                    type="submit"
                     onClick={() =>
                       navigate(`/geardetails/${gear.id}`, { state: { gear } })
                     }
-                    className='bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow border-transparent'
-                  >
+                    className="border-transparent bg-white hover:bg-indigo-400  hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
                     See more details
                   </button>
                 </form>

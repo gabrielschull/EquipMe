@@ -12,6 +12,7 @@ const CurrentRentalBanner: React.FC = (): JSX.Element => {
 
   return (
     <>
+
   <div className="overflow-y-auto max-h-[400px] mt-4 mb-6 shadow-lg">
     <div>
       {userInfo?.activeRentals?.map((rental: any) => {
