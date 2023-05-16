@@ -12,6 +12,12 @@ import { setAvailableDates, setUnavailableDates } from '../Redux/GearSlice';
 import { loadStripe } from '@stripe/stripe-js';
 import { differenceInDays } from 'date-fns';
 
+interface Conversation {
+  id: string;
+  member1: string;
+  member2: string;
+}
+
 const CDNURL =
   'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
 
@@ -26,6 +32,7 @@ const GearDetails: React.FC = (): JSX.Element => {
   const [rentalStartDate, setRentalStartDate] = useState<Date>(new Date());
   const [rentalEndDate, setRentalEndDate] = useState<Date>(new Date());
   const [gearAvailableDates, setGearAvailableDates] = useState<any>([]);
+  const [conversationId, setConversationId] = useState<string | null>(null)
   const { id } = useParams();
   const gearInfo = useSelector((state: RootState) =>
     state.Gear.find((gear) => gear.id === id)
@@ -70,6 +77,12 @@ const GearDetails: React.FC = (): JSX.Element => {
     //   );
     makePayment();
   };
+
+  const handleContactClick = async (ownerId: string, userId: string ) => {
+    const id = await getOrCreateConversation(ownerId, userId);
+    console.log("THIS SHOULD BE THE SAME ==> ", id)
+    setConversationId(id)
+  }
 
   const randomReviewCount = Math.floor(Math.random() * 101);
 
@@ -125,6 +138,38 @@ const GearDetails: React.FC = (): JSX.Element => {
     // if (result.error) {
     //   console.log(result?.error);
     // }
+  };
+
+  const getOrCreateConversation = async (ownerId: string, userId: string): Promise<string> => {
+    const { data: existingConversation, error } = await supabaseClient
+      .from('Conversations')
+      .select('id')
+      .or(`member1.eq.${ownerId},member2.eq.${ownerId}`)
+      .or(`member1.eq.${userId},member2.eq.${userId}`)
+      .single()
+
+      console.log("LOOKIE HERE ==> ", existingConversation)
+  
+    if (existingConversation) {
+      return existingConversation.id;
+    }
+    if (!existingConversation) {
+    const { data: newConversation, error: insertError } = await supabaseClient
+      .from('Conversations')
+      .insert({
+        member1: ownerId,
+        member2: userId
+      })
+      .single() as {data: Conversation | null, error: Error | null};
+  
+    if (insertError || !newConversation) {
+      console.error("Error creating conversation: ", insertError);
+      return '';
+    }
+    return newConversation.id
+  }
+  console.log("reached final return in getOrCreateConversation (NOT GOOD)")
+  return ''
   };
 
   return (
@@ -224,14 +269,14 @@ const GearDetails: React.FC = (): JSX.Element => {
                   >
                     Reserve this gear
                   </button>
-                  <button
+                  <button onClick={() => handleContactClick(gearInfo.owner_id as string, userInfo.profile.id)}
                     type='button'
                     className='mt-10 flex w-full items-center justify-center bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3  rounded shadow border-transparent'
                   >
                     Contact Gear Owner
                   </button>
                 </form>
-                <Chat />
+                {conversationId && <Chat conversationId={conversationId} defaultOpen />}
               </div>
               <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
                 <div>

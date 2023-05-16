@@ -29,7 +29,7 @@ import PaymentSuccessful from './Components/payments/PaymentSuccessful';
 import PaymentCanceled from './Components/payments/PaymentCanceled';
 import { supabase } from './services/supabase.service';
 import { setAllGear } from './Redux/GearSlice';
-// import Chat from './Components/rentals/Chat';
+import Chat from './Components/rentals/Chat';
 
 const App: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
@@ -84,7 +84,7 @@ const App: React.FC = (): JSX.Element => {
          <Route path='/paymentcanceled' element={<PaymentCanceled />} />
        </>
      </Routes>
-     {/* <Chat /> */}
+     <Chat conversationId={''} />
    </Router>
  );
 };
