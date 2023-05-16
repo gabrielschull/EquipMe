@@ -234,14 +234,14 @@ const EditUser: React.FC = (): JSX.Element => {
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
               type="button"
-              className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow"
+              className="border-transparent bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold"
               onClick={() => navigate(`/home`)}>
               Cancel
             </button>
             <button
               type="submit"
               onClick={handleSubmit}
-              className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow">
+              className="border-transparent bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
               Update
             </button>
           </div>
