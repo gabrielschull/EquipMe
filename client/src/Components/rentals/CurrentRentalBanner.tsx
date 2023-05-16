@@ -14,8 +14,10 @@ const CurrentRentalBanner: React.FC = (): JSX.Element => {
 
   return (
     <>
-      <div className="flex justify-center bg-blue-800 text-white py-3">
-        <h2 className="text-xl font-semibold mb-2">CURRENT RENTALS LIST</h2>
+      <div className="flex justify-center border-transparent bg-indigo-400 px-8 text-base font-medium hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-white py-3">
+        <h2 className="text-xl border-transparent bg-indigo-400 px-8 py-3 font-medium text-white hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mb-2">
+          CURRENT RENTALS LIST
+        </h2>
       </div>
       <div className="overflow-y-auto max-h-[400px] mt-4 mb-6 shadow-lg">
         <div>
