@@ -101,7 +101,7 @@ const App: React.FC = (): JSX.Element => {
           <Route path='/paymentcanceled' element={<PaymentCanceled />} />
         </>
       </Routes>
-      {/* <Chat /> */}
+      <Chat />
     </Router>
   );
 
