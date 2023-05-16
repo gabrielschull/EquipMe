@@ -168,6 +168,7 @@ useEffect(() => {
 
   return (
     <div className='flex'>
+      {otherUser && (
       <button
         ref={buttonRef}
         onClick={handleButtonClick}
@@ -187,6 +188,7 @@ useEffect(() => {
     chatState.isOpen ? '-' : '+'
   )}
 </button>
+)}
       {chatState.isOpen && (
         <div
           ref={chatRef}
