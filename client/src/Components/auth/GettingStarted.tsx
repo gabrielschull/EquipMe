@@ -15,9 +15,7 @@ import {
 } from '../../Redux/UserSlice';
 import { setFilteredGear } from '../../Redux/filteredGearSlice';
 import { updateLocation } from '../../Redux/UserSlice';
-import Background from "../Assets/Background.jpg"
-
-
+import Background from '../Assets/Background.jpg';
 
 function onlyUnique(value: string, index: number, array: string[]) {
   return array.indexOf(value) === index;
@@ -107,58 +105,60 @@ const GettingStarted: React.FC = (): JSX.Element => {
   return (
     <>
       <div
-        className='relative'
+        className="relative"
         style={{
           backgroundImage: `url(${Background})`,
-          backgroundSize: 'contain',
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
-        }}
-      >
-        <div className='flex items-center justify-center'>
-          <div className='flex flex-col items-center space-y-12 mt-20 '>
+        }}>
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col items-center space-y-12 mt-20 ">
             <button
-              type='submit'
+              type="submit"
               onClick={() => {
-                userInfo.profile.is_owner
+                userInfo.profile?.is_owner
                   ? supabase.updateIsOwnerToFalse(userInfo.profile.id)
                   : supabase.updateIsOwnerToTrue(userInfo.profile.id);
                 dispatch(toggleIsOwner(userInfo.profile.id));
               }}
               className='bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow'
             >
-              {userInfo.profile.is_owner ? '✔' : ''} I want to lease my sports
+              {userInfo.profile?.is_owner ? '✔' : ''} I want to lease my sports
+
               gear to others
             </button>
-            {userInfo.profile.is_owner && (
+            ;
+            {userInfo.profile?.is_owner && (
               <button
-                type='button'
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   navigate(`/addgear`);
                 }}
-                className='bg-indigo-400 text-white font-semibold py-2 px-3 rounded shadow'
-              >
+                className="bg-indigo-400 text-white font-semibold py-2 px-3 rounded shadow">
                 Add Gear
               </button>
             )}
             <button
-              type='submit'
+              type="submit"
               onClick={() => {
-                userInfo.profile.is_renter
+                userInfo.profile?.is_renter
                   ? supabase.updateIsRenterToFalse(userInfo.profile.id)
                   : supabase.updateIsRenterToTrue(userInfo.profile.id);
                 dispatch(toggleIsRenter(userInfo.profile.id));
               }}
               className='bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow'
             >
-              {userInfo.profile.is_renter ? '✔' : ''} I'm looking to rent some
+              {userInfo.profile?.is_renter ? '✔' : ''} I'm looking to rent some
+
               gear
             </button>
+            ;
           </div>
         </div>
 
-        {userInfo.profile.is_renter && (
+        {userInfo.profile?.is_renter && (
           <>
             <Listbox
               value={selected}
@@ -166,35 +166,34 @@ const GettingStarted: React.FC = (): JSX.Element => {
                 console.log(gearType);
                 setSelected(gearType);
                 gearType && setGearType(gearType);
-              }}
-            >
+              }}>
               {({ open }) => (
                 <>
-                  <div className='flex justify-center mt-12'>
-                    <div className='relative'>
-                      <Listbox.Label className='block text-lg text-white font-semibold py-2 px-5'>
+                  <div className="flex justify-center mt-12">
+                    <div className="relative">
+                      <Listbox.Label className="block text-lg text-white font-semibold py-2 px-5">
                         What type of gear you are looking for?
                       </Listbox.Label>
-                      <div className='relative mt-2 mx-12'>
-                        <Listbox.Button className='relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6 ml-50 mt-5 w-1/4'>
-                          <span className='flex items-center'>
+                      <div className="relative mt-2 mx-12">
+                        <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6 ml-50 mt-5 w-1/4">
+                          <span className="flex items-center">
                             <img
                               src={
                                 'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/images/' +
                                 userInfo.profile?.id +
                                 '/profileImage'
                               }
-                              alt=''
-                              className='h-5 w-5 flex-shrink-0 rounded-full'
+                              alt=""
+                              className="h-5 w-5 flex-shrink-0 rounded-full"
                             />
-                            <span className='ml-3 block truncate'>
+                            <span className="ml-3 block truncate">
                               {selected}
                             </span>
                           </span>
-                          <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2 w-1/4'>
+                          <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2 w-1/4">
                             <ChevronUpDownIcon
-                              className='h-5 w-5 text-gray-400'
-                              aria-hidden='true'
+                              className="h-5 w-5 text-gray-400"
+                              aria-hidden="true"
                             />
                           </span>
                         </Listbox.Button>
@@ -203,11 +202,10 @@ const GettingStarted: React.FC = (): JSX.Element => {
                     <Transition
                       show={open}
                       as={Fragment}
-                      leave='transition ease-in duration-100'
-                      leaveFrom='opacity-100'
-                      leaveTo='opacity-0'
-                    >
-                      <Listbox.Options className='absolute z-10 mt-1 max-h-56 w-1/2 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0">
+                      <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-1/2 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                         {gearTypesArray?.map((type) => {
                           return (
                             <Listbox.Option
@@ -220,19 +218,17 @@ const GettingStarted: React.FC = (): JSX.Element => {
                                   'relative cursor-default select-none py-2 pl-3 pr-9'
                                 )
                               }
-                              value={type}
-                            >
+                              value={type}>
                               {({ selected, active }) => (
                                 <>
-                                  <div className='flex items-center'>
+                                  <div className="flex items-center">
                                     <span
                                       className={classNames(
                                         selected
                                           ? 'font-semibold'
                                           : 'font-normal',
                                         'ml-3 block truncate'
-                                      )}
-                                    >
+                                      )}>
                                       {type}
                                     </span>
                                   </div>
@@ -244,11 +240,10 @@ const GettingStarted: React.FC = (): JSX.Element => {
                                           ? 'text-white'
                                           : 'text-indigo-400',
                                         'absolute inset-y-0 right-0 flex items-center pr-4'
-                                      )}
-                                    >
+                                      )}>
                                       <CheckIcon
-                                        className='h-5 w-5'
-                                        aria-hidden='true'
+                                        className="h-5 w-5"
+                                        aria-hidden="true"
                                       />
                                     </span>
                                   ) : null}
@@ -265,12 +260,11 @@ const GettingStarted: React.FC = (): JSX.Element => {
             </Listbox>
           </>
         )}
-        <div className='flex justify-center items-center mt-10'>
+        <div className="flex justify-center items-center mt-10">
           <button
             onClick={handleGeolocation}
-            type='submit'
-            className='mt-10 mb-40 flex items-center justify-center rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-          >
+            type="submit"
+            className="mt-10 mb-40 flex items-center justify-center rounded-md border border-transparent bg-white px-3 py-2 text-base  text-black font-semibold  hover:bg-indigo-400  hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             Update your location
           </button>
         </div>
