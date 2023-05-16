@@ -328,7 +328,9 @@ useEffect(() => {
 
 
           {messages[`${chatState.currentConversationId}`]?.map((message: Message) => {
+            console.log(message, "FUCKER")
   const messageDate = parseISO(message.created_at!);
+  console.log(messageDate, "DATE")
   const now = new Date();
   let formattedDate = '';
 
@@ -337,7 +339,7 @@ useEffect(() => {
   const diffInDays = diffInHours / 24;
 
   if (diffInMinutes < 1) {
-    formattedDate = 'Just now';
+     formattedDate = 'Just now';
   } else if (diffInHours < 1) {
     const minutes = Math.round(diffInMinutes);
     formattedDate = `${minutes} min${minutes > 1 ? 's' : ''} ago`;
