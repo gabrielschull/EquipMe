@@ -109,11 +109,14 @@ const GearListings: React.FC = (): JSX.Element => {
   return (
     <>
       <div className='flex overflow-x-auto mx-12 mt-20'>
-      {sortedGear
-        .filter((gear: Gear) => {
-          return gear.owner_id !== userInfo.profile.id;
-        })
-        .map((gear: Gear, index) => (
+        <MapContainer homeGearImages={homeGearImages}></MapContainer>
+      </div>
+      <div className='flex overflow-x-auto mx-12 mt-20'>
+        {sortedGear
+          .filter((gear: Gear) => {
+            return gear.owner_id !== userInfo.profile.id;
+          })
+          .map((gear: Gear, index) => (
             <div
               key={gear.id}
               className='flex flex-col justify-between gap-4 p-4 items-center'

@@ -22,7 +22,11 @@ const apiKey = process.env.REACT_APP_MAPS_API_KEY!;
 const CDNURL =
   'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
 
-const MapContainer: React.FC = () => {
+interface MapProps {
+  homeGearImages: any;
+}
+
+const MapContainer: React.FC<MapProps> = ({ homeGearImages }: any) => {
   const { profile } = useSelector((state: RootState) => state.User);
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
   const [zoom, setZoom] = useState(13);
@@ -34,6 +38,8 @@ const MapContainer: React.FC = () => {
   const [markerPositions, setMarkerPositions] = useState<any[]>([]);
   const [selectedGear, setSelectedGear] = useState<any>();
   const [data, setData] = useState<any>([]);
+
+  console.log('MapContainer > homeGearImages', homeGearImages);
 
   const handleGeolocation = async () => {
     navigator.geolocation.getCurrentPosition(
@@ -73,9 +79,12 @@ const MapContainer: React.FC = () => {
             lng: gearItem.location
               ? parseFloat(gearItem.location.split(',')[1])
               : 0,
+            gear_id: gearItem.id,
+            owner_id: gearItem.owner_id,
           }))
         );
       }
+      console.log('MapContainer > markerPositions', markerPositions);
       setData(gearData);
     } catch (error) {
       console.error(error);
@@ -125,7 +134,7 @@ const MapContainer: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        <div className='pb-6 flex'>
+        <div className='flex'>
           {/* <button
             onClick={handleGeolocation}
             type='submit'
@@ -155,10 +164,13 @@ const MapContainer: React.FC = () => {
                 position={position}
                 options={{
                   icon: {
-                    url: 'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/48194651-e701-40f9-affb-885ef7226d47/gear/1b146a9f-f32b-4b7d-8967-5fcd9a506f44/pexels-pixabay-276517.jpg',
+                    // url: 'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/48194651-e701-40f9-affb-885ef7226d47/gear/1b146a9f-f32b-4b7d-8967-5fcd9a506f44/pexels-pixabay-276517.jpg',
+                    url: `${CDNURL}${position.owner_id}/gear/${
+                      position.gear_id
+                    }/${homeGearImages[position.gear_id]}`,
                     scaledSize: {
-                      width: 30,
-                      height: 30,
+                      width: 60,
+                      height: 60,
                       equals: () => {
                         return false;
                       },

@@ -275,7 +275,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
           </button>
         </div>
       </div>
-      <MapContainer></MapContainer>
+      {/* <MapContainer></MapContainer> */}
     </>
   );
 };
