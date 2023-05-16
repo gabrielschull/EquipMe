@@ -46,8 +46,8 @@ const NavBar: React.FC = (): JSX.Element => {
                         className={classNames(
                           item.current
                             ? 'bg-gray-900 text-black'
-                            : 'text-black hover:shadow-md hover:text-black',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                            : 'text-black hover:shadow-md hover:text-white hover:bg-indigo-400',
+                          'rounded-md px-3 py-2 text-sm font-semibold'
                         )}
                         aria-current={item.current ? 'page' : undefined}>
                         {item.name}
@@ -59,9 +59,7 @@ const NavBar: React.FC = (): JSX.Element => {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <button
                   type="button"
-                  className="rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+                  className="rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"></button>
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2  mr-0">

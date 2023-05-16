@@ -36,15 +36,14 @@ const MyGear: React.FC = (): JSX.Element => {
 
       if (error) console.log('ERROR IN IMAGE FETCH ==> ', error);
 
-
-        if (data !== null && data.length > 0) {
-          setHomeGearImages((state: any) => {
-            return {...state, [ gearid as string ] : data[0].name}
-          });
-        }
-      } catch (e: any) {
-        console.log(e, 'Error getting gear images');
+      if (data !== null && data.length > 0) {
+        setHomeGearImages((state: any) => {
+          return { ...state, [gearid as string]: data[0].name };
+        });
       }
+    } catch (e: any) {
+      console.log(e, 'Error getting gear images');
+    }
   }
 
   useEffect(() => {
@@ -89,10 +88,12 @@ const MyGear: React.FC = (): JSX.Element => {
                 <div className="flex gap-x-4">
                   {/* <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={gear.imageUrl} alt="" /> */}
                   <div className="min-w-0 flex-auto">
-                    <p className="text-sm font-semibold leading-6 text-gray-900">
-                      {gear.name}
-                      {gear.description}
-                    </p>
+                    <div className="overflow-auto max-h-20">
+                      <p className="text-sm font-semibold leading-6 text-gray-900">
+                        {gear.name}
+                        {gear.description}
+                      </p>
+                    </div>
                     <p className="mt-1 text-xs leading-5 text-gray-800">
                       €{gear.price_hr} / hour
                     </p>
@@ -132,13 +133,13 @@ const MyGear: React.FC = (): JSX.Element => {
                   <button
                     type="submit"
                     onClick={() => navigate(`/editgear/${gear.id}`)}
-                    className="bg-white hover:bg-indigo-400 text-black font-semibold py-1 px-3 rounded border border-gray-300 hover:text-white">
+                    className="border-transparent bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
                     Edit Gear
                   </button>
                   <button
                     type="button"
                     onClick={() => handleDelete(gear)}
-                    className="bg-white hover:bg-indigo-400 text-black font-semibold py-1 px-3 rounded hover:text-white">
+                    className="bg-white hover:bg-indigo-400 text-black font-semibold py-2 px-3 rounded hover:text-white">
                     Delete Gear
                   </button>
                 </div>
