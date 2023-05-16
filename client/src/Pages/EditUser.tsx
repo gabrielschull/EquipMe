@@ -91,7 +91,7 @@ const EditUser: React.FC = (): JSX.Element => {
                   className="block text-sm font-medium leading-6 text-gray-900 mb-2">
                   First Name
                 </label>
-                <div className="mt-2">
+                <div className="mt-2 w-3/4">
                   <input
                     value={formState.first_name}
                     onChange={handleChange}
@@ -104,7 +104,7 @@ const EditUser: React.FC = (): JSX.Element => {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-3 w-3/4">
                 <label
                   htmlFor="last-name"
                   className="block text-sm font-medium leading-6 text-gray-900">
@@ -124,7 +124,7 @@ const EditUser: React.FC = (): JSX.Element => {
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-3 w-3/4">
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-gray-900">
@@ -143,7 +143,7 @@ const EditUser: React.FC = (): JSX.Element => {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-3 w-3/4">
                 <label
                   htmlFor="phone"
                   className="block text-sm font-medium leading-6 text-gray-900">
@@ -179,7 +179,7 @@ const EditUser: React.FC = (): JSX.Element => {
                     id="about"
                     name="bio"
                     rows={3}
-                    className=" p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="p-4 block w-full rounded-md border-0 py-3.0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 h-40"
                     required
                   />
                 </div>
@@ -208,7 +208,7 @@ const EditUser: React.FC = (): JSX.Element => {
                     <div className="mt-4 flex text-sm leading-6 text-gray-600">
                       <label
                         htmlFor="file-upload"
-                        className="relative cursor-pointer rounded-md bg-white font-semibold text-black focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:shadow-md">
+                        className=" px-5 py-2 hover:text-white hover:bg-indigo-400 relative cursor-pointer rounded-md bg-white font-semibold text-black focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:shadow-md">
                         <span>Upload a file</span>
                         <input
                           id="file-upload"
@@ -234,14 +234,14 @@ const EditUser: React.FC = (): JSX.Element => {
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
               type="button"
-              className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow"
+              className="bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3  rounded shadow"
               onClick={() => navigate(`/home`)}>
               Cancel
             </button>
             <button
               type="submit"
               onClick={handleSubmit}
-              className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3  rounded shadow">
+              className="bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3  rounded shadow">
               Update
             </button>
           </div>

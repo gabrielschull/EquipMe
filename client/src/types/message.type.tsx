@@ -5,4 +5,3 @@ export interface Message {
     sender_id: string;
     conversation_id: string;
 }
-  

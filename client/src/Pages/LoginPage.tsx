@@ -8,7 +8,6 @@ const LoginPage: React.FC = (): JSX.Element => {
       <>
         <div className="component-container">
           <Login></Login>
-          {/* <Signup/> */}
         </div>
       </>
     );

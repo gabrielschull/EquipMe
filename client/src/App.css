@@ -10,13 +10,6 @@
     @apply text-7xl;
   }
 }
-
-.map-style {
-  display: flex;
-  justify-content: center;
-  padding-top: 30px;
-}
-
 .image-track > .image {
   width: 40vmin;
   height: 56vmin;
