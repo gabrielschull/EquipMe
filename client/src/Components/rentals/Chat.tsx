@@ -7,7 +7,7 @@ import { addMessage, setMessages } from '../../Redux/MessageSlice';
 import { Message } from '../../types/message.type';
 import { Data } from '@react-google-maps/api';
 import { openChat, closeChat, toggleChat } from '../../Redux/ChatSlice';
-
+import { User } from '../../types/user.type'
 
 
 const Chat: React.FC = (): JSX.Element => {
@@ -15,6 +15,7 @@ const Chat: React.FC = (): JSX.Element => {
   const [inputValue, setInputValue] = useState('');
   const chatState = useSelector((state: RootState) => state.Chat);
   const messages = useSelector((state: RootState) => state.Message)
+  const [otherUser, setOtherUser] = useState<User | null>(null);
   const dispatch = useDispatch()
 
   const chatRef = useRef<HTMLDivElement>(null);
@@ -33,7 +34,6 @@ const Chat: React.FC = (): JSX.Element => {
     e.preventDefault();
     if (!inputValue) return;
 
-    console.log("GUI", chatState.currentConversationId)
   
     
     const newMessage : Message = {
@@ -42,7 +42,6 @@ const Chat: React.FC = (): JSX.Element => {
       conversation_id: chatState.currentConversationId,
     }
     
-    console.log("NEWMSG ==>", newMessage)
 
     const { data: message, error } = await supabaseClient
     .from('Messages')
@@ -88,7 +87,6 @@ useEffect(() => {
       .from('Messages')
       .select('*')
       .eq('conversation_id', conversationId);
-      console.log("GETMESSAGESBYCONVERSATION ==>", messages)
 
     if (error) {
       console.error("Error fetching messages: ", error);
@@ -100,15 +98,15 @@ useEffect(() => {
 
   async function getConversationsAndMessages() {
     const conversations = await getAllConversations();
-    console.log("CONVOS ==>", conversations)
+   
     const messages = await Promise.all(conversations.map(conversation => getMessagesByConversation(conversation.id)))
-    console.log("MSGS", messages)
+    
     const messagesByConversation: Record<string, Message[]> = {};
     for(let i = 0; i < conversations.length; i++) {
       messagesByConversation[conversations[i].id] = messages[i];
     }
     dispatch(setMessages(messagesByConversation));
-    console.log("MESSAGESBYCONVO ==> ", messagesByConversation)
+    
   }
 getConversationsAndMessages()
 
@@ -124,7 +122,7 @@ supabaseClient
       filter: `conversation_id=eq.${chatState.currentConversationId}`,
     },
     (payload) => {
-      console.log("PAYLOAD ==>", payload)
+      
       dispatch(addMessage(payload.new))
     }
   )
@@ -133,25 +131,68 @@ supabaseClient
 }, [dispatch, userInfo.profile.id, chatState.currentConversationId])
 
 useEffect(() => {
-  console.log("UPDATED CONVO ID ==>" , chatState.currentConversationId)
-}, [chatState.currentConversationId])
+  async function fetchOtherUser() {
+    setOtherUser(null)
+    const conversation = await supabaseClient
+      .from('Conversations')
+      .select('*')
+      .eq('id', chatState.currentConversationId)
+      .single();
+
+    if (conversation.error) {
+      console.error("Error fetching conversation: ", conversation.error);
+      return;
+    }
+
+    const otherUserId = conversation.data.member1 === userInfo.profile.id 
+      ? conversation.data.member2 
+      : conversation.data.member1;
+    
+    const otherUserDetails = await supabaseClient
+      .from('Users')
+      .select('*')
+      .eq('id', otherUserId)
+      .single();
+
+    if (otherUserDetails.error) {
+      console.error("Error fetching other user's details: ", otherUserDetails.error);
+      return;
+    }
+
+    setOtherUser(otherUserDetails.data as User);
+  }
+
+  fetchOtherUser();
+}, [chatState.currentConversationId, userInfo.profile.id]);
 
 
   return (
     <div className='flex'>
+      {otherUser && (
       <button
         ref={buttonRef}
         onClick={handleButtonClick}
         className='fixed bottom-4 right-4 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center focus:outline-none'
       >
-        {chatState.isOpen ? '-' : '+'}
-      </button>
+        {otherUser && chatState.currentConversationId ? (
+    <img
+      src={
+        'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/images/' +
+        otherUser.id +
+        '/profileImage'
+      }
+      alt="User"
+      className='w-full h-full object-cover rounded-full' 
+    />
+  ) : (
+    chatState.isOpen ? '-' : '+'
+  )}
+</button>
+)}
       {chatState.isOpen && (
         <div
           ref={chatRef}
-          className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'
-        >
-
+          className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'>
           <button
             onClick={handleCloseClick}
             style={{
@@ -171,7 +212,13 @@ useEffect(() => {
           >
             X
           </button>
+          {otherUser && (
+              <h2 style={{marginLeft: "10px", marginTop:"7px", marginBottom:"7px"}}>
+                {otherUser.first_name} {otherUser.last_name}
+              </h2>
+            )}
           <div className='flex-grow overflow-y-auto p-4'>
+         
   {messages[`${chatState.currentConversationId}`]?.map((message: Message) => (
     <div
       key={message.id}
