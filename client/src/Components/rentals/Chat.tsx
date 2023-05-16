@@ -62,6 +62,7 @@ const Chat: React.FC = (): JSX.Element => {
     dispatch(closeChat());
   };
 
+
   useEffect(() => {
     async function getAllConversations() {
       const { data: conversations, error } = await supabaseClient
@@ -82,14 +83,17 @@ const Chat: React.FC = (): JSX.Element => {
     return conversations;
   }
 
-  async function getMessagesByConversation(conversationId: string): Promise<Message[]>{
+  async function getMessagesByConversation(
+    conversationId: string
+  ): Promise<Message[]> {
     const { data: messages, error } = await supabaseClient
       .from('Messages')
       .select('*')
       .eq('conversation_id', conversationId);
 
+
     if (error) {
-      console.error("Error fetching messages: ", error);
+      console.error('Error fetching messages: ', error);
       return [];
     }
 
@@ -98,14 +102,16 @@ const Chat: React.FC = (): JSX.Element => {
 
   async function getConversationsAndMessages() {
     const conversations = await getAllConversations();
+
    
     const messages = await Promise.all(conversations.map(conversation => getMessagesByConversation(conversation.id)))
     
     const messagesByConversation: Record<string, Message[]> = {};
-    for(let i = 0; i < conversations.length; i++) {
-      messagesByConversation[conversations[i].id] = messages[i];
+    for (let i = 0; i < conversations.length; i++) {
+      messagesByConversation[conversations[i]?.id] = messages[i];
     }
     dispatch(setMessages(messagesByConversation));
+
     
   }
 getConversationsAndMessages()
@@ -192,6 +198,7 @@ useEffect(() => {
       {chatState.isOpen && (
         <div
           ref={chatRef}
+
           className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'>
           <button
             onClick={handleCloseClick}
@@ -217,6 +224,7 @@ useEffect(() => {
               </h2>
             )}
           <div className='flex-grow overflow-y-auto p-4'>
+
          
           {messages[`${chatState.currentConversationId}`]?.map((message: Message) => {
   const messageDate = parseISO(message.created_at!);

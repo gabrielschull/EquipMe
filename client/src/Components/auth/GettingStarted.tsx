@@ -117,16 +117,19 @@ const GettingStarted: React.FC = (): JSX.Element => {
             <button
               type="submit"
               onClick={() => {
-                userInfo.profile.is_owner
+                userInfo.profile?.is_owner
                   ? supabase.updateIsOwnerToFalse(userInfo.profile.id)
                   : supabase.updateIsOwnerToTrue(userInfo.profile.id);
                 dispatch(toggleIsOwner(userInfo.profile.id));
               }}
-              className="border-transparent bg-white hover:bg-indigo-400  hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
-              {userInfo.profile.is_owner ? '✔' : ''} I want to lease my sports
+              className='bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow'
+            >
+              {userInfo.profile?.is_owner ? '✔' : ''} I want to lease my sports
+
               gear to others
             </button>
-            {userInfo.profile.is_owner && (
+            ;
+            {userInfo.profile?.is_owner && (
               <button
                 type="button"
                 onClick={(e) => {
@@ -140,19 +143,22 @@ const GettingStarted: React.FC = (): JSX.Element => {
             <button
               type="submit"
               onClick={() => {
-                userInfo.profile.is_renter
+                userInfo.profile?.is_renter
                   ? supabase.updateIsRenterToFalse(userInfo.profile.id)
                   : supabase.updateIsRenterToTrue(userInfo.profile.id);
                 dispatch(toggleIsRenter(userInfo.profile.id));
               }}
-              className="border-transparent bg-white hover:bg-indigo-400  hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
-              {userInfo.profile.is_renter ? '✔' : ''} I'm looking to rent some
+              className='bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow'
+            >
+              {userInfo.profile?.is_renter ? '✔' : ''} I'm looking to rent some
+
               gear
             </button>
+            ;
           </div>
         </div>
 
-        {userInfo.profile.is_renter && (
+        {userInfo.profile?.is_renter && (
           <>
             <Listbox
               value={selected}
