@@ -108,7 +108,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
         className="relative"
         style={{
           backgroundImage: `url(${Background})`,
-          backgroundSize: 'contain',
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
         }}>
