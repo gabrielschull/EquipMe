@@ -115,8 +115,8 @@ const GettingStarted: React.FC = (): JSX.Element => {
           backgroundAttachment: 'fixed',
         }}
       >
-        <div className='flex items-center justify-center'>
-          <div className='flex flex-col items-center space-y-12 mt-20 '>
+        <div className='flex items-center justify-center white'>
+          <div className='flex flex-col items-center space-y-12 mt-20'>
             <button
               type='submit'
               onClick={() => {
