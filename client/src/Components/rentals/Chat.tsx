@@ -80,9 +80,6 @@ const Chat: React.FC = (): JSX.Element => {
       return conversations;
     }
 
-    return conversations;
-  }
-
   async function getMessagesByConversation(
     conversationId: string
   ): Promise<Message[]> {
