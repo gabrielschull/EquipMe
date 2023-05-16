@@ -89,7 +89,6 @@ const GearDetails: React.FC = (): JSX.Element => {
 
   const handleContactClick = async (ownerId: string, userId: string ) => {
     const id = await getOrCreateConversation(ownerId, userId);
-    console.log("THIS SHOULD BE THE SAME ==> ", id)
     setConversationId(id)
     dispatch(openChat(id))
     setIsChatOpen(true)
@@ -116,8 +115,6 @@ const GearDetails: React.FC = (): JSX.Element => {
   }
 
   useEffect(() => {
-    console.log('GearDetails ID', id);
-    console.log('GearDetails gearInfo', gearInfo);
     getGearImages();
     getGearAvailability();
   }, []);
@@ -157,8 +154,6 @@ const GearDetails: React.FC = (): JSX.Element => {
       .or(`member1.eq.${userId},member2.eq.${userId}`)
       .single()
 
-      console.log("LOOKIE HERE ==> ", existingConversation)
-
     if (existingConversation) {
       return existingConversation.id;
     }
@@ -177,7 +172,7 @@ const GearDetails: React.FC = (): JSX.Element => {
     }
     return newConversation.id
   }
-  console.log("reached final return in getOrCreateConversation (NOT GOOD)")
+  console.log("reached final return in getOrCreateConversation (could not find or create conversation)")
   return ''
   };
 
