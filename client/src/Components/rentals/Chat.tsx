@@ -6,16 +6,14 @@ import { Root } from 'react-dom/client';
 import { addMessage, setMessages } from '../../Redux/MessageSlice';
 import { Message } from '../../types/message.type';
 import { Data } from '@react-google-maps/api';
+import { openChat, closeChat, toggleChat } from '../../Redux/ChatSlice';
 
-interface ChatProps {
-  conversationId: string;
-  defaultOpen?: boolean
-}
 
-const Chat: React.FC<ChatProps> = ({conversationId, defaultOpen }): JSX.Element => {
+
+const Chat: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [inputValue, setInputValue] = useState('');
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const chatState = useSelector((state: RootState) => state.Chat);
   const messages = useSelector((state: RootState) => state.Message)
   const dispatch = useDispatch()
 
@@ -24,12 +22,10 @@ const Chat: React.FC<ChatProps> = ({conversationId, defaultOpen }): JSX.Element 
 
   //\console.log('userInfo!!! =>>>', userInfo)
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (defaultOpen) {
-      setIsChatOpen(true)
-    }
-  }, [])
+  //  dispatch(openChat(conversationId))
+  // }, [])
 
 
 
@@ -37,12 +33,15 @@ const Chat: React.FC<ChatProps> = ({conversationId, defaultOpen }): JSX.Element 
     e.preventDefault();
     if (!inputValue) return;
 
+    console.log("GUI", chatState.currentConversationId)
+  
+    
     const newMessage : Message = {
       content: inputValue,
       sender_id: userInfo.profile.id,
-      conversation_id: conversationId,
+      conversation_id: chatState.currentConversationId,
     }
-
+    
     console.log("NEWMSG ==>", newMessage)
 
     const { data: message, error } = await supabaseClient
@@ -60,11 +59,11 @@ const Chat: React.FC<ChatProps> = ({conversationId, defaultOpen }): JSX.Element 
   }
 
   const handleButtonClick = () => {
-    setIsChatOpen((prevState) => !prevState);
+    dispatch(toggleChat())
   };
 
   const handleCloseClick = () => {
-    setIsChatOpen(false);
+    dispatch(closeChat())
   };
 
 
@@ -122,7 +121,7 @@ supabaseClient
       event: 'INSERT',
       schema: 'public',
       table: 'Messages',
-      filter: `conversation_id=eq.${conversationId}`,
+      filter: `conversation_id=eq.${chatState.currentConversationId}`,
     },
     (payload) => {
       console.log("PAYLOAD ==>", payload)
@@ -131,11 +130,11 @@ supabaseClient
   )
   .subscribe()
 
-}, [dispatch, userInfo.profile.id])
+}, [dispatch, userInfo.profile.id, chatState.currentConversationId])
 
 useEffect(() => {
-  console.log("UPDATED CONVO ID ==>" , conversationId)
-}, [conversationId])
+  console.log("UPDATED CONVO ID ==>" , chatState.currentConversationId)
+}, [chatState.currentConversationId])
 
 
   return (
@@ -145,9 +144,9 @@ useEffect(() => {
         onClick={handleButtonClick}
         className='fixed bottom-4 right-4 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center focus:outline-none'
       >
-        {isChatOpen ? '-' : '+'}
+        {chatState.isOpen ? '-' : '+'}
       </button>
-      {isChatOpen && (
+      {chatState.isOpen && (
         <div
           ref={chatRef}
           className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'
@@ -173,7 +172,7 @@ useEffect(() => {
             X
           </button>
           <div className='flex-grow overflow-y-auto p-4'>
-  {messages[`${conversationId}`]?.map((message: Message) => (
+  {messages[`${chatState.currentConversationId}`]?.map((message: Message) => (
     <div
       key={message.id}
       className={`flex justify-${
