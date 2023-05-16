@@ -36,15 +36,14 @@ const MyGear: React.FC = (): JSX.Element => {
 
       if (error) console.log('ERROR IN IMAGE FETCH ==> ', error);
 
-
-        if (data !== null && data.length > 0) {
-          setHomeGearImages((state: any) => {
-            return {...state, [ gearid as string ] : data[0].name}
-          });
-        }
-      } catch (e: any) {
-        console.log(e, 'Error getting gear images');
+      if (data !== null && data.length > 0) {
+        setHomeGearImages((state: any) => {
+          return { ...state, [gearid as string]: data[0].name };
+        });
       }
+    } catch (e: any) {
+      console.log(e, 'Error getting gear images');
+    }
   }
 
   useEffect(() => {
@@ -130,13 +129,13 @@ const MyGear: React.FC = (): JSX.Element => {
                   <button
                     type="submit"
                     onClick={() => navigate(`/editgear/${gear.id}`)}
-                    className="bg-white hover:bg-indigo-400 text-black font-semibold py-1 px-3 rounded border border-gray-300 hover:text-white">
+                    className="border-transparent bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
                     Edit Gear
                   </button>
                   <button
                     type="button"
                     onClick={() => handleDelete(gear)}
-                    className="bg-white hover:bg-indigo-400 text-black font-semibold py-1 px-3 rounded hover:text-white">
+                    className="bg-white hover:bg-indigo-400 text-black font-semibold py-2 px-3 rounded hover:text-white">
                     Delete Gear
                   </button>
                 </div>
