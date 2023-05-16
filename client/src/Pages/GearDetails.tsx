@@ -11,6 +11,7 @@ import Calendar from '../Components/gear/Calendar';
 import { setAvailableDates, setUnavailableDates } from '../Redux/GearSlice';
 import { loadStripe } from '@stripe/stripe-js';
 import { differenceInDays } from 'date-fns';
+import { openChat } from '../Redux/ChatSlice';
 
 interface Conversation {
   id: string;
@@ -30,9 +31,11 @@ const GearDetails: React.FC = (): JSX.Element => {
   const [reviews, setReviews] = useState<any>({});
   const userInfo = useSelector((state: RootState) => state.User);
   const [rentalStartDate, setRentalStartDate] = useState<Date>(new Date());
+  const chatState = useSelector((state: RootState) => state.Chat);
   const [rentalEndDate, setRentalEndDate] = useState<Date>(new Date());
   const [gearAvailableDates, setGearAvailableDates] = useState<any>([]);
   const [conversationId, setConversationId] = useState<string | null>(null)
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const { id } = useParams();
   const gearInfo = useSelector((state: RootState) =>
     state.Gear.find((gear) => gear.id === id)
@@ -82,6 +85,8 @@ const GearDetails: React.FC = (): JSX.Element => {
     const id = await getOrCreateConversation(ownerId, userId);
     console.log("THIS SHOULD BE THE SAME ==> ", id)
     setConversationId(id)
+    dispatch(openChat(id))
+    setIsChatOpen(true)
   }
 
   const randomReviewCount = Math.floor(Math.random() * 101);
@@ -171,6 +176,8 @@ const GearDetails: React.FC = (): JSX.Element => {
   console.log("reached final return in getOrCreateConversation (NOT GOOD)")
   return ''
   };
+
+  
 
   return (
     <>
@@ -276,7 +283,7 @@ const GearDetails: React.FC = (): JSX.Element => {
                     Contact Gear Owner
                   </button>
                 </form>
-                {conversationId && <Chat conversationId={conversationId} defaultOpen />}
+                {chatState.currentConversationId && <Chat />}
               </div>
               <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
                 <div>
