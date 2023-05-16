@@ -89,8 +89,6 @@ const GearDetails: React.FC = (): JSX.Element => {
     setConversationId(id)
   }
 
-  const randomReviewCount = Math.floor(Math.random() * 101);
-
   async function getGearImages() {
     try {
       const { data, error } = await supabaseClient.storage
@@ -154,7 +152,7 @@ const GearDetails: React.FC = (): JSX.Element => {
       .single()
 
       console.log("LOOKIE HERE ==> ", existingConversation)
-  
+
     if (existingConversation) {
       return existingConversation.id;
     }
@@ -166,7 +164,7 @@ const GearDetails: React.FC = (): JSX.Element => {
         member2: userId
       })
       .single() as {data: Conversation | null, error: Error | null};
-  
+
     if (insertError || !newConversation) {
       console.error("Error creating conversation: ", insertError);
       return '';

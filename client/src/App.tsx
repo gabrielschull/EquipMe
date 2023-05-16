@@ -55,7 +55,7 @@ const App: React.FC = (): JSX.Element => {
 
     fetchData();
   }, []);
-  
+
  return (
    <Router>
      <Routes>
@@ -92,7 +92,7 @@ const App: React.FC = (): JSX.Element => {
          <Route path='/calendar' element={<Calendar />} />
          <Route path='/test' element={<CurrentRental />} />
 
-         <Route path='/stripe' element={<Stripe />} />
+         {/* <Route path='/stripe' element={<Stripe />} /> */}
          <Route path='/paymentsuccessful' element={<PaymentSuccessful />} />
          <Route path='/paymentcanceled' element={<PaymentCanceled />} />
        </>
