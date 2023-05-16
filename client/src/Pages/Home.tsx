@@ -8,6 +8,7 @@ import GettingStarted from '../Components/auth/GettingStarted';
 import { useDispatch, useSelector } from 'react-redux';
 import { supabase } from '../services/supabase.service';
 import { setActiveRentals } from '../Redux/UserSlice';
+import { setAllGear } from '../Redux/GearSlice';
 import { RootState } from '../Redux/store';
 import CurrentRentalBanner from '../Components/rentals/CurrentRentalBanner';
 import Loading from '../Components/misc/Loading';
@@ -15,13 +16,14 @@ import Loading from '../Components/misc/Loading';
 
 const Home: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
+  const dispatch = useDispatch()
+
+
 
   //console.log('Home.tsx', userInfo);
 
   return (
     <>
-
-
       <div className="component-container">
         <NavBar/>
         {/* <Loading></Loading> */}

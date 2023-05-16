@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../Redux/store';
 import { useEffect } from 'react';
 import { supabase } from '../../services/supabase.service';
-import { setActiveRentals } from '../../Redux/UserSlice';
+// import { setActiveRentals } from '../../Redux/UserSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import logo from '../Assets/Logo.png';
@@ -10,7 +10,7 @@ import logo from '../Assets/Logo.png';
 const CurrentRentalBanner: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   // const navigate = useNavigate();
-  //console.log('CurrentRentalBanner.tsx', userInfo);
+  console.log('CurrentRentalBanner.tsx', userInfo);
 
   return (
     <>

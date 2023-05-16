@@ -11,6 +11,7 @@ import Calendar from '../Components/gear/Calendar';
 import { setAvailableDates, setUnavailableDates } from '../Redux/GearSlice';
 import { loadStripe } from '@stripe/stripe-js';
 import { differenceInDays } from 'date-fns';
+import { addOneNewRental, setActiveRentals } from '../Redux/UserSlice';
 
 interface Conversation {
   id: string;
@@ -24,6 +25,8 @@ const CDNURL =
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
+
+const randomReviewCount = Math.floor(Math.random() * 101);
 
 const GearDetails: React.FC = (): JSX.Element => {
   const [gearImages, setGearImages] = useState<any[]>([]);
@@ -57,8 +60,8 @@ const GearDetails: React.FC = (): JSX.Element => {
 
   const rentalDays = differenceInDays(rentalEndDate, rentalStartDate);
 
-  const handleReservationClick = () => {
-    supabase.startRentalContract(
+  const handleReservationClick = async () => {
+    const newContract = await supabase.startRentalContract(
       id,
       gearInfo?.owner_id as string,
       userInfo.profile.id,
@@ -76,6 +79,8 @@ const GearDetails: React.FC = (): JSX.Element => {
     //     rentalEndDate
     //   );
     makePayment();
+    if (newContract) {
+     dispatch(addOneNewRental(newContract[0]))}
   };
 
   const handleContactClick = async (ownerId: string, userId: string ) => {

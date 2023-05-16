@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../Redux/store';
 import { Gear } from '../types/gear.type';
 import Calendar from '../Components/gear/Calendar';
+import { updateGear } from '../Redux/GearSlice';
 
 const EditGear: React.FC = (): JSX.Element => {
   const CDNURL =
@@ -19,6 +20,7 @@ const EditGear: React.FC = (): JSX.Element => {
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
   const [gearImages, setGearImages] = useState<any[]>([]);
+  const dispatch = useDispatch()
   const gearInfo = useSelector((state: RootState) =>
     state.Gear.find((gear: Gear) => gear.id === gearId)
   );
@@ -65,6 +67,8 @@ const EditGear: React.FC = (): JSX.Element => {
         [name]: value,
       };
     });
+
+
   };
 
   const handleSubmit = async () => {
@@ -76,6 +80,17 @@ const EditGear: React.FC = (): JSX.Element => {
       formState.priceday as number,
       formState.deposit as number,
       formState.type as string | null
+    );
+
+    dispatch(
+      updateGear({
+        id: gearId,
+        name: formState.name,
+        description: formState.description,
+        price_hr: formState.pricehour,
+        price_day: formState.priceday,
+        deposit: formState.deposit,
+      })
     );
 
     // upload new files to the storage bucket
