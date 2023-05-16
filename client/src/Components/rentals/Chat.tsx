@@ -7,7 +7,12 @@ import { addMessage, setMessages } from '../../Redux/MessageSlice';
 import { Message } from '../../types/message.type';
 import { Data } from '@react-google-maps/api';
 
-const Chat: React.FC = (): JSX.Element => {
+interface ChatProps {
+  conversationId: string;
+  defaultOpen?: boolean
+}
+
+const Chat: React.FC<ChatProps> = ({conversationId, defaultOpen }): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [inputValue, setInputValue] = useState('');
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -19,6 +24,13 @@ const Chat: React.FC = (): JSX.Element => {
 
   //\console.log('userInfo!!! =>>>', userInfo)
 
+  useEffect(() => {
+
+    if (defaultOpen) {
+      setIsChatOpen(true)
+    }
+  }, [])
+
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +40,7 @@ const Chat: React.FC = (): JSX.Element => {
     const newMessage : Message = {
       content: inputValue,
       sender_id: userInfo.profile.id,
-      conversation_id: "a9474d61-2df9-41a9-bb1f-d80daa9b632e",
+      conversation_id: conversationId,
     }
 
     console.log("NEWMSG ==>", newMessage)
@@ -110,7 +122,7 @@ supabaseClient
       event: 'INSERT',
       schema: 'public',
       table: 'Messages',
-      filter: 'conversation_id=eq.a9474d61-2df9-41a9-bb1f-d80daa9b632e',
+      filter: `conversation_id=eq.${conversationId}`,
     },
     (payload) => {
       console.log("PAYLOAD ==>", payload)
@@ -120,6 +132,10 @@ supabaseClient
   .subscribe()
 
 }, [dispatch, userInfo.profile.id])
+
+useEffect(() => {
+  console.log("UPDATED CONVO ID ==>" , conversationId)
+}, [conversationId])
 
 
   return (
@@ -157,7 +173,7 @@ supabaseClient
             X
           </button>
           <div className='flex-grow overflow-y-auto p-4'>
-  {messages["a9474d61-2df9-41a9-bb1f-d80daa9b632e"]?.map((message: Message) => (
+  {messages[`${conversationId}`]?.map((message: Message) => (
     <div
       key={message.id}
       className={`flex justify-${

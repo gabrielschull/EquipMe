@@ -24,7 +24,6 @@ import { useSession } from './Components/users/UseSession';
 import CurrentRentalBanner from './Components/rentals/CurrentRentalBanner';
 import CurrentRental from './Components/rentals/CurrentRental';
 import Rentals from './Pages/Rentals';
-import Stripe from './Components/payments/Stripe';
 import PaymentSuccessful from './Components/payments/PaymentSuccessful';
 import PaymentCanceled from './Components/payments/PaymentCanceled';
 import { supabase } from './services/supabase.service';
@@ -35,7 +34,8 @@ import {
   setActiveRentals,
   setUserInfo,
 } from "./Redux/UserSlice"
-// import Chat from './Components/rentals/Chat';
+ import Chat from './Components/rentals/Chat';
+
 
 const App: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
@@ -55,8 +55,7 @@ const App: React.FC = (): JSX.Element => {
 
     fetchData();
   }, []);
-
-
+  
  return (
    <Router>
      <Routes>
@@ -98,9 +97,10 @@ const App: React.FC = (): JSX.Element => {
          <Route path='/paymentcanceled' element={<PaymentCanceled />} />
        </>
      </Routes>
-     {/* <Chat /> */}
+     <Chat conversationId={''} />
    </Router>
  );
+
 };
 
 export default App;
