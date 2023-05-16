@@ -71,11 +71,12 @@ const CurrentRental: React.FC = (): JSX.Element => {
   const handleDelete = (rental:Rental) => {
     console.log("WE ARE GETTING HERE")
     supabase
-      .deleteRental(rental.id)
+      .deleteRental(rental.id as string)
       .then(() => {
         dispatch(deleteRental(rental.id));
         console.log("successfully deleted gear")
         navigate(`/myprofile`)
+        console.log ("ARE WE HERE")
       })
       .catch((error) => {
         alert('Error: ' + error);

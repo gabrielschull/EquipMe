@@ -13,7 +13,7 @@ const GearListings: React.FC = (): JSX.Element => {
   const gear = useSelector((state: RootState) => state.Gear);
   const userInfo = useSelector((state: RootState) => state.User);
   const [homeGearImages, setHomeGearImages] = useState<any>({});
-  // const filteredGear = useSelector((state: RootState) => state.Gear);
+  const filteredGear = useSelector((state: RootState) => state.FilteredGear);
 
   const CDNURL =
     'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
@@ -93,25 +93,27 @@ const GearListings: React.FC = (): JSX.Element => {
     });
   }, [gear, owners, userInfo.id]);
 
-  // const sortedGear = filteredGear.slice().sort((gearA: Gear, gearB: Gear) => {
-  //   const distanceA = parseFloat(distances[gearA.owner_id!] || 'Infinity');
-  //   const distanceB = parseFloat(distances[gearB.owner_id!] || 'Infinity');
+  const sortedGear = filteredGear.slice().sort((gearA: Gear, gearB: Gear) => {
+    const distanceA = parseFloat(distances[gearA.owner_id!] || 'Infinity');
+    const distanceB = parseFloat(distances[gearB.owner_id!] || 'Infinity');
 
-  //   if (distanceA < distanceB) {
-  //     return -1;
-  //   } else if (distanceA > distanceB) {
-  //     return 1;
-  //   } else {
-  //     return 0;
-  //   }
-  // });
+    if (distanceA < distanceB) {
+      return -1;
+    } else if (distanceA > distanceB) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 
   return (
     <>
       <div className='flex overflow-x-auto mx-12 mt-20'>
-        {gear
-          .filter((gear: Gear) => gear.owner_id !== userInfo.profile.id)
-          .map((gear: Gear, index) => (
+      {sortedGear
+        .filter((gear: Gear) => {
+          return gear.owner_id !== userInfo.profile.id;
+        })
+        .map((gear: Gear, index) => (
             <div
               key={gear.id}
               className='flex flex-col justify-between gap-4 p-4 items-center'
