@@ -8,6 +8,7 @@ import { Message } from '../../types/message.type';
 import { Data } from '@react-google-maps/api';
 import { openChat, closeChat, toggleChat } from '../../Redux/ChatSlice';
 import { User } from '../../types/user.type'
+import { formatDistanceToNow, format, parseISO } from 'date-fns';
 
 
 const Chat: React.FC = (): JSX.Element => {
@@ -217,31 +218,58 @@ useEffect(() => {
             )}
           <div className='flex-grow overflow-y-auto p-4'>
          
-  {messages[`${chatState.currentConversationId}`]?.map((message: Message) => (
+          {messages[`${chatState.currentConversationId}`]?.map((message: Message) => {
+  const messageDate = parseISO(message.created_at!);
+  const now = new Date();
+  let formattedDate = '';
+
+  const diffInMinutes = (now.getTime() - messageDate.getTime()) / (1000 * 60);
+  const diffInHours = diffInMinutes / 60;
+  const diffInDays = diffInHours / 24;
+
+  if (diffInMinutes < 1) {
+    formattedDate = 'Just now';
+  } else if (diffInHours < 1) {
+    const minutes = Math.round(diffInMinutes);
+    formattedDate = `${minutes} min${minutes > 1 ? 's' : ''} ago`;
+  } else if (diffInDays < 1) {
+    const hours = Math.round(diffInHours);
+    formattedDate = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  } else if (diffInDays < 7) {
+    const days = Math.round(diffInDays);
+    formattedDate = `${days} day${days > 1 ? 's' : ''} ago`;
+  } else {
+    formattedDate = format(messageDate, 'MM-dd');
+  }
+
+  return (
     <div
       key={message.id}
       className={`flex justify-${
         message.sender_id === userInfo.profile.id ? 'end' : 'start'
       } mb-2`}
     >
-      <div
+      <div 
         className={`${
-          message.sender_id === userInfo.profile.id ? 'ml-2 bg-blue-500 p-2 rounded-lg text-white max-w-xs bg-blue-500 p-2 rounded-lg text-white max-w-xs' : 'mr-2 bg-gray-400 p-2 rounded-lg text-white max-w-xs'
-        }`}
+          message.sender_id === userInfo.profile.id ? 'ml-2 bg-blue-500 p-2 rounded-lg text-white max-w-xs' : 'mr-2 bg-gray-400 p-2 rounded-lg text-white max-w-xs'
+        } `}
       >
         {message.content}
+        <div className='text-xs'>{formattedDate}</div>
       </div>
     </div>
-  ))}
+  );
+})}
 </div>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className="border-2 border-gray-300 p-2 w-full rounded-lg focus:outline-none focus:border-blue-500 whitespace-normal overflow-wrap-normal"
-              placeholder="Type your message..."
-              style={{ flex: 'none' }}
+              className='border-2 border-gray-300 p-2 w-full rounded-lg focus:outline-none focus:border-blue-500 whitespace-normal overflow-wrap-normal'
+              placeholder='Type your message...'
+              style={{flex: 'none'}}
+
             />
           </form>
         </div>
