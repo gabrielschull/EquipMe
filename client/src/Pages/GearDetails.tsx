@@ -13,6 +13,8 @@ import { loadStripe } from '@stripe/stripe-js';
 import { differenceInDays } from 'date-fns';
 import { openChat } from '../Redux/ChatSlice';
 
+import { addOneNewRental, setActiveRentals } from '../Redux/UserSlice';
+
 interface Conversation {
   id: string;
   member1: string;
@@ -25,6 +27,8 @@ const CDNURL =
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
+
+const randomReviewCount = Math.floor(Math.random() * 101);
 
 const GearDetails: React.FC = (): JSX.Element => {
   const [gearImages, setGearImages] = useState<any[]>([]);
@@ -60,8 +64,8 @@ const GearDetails: React.FC = (): JSX.Element => {
 
   const rentalDays = differenceInDays(rentalEndDate, rentalStartDate);
 
-  const handleReservationClick = () => {
-    supabase.startRentalContract(
+  const handleReservationClick = async () => {
+    const newContract = await supabase.startRentalContract(
       id,
       gearInfo?.owner_id as string,
       userInfo.profile.id,
@@ -79,6 +83,8 @@ const GearDetails: React.FC = (): JSX.Element => {
     //     rentalEndDate
     //   );
     makePayment();
+    if (newContract) {
+     dispatch(addOneNewRental(newContract[0]))}
   };
 
   const handleContactClick = async (ownerId: string, userId: string ) => {
@@ -88,8 +94,6 @@ const GearDetails: React.FC = (): JSX.Element => {
     dispatch(openChat(id))
     setIsChatOpen(true)
   }
-
-  const randomReviewCount = Math.floor(Math.random() * 101);
 
   async function getGearImages() {
     try {
@@ -154,7 +158,7 @@ const GearDetails: React.FC = (): JSX.Element => {
       .single()
 
       console.log("LOOKIE HERE ==> ", existingConversation)
-  
+
     if (existingConversation) {
       return existingConversation.id;
     }
@@ -166,7 +170,7 @@ const GearDetails: React.FC = (): JSX.Element => {
         member2: userId
       })
       .single() as {data: Conversation | null, error: Error | null};
-  
+
     if (insertError || !newConversation) {
       console.error("Error creating conversation: ", insertError);
       return '';

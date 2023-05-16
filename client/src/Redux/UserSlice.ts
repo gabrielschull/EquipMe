@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export const initialState: any = {
   session: null,
   profile: null,
-  activeRentals: null,
+  activeRentals: [],
 };
 
 export const UserSlice = createSlice({
@@ -21,6 +21,10 @@ export const UserSlice = createSlice({
     addOneNewRental: (state, action) => {
       const newRental = action.payload;
       state.activeRentals = [...state.activeRentals, newRental];
+    },
+    deleteRental: (state, action) => {
+      state.activeRentals =  state.activeRentals.filter((rental : any) => rental.id !== action.payload);
+      console.log("STATE RENTALS",state.activeRentals)
     },
     updateUser: (state, action) => {
       const { firstname, lastname, email, phone, bio } = action.payload.profile;
@@ -58,6 +62,7 @@ export const {
   toggleIsOwner,
   toggleIsRenter,
   updateLocation,
+  deleteRental,
   updateUser,
   addOneNewRental,
 } = UserSlice.actions;

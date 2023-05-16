@@ -24,24 +24,37 @@ import { useSession } from './Components/users/UseSession';
 import CurrentRentalBanner from './Components/rentals/CurrentRentalBanner';
 import CurrentRental from './Components/rentals/CurrentRental';
 import Rentals from './Pages/Rentals';
-import Stripe from './Components/payments/Stripe';
 import PaymentSuccessful from './Components/payments/PaymentSuccessful';
 import PaymentCanceled from './Components/payments/PaymentCanceled';
 import { supabase } from './services/supabase.service';
 import { setAllGear } from './Redux/GearSlice';
-import Chat from './Components/rentals/Chat';
+import { deleteRental } from './Redux/rentalSlice';
+import {
+  UserSlice,
+  setActiveRentals,
+  setUserInfo,
+} from "./Redux/UserSlice"
+ import Chat from './Components/rentals/Chat';
+
 
 const App: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    supabase.getGear().then((gear) => {
-      dispatch(setAllGear(gear));
-      console.log('🍆 MyGear gear=', gear);
-    });
-  }, []);
+    const fetchData = async () => {
+      const gear = await supabase.getGear();
+      const contracts = await supabase.getContractsByRenterId(userInfo.profile.id);
 
+      dispatch(setAllGear(gear));
+      dispatch(setActiveRentals(contracts));
+
+      console.log('🍆 MyGear gear=', gear);
+      console.log('🐷 UseSession.tsx > getContractsOnRender', contracts);
+    };
+
+    fetchData();
+  }, []);
 
  return (
    <Router>
@@ -79,7 +92,7 @@ const App: React.FC = (): JSX.Element => {
          <Route path='/calendar' element={<Calendar />} />
          <Route path='/test' element={<CurrentRental />} />
 
-         <Route path='/stripe' element={<Stripe />} />
+         {/* <Route path='/stripe' element={<Stripe />} /> */}
          <Route path='/paymentsuccessful' element={<PaymentSuccessful />} />
          <Route path='/paymentcanceled' element={<PaymentCanceled />} />
        </>
@@ -87,6 +100,7 @@ const App: React.FC = (): JSX.Element => {
      <Chat />
    </Router>
  );
+
 };
 
 export default App;

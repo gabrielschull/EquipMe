@@ -37,7 +37,15 @@ export function useSession(): GearhubUserInfo {
     // console.log('Error insterting new user into the database!', error);
   };
 
+  // get active contracts
+  const getContractsOnRender = async () => {
+    const data = await supabase.getContractsByRenterId(userInfo.profile.id);
+    console.log('🐷 UseSession.tsx > getContractsOnRender', data);
+    dispatch(setActiveRentals(data));
+  };
+
   useEffect(() => {
+    console.log('🐷 are we here?');
     supabaseClient.auth.getSession().then(async ({ data: { session } }) => {
       console.log(session);
       dispatch(setUserInfo({ ...userInfo, session }));
@@ -55,13 +63,7 @@ export function useSession(): GearhubUserInfo {
           dispatch(setUserInfo({ session, profile: userData.data }))
         );
 
-      // get active contracts
-      const getContractsOnRender = async () => {
-        const data = await supabase.getContractsByRenterId(userInfo.profile.id);
-        dispatch(setActiveRentals(data));
-      };
-
-      await getContractsOnRender();
+      // getContractsOnRender();
 
       // is user is not in Users db, create them
       if (!userInfo.profile?.id) {
