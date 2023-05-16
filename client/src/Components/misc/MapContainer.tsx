@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, LoadScript, Marker, useJsApiLoader, InfoWindow, Data } from '@react-google-maps/api';
+import {
+  GoogleMap,
+  LoadScript,
+  MarkerF,
+  useJsApiLoader,
+  InfoWindow,
+  Data,
+} from '@react-google-maps/api';
 import { supabase, supabaseClient } from '../../services/supabase.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../Redux/store';
 import { updateLocation } from '../../Redux/UserSlice';
 import { userInfo } from 'os';
 import { Gear } from '../../types/gear.type';
-import { useLocation, Link} from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { setAllGear } from '../../Redux/GearSlice';
 import logo from '../Assets/Logo.png';
 
@@ -21,7 +28,7 @@ const MapContainer: React.FC = () => {
   const [zoom, setZoom] = useState(13);
   const [mapLoaded, setMapLoaded] = useState(false);
   const dispatch: AppDispatch = useDispatch();
-   const gear = useSelector((state: RootState) => state.Gear);
+  const gear = useSelector((state: RootState) => state.Gear);
   // const [gearImages, setGearImages] = useState<any[]>([]);
   const location = useLocation();
   const [markerPositions, setMarkerPositions] = useState<any[]>([]);
@@ -51,11 +58,21 @@ const MapContainer: React.FC = () => {
       const gearData = await supabase.getGear();
       dispatch(setAllGear(gearData));
       //console.log("This is the data", gearData)
+      //
       if (gearData) {
+        const sortedGear = gearData.filter((gear: Gear) => {
+          return gear.owner_id !== profile.id;
+        });
+        console.log('MapContainer > gearData', gearData);
+        console.log('MapContainer > sortedGear', sortedGear);
         setMarkerPositions(
-          gearData.map((gearItem) => ({
-            lat: gearItem.location ? parseFloat(gearItem.location.split(',')[0]) : 0,
-            lng: gearItem.location ? parseFloat(gearItem.location.split(',')[1]) : 0,
+          sortedGear.map((gearItem) => ({
+            lat: gearItem.location
+              ? parseFloat(gearItem.location.split(',')[0])
+              : 0,
+            lng: gearItem.location
+              ? parseFloat(gearItem.location.split(',')[1])
+              : 0,
           }))
         );
       }
@@ -87,15 +104,12 @@ const MapContainer: React.FC = () => {
   //   }
   // }
 
-
   useEffect(() => {
     if (profile?.location) {
       const [lat, lng] = profile.location.split(',');
       setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) });
     }
-
   }, []);
-
 
   const handleMapLoad = () => {
     setMapLoaded(true);
@@ -111,7 +125,6 @@ const MapContainer: React.FC = () => {
           alignItems: 'center',
         }}
       >
-
         <div className='pb-6 flex'>
           {/* <button
             onClick={handleGeolocation}
@@ -137,9 +150,21 @@ const MapContainer: React.FC = () => {
           {/* <Marker position={center}/> */}
           {markerPositions &&
             markerPositions.map((position, index) => (
-              <Marker
+              <MarkerF
                 key={index}
                 position={position}
+                options={{
+                  icon: {
+                    url: 'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/48194651-e701-40f9-affb-885ef7226d47/gear/1b146a9f-f32b-4b7d-8967-5fcd9a506f44/pexels-pixabay-276517.jpg',
+                    scaledSize: {
+                      width: 30,
+                      height: 30,
+                      equals: () => {
+                        return false;
+                      },
+                    },
+                  },
+                }}
                 onClick={() => setSelectedGear(data[index])}
               />
             ))}
@@ -157,7 +182,7 @@ const MapContainer: React.FC = () => {
             >
               <div className='bg-white p-4 rounded-lg shadow'>
                 <img
-                  className='w-10 rounded-lg'
+                  className='w-20 rounded-lg'
                   src='https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/48194651-e701-40f9-affb-885ef7226d47/gear/1b146a9f-f32b-4b7d-8967-5fcd9a506f44/pexels-pixabay-276517.jpg'
                 />
                 <h3 className='text-lg font-semibold mb-2'>
@@ -186,7 +211,6 @@ const MapContainer: React.FC = () => {
       </div>
     </LoadScript>
   );
-
 };
 
 export default MapContainer;
