@@ -129,7 +129,6 @@ const GettingStarted: React.FC = (): JSX.Element => {
 
               gear to others
             </button>
-            ;
             {userInfo.profile?.is_owner && (
               <button
                 type="button"
@@ -152,10 +151,8 @@ const GettingStarted: React.FC = (): JSX.Element => {
               className='bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow'
             >
               {userInfo.profile?.is_renter ? '✔' : ''} I'm looking to rent some
-
               gear
             </button>
-            ;
           </div>
         </div>
 
@@ -172,7 +169,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                 <>
                   <div className="flex justify-center mt-12">
                     <div className="relative">
-                      <Listbox.Label className="block text-lg text-white font-semibold py-2 px-5">
+                      <Listbox.Label className="block text-2xl text-white font-semibold py-2 px-5">
                         What type of gear you are looking for?
                       </Listbox.Label>
                       <div className="relative mt-2 mx-12">
@@ -191,7 +188,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                               {selected}
                             </span>
                           </span>
-                          <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2 w-1/4">
+                          <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2 w-1/9">
                             <ChevronUpDownIcon
                               className="h-5 w-5 text-gray-400"
                               aria-hidden="true"

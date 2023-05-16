@@ -93,8 +93,8 @@ const App: React.FC = (): JSX.Element => {
           <Route path='/myprofile' element={<UserProfile />} />
           <Route path='/edituser' element={<EditUser />} />
 
-          <Route path='/calendar' element={<Calendar />} />
-          <Route path='/test' element={<CurrentRental />} />
+          {/* <Route path='/calendar' element={<Calendar />} /> */}
+          {/* <Route path='/test' element={<CurrentRental />} /> */}
 
           {/* <Route path='/stripe' element={<Stripe />} /> */}
           <Route path='/paymentsuccessful' element={<PaymentSuccessful />} />
