@@ -145,7 +145,7 @@ const MapContainer: React.FC<MapProps> = ({ homeGearImages }: any) => {
           <button
             onClick={handleClick}
             type='submit'
-            className='mb-2 w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-black hover:bg-indigo-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+            className='mb-2 w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-black hover:bg-indigo-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2'
           >
             See gear around you
           </button>

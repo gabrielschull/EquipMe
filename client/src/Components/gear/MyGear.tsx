@@ -83,8 +83,9 @@ const MyGear: React.FC = (): JSX.Element => {
           filteredGear.map((gear) => (
             <div
               key={gear.id}
-              className="flex-shrink-0 w-64 mr-4 scroll-snap-align-start">
-              <div className="bg-white shadow rounded-lg p-4">
+              className="flex-shrink-0 w-64 mr-4 scroll-snap-align-start"
+              >
+              <div className="bg-white shadow rounded-lg p-4 h-fit">
                 <div className="flex gap-x-4">
                   <div className="min-w-0 flex-auto">
                     <p className="text-sm font-semibold leading-6 text-gray-900">

@@ -122,16 +122,16 @@ const GearListings: React.FC = (): JSX.Element => {
               className="flex flex-col justify-between gap-4 p-4 items-center">
               <div className="flex gap-4">
                 <div className="flex-auto">
-                  <p className="text-lg font-semibold leading-6 text-gray-900">
+                  <p className="text-lg font-semibold leading-6 text-gray-900 text-center">
                     {gear.name}
                   </p>
-                  <p className="mt-1 text-sm leading-5 text-gray-800">
+                  <p className="mt-1 text-sm leading-5 text-gray-800 text-center">
                     €{gear.price_hr} / hour
                   </p>
-                  <p className="mt-1 text-sm leading-5 text-gray-800">
+                  <p className="mt-1 text-sm leading-5 text-gray-800 text-center">
                     €{gear.price_day} / day
                   </p>
-                  <p className="mt-1 text-sm leading-5 text-gray-800">
+                  <p className="mt-1 text-sm leading-5 text-gray-800 text-center">
                     Type: {gear.type}
                   </p>
                 </div>

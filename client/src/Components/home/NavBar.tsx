@@ -23,7 +23,7 @@ const NavBar: React.FC = (): JSX.Element => {
   return (
     <Disclosure
       as="nav"
-      className="bg-white mt-10  mb-8 mr-0 ml-14 shadow-sm h-20">
+      className="bg-white mt-10  mb-8 mr-16 ml-14 shadow-lg h-20">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-10xl px-2 sm:px-6 lg:px-0 m-0">
@@ -36,16 +36,15 @@ const NavBar: React.FC = (): JSX.Element => {
                     <img
                       src={logo}
                       alt="Logo"
-                      className="rounded-full w-[70px] h-[70px]"
+                      className="rounded-full w-[70px] h-[70px] ml-10"
                     />
-
                     {navigation?.map((item) => (
                       <button
                         key={item.name}
                         onClick={() => navigate(item.href)}
                         className={classNames(
                           item.current
-                            ? 'bg-indigo-400 text-black'
+                            ? 'bg-indigo-400 text-pink'
                             : 'text-black hover:shadow-md hover:text-black',
                           'rounded-md px-3 py-2 text-lg font-medium'
                         )}
