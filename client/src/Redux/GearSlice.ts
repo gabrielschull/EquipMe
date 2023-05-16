@@ -40,13 +40,21 @@ export const AllGearSlice = createSlice({
       console.log('GearSlice >>> state[indexToUpd]=', state[indexToUpd]);
     },
     updateGear: (state, action) => {
-      const indexToUpd = state.findIndex(
-        (gear) => gear.id === action.payload.id
-      );
-      state[indexToUpd].description = action.payload.description;
-      state[indexToUpd].price_hr = action.payload.price_hr;
-      state[indexToUpd].price_day = action.payload.price_day;
-      state[indexToUpd].deposit = action.payload.deposit;
+      const updatedGear = state.map((gear) => {
+        if (gear.id === action.payload.id) {
+          return {
+            ...gear,
+            name: action.payload.name,
+            description: action.payload.description,
+            price_hr: action.payload.price_hr,
+            price_day: action.payload.price_day,
+            deposit: action.payload.deposit,
+          };
+        }
+        return gear;
+      });
+
+      return updatedGear;
     },
   },
 });
