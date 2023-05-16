@@ -24,7 +24,6 @@ import { useSession } from './Components/users/UseSession';
 import CurrentRentalBanner from './Components/rentals/CurrentRentalBanner';
 import CurrentRental from './Components/rentals/CurrentRental';
 import Rentals from './Pages/Rentals';
-import Stripe from './Components/payments/Stripe';
 import PaymentSuccessful from './Components/payments/PaymentSuccessful';
 import PaymentCanceled from './Components/payments/PaymentCanceled';
 import { supabase } from './services/supabase.service';
@@ -41,8 +40,7 @@ const App: React.FC = (): JSX.Element => {
       console.log('🍆 MyGear gear=', gear);
     });
   }, []);
-
-
+  
  return (
    <Router>
      <Routes>
@@ -87,6 +85,7 @@ const App: React.FC = (): JSX.Element => {
      <Chat conversationId={''} />
    </Router>
  );
+
 };
 
 export default App;
