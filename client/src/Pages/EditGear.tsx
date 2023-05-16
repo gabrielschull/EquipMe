@@ -242,7 +242,7 @@ const EditGear: React.FC = (): JSX.Element => {
                     <div className='mt-4 flex text-sm leading-6 text-gray-600'>
                       <label
                         htmlFor='file-upload'
-                        className='text-center relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
+                        className='px-4 text-center relative cursor-pointer rounded-md font-semibold hover:bg-indigo-400 hover:text-white'
                       >
                         <span>Upload a file</span>
                         <input
@@ -354,14 +354,14 @@ const EditGear: React.FC = (): JSX.Element => {
 
                 navigate(`/myprofile`);
               }}
-              className='rounded-md bg-indigo-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+              className='rounded-md px-3 py-2 hover:text-white text-black text-sm font-semibold shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
             >
               Update your gear listing
             </button>
             <button
               type='button'
               onClick={() => navigate(`/myprofile`)}
-              className='rounded-md px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-indigo-400 hover:text0-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+              className='rounded-md px-3 py-2 text-sm font-semibold text-black hover:text-white shadow-sm hover:bg-indigo-400 hover:text0-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
 
             >
               Cancel
