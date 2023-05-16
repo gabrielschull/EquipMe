@@ -34,13 +34,13 @@ const Chat: React.FC = (): JSX.Element => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputValue) return;
-    
+
     const newMessage : Message = {
       content: inputValue,
       sender_id: userInfo.profile.id,
       conversation_id: chatState.currentConversationId,
     }
-    
+
 
     const { data: message, error } = await supabaseClient
       .from('Messages')
@@ -81,8 +81,7 @@ const Chat: React.FC = (): JSX.Element => {
       return conversations;
     }
 
-    return conversations;
-  }
+
 
   async function getMessagesByConversation(
     conversationId: string
@@ -104,16 +103,16 @@ const Chat: React.FC = (): JSX.Element => {
   async function getConversationsAndMessages() {
     const conversations = await getAllConversations();
 
-   
+
     const messages = await Promise.all(conversations.map(conversation => getMessagesByConversation(conversation.id)))
-    
+
     const messagesByConversation: Record<string, Message[]> = {};
     for (let i = 0; i < conversations.length; i++) {
       messagesByConversation[conversations[i]?.id] = messages[i];
     }
     dispatch(setMessages(messagesByConversation));
 
-    
+
   }
 getConversationsAndMessages()
 
@@ -129,7 +128,7 @@ supabaseClient
       filter: `conversation_id=eq.${chatState.currentConversationId}`,
     },
     (payload) => {
-      
+
       dispatch(addMessage(payload.new))
     }
   )
@@ -151,10 +150,10 @@ useEffect(() => {
       return;
     }
 
-    const otherUserId = conversation.data.member1 === userInfo.profile.id 
-      ? conversation.data.member2 
+    const otherUserId = conversation.data.member1 === userInfo.profile.id
+      ? conversation.data.member2
       : conversation.data.member1;
-    
+
     const otherUserDetails = await supabaseClient
       .from('Users')
       .select('*')
@@ -189,7 +188,7 @@ useEffect(() => {
         '/profileImage'
       }
       alt="User"
-      className='w-full h-full object-cover rounded-full' 
+      className='w-full h-full object-cover rounded-full'
     />
   ) : (
     chatState.isOpen ? '-' : '+'
@@ -226,7 +225,7 @@ useEffect(() => {
             )}
           <div className='flex-grow overflow-y-auto p-4'>
 
-         
+
           {messages[`${chatState.currentConversationId}`]?.map((message: Message) => {
   const messageDate = parseISO(message.created_at!);
   const now = new Date();
@@ -258,7 +257,7 @@ useEffect(() => {
         message.sender_id === userInfo.profile.id ? 'end' : 'start'
       } mb-2`}
     >
-      <div 
+      <div
         className={`${
           message.sender_id === userInfo.profile.id ? 'ml-2 bg-indigo-400 p-2 rounded-lg text-white max-w-xs' : 'mr-2 bg-gray-400 p-2 rounded-lg text-white max-w-xs'
         } `}
