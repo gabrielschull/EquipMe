@@ -39,7 +39,7 @@ const CurrentRentalBanner: React.FC = (): JSX.Element => {
                   </p>
                   <div className="flex items-center ml-4 mt-4">
                     <Link to={`/rentals/${rental.id}`}>
-                      <a className="px-5 py-2 text-s font-medium text-black bg-white rounded-lg hover:bg-indigo-400 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-28 rounded hover:text-white">
+                      <a className="px-5 py-2 text-s font-medium text-black bg-whiterounded-lg hover:bg-indigo-400 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ml-10 rounded">
                         See details
                       </a>
                     </Link>
