@@ -111,22 +111,25 @@ const GettingStarted: React.FC = (): JSX.Element => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
-        }}>
-        <div className="flex items-center justify-center">
-          <div className="flex flex-col items-center space-y-12 mt-20 ">
+        }}
+      >
+        <div className='flex items-center justify-center white'>
+          <div className='flex flex-col items-center space-y-12 mt-20'>
             <button
               type="submit"
               onClick={() => {
-                userInfo.profile.is_owner
+                userInfo.profile?.is_owner
                   ? supabase.updateIsOwnerToFalse(userInfo.profile.id)
                   : supabase.updateIsOwnerToTrue(userInfo.profile.id);
                 dispatch(toggleIsOwner(userInfo.profile.id));
               }}
-              className="border-transparent bg-white hover:bg-indigo-400  hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
-              {userInfo.profile.is_owner ? '✔' : ''} I want to lease my sports
+              className='bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow'
+            >
+              {userInfo.profile?.is_owner ? '✔' : ''} I want to lease my sports
+
               gear to others
             </button>
-            {userInfo.profile.is_owner && (
+            {userInfo.profile?.is_owner && (
               <button
                 type="button"
                 onClick={(e) => {
@@ -140,19 +143,20 @@ const GettingStarted: React.FC = (): JSX.Element => {
             <button
               type="submit"
               onClick={() => {
-                userInfo.profile.is_renter
+                userInfo.profile?.is_renter
                   ? supabase.updateIsRenterToFalse(userInfo.profile.id)
                   : supabase.updateIsRenterToTrue(userInfo.profile.id);
                 dispatch(toggleIsRenter(userInfo.profile.id));
               }}
-              className="border-transparent bg-white hover:bg-indigo-400  hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
-              {userInfo.profile.is_renter ? '✔' : ''} I'm looking to rent some
+              className='bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow'
+            >
+              {userInfo.profile?.is_renter ? '✔' : ''} I'm looking to rent some
               gear
             </button>
           </div>
         </div>
 
-        {userInfo.profile.is_renter && (
+        {userInfo.profile?.is_renter && (
           <>
             <Listbox
               value={selected}
@@ -165,7 +169,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                 <>
                   <div className="flex justify-center mt-12">
                     <div className="relative">
-                      <Listbox.Label className="block text-lg text-white font-semibold py-2 px-5">
+                      <Listbox.Label className="block text-2xl text-white font-semibold py-2 px-5">
                         What type of gear you are looking for?
                       </Listbox.Label>
                       <div className="relative mt-2 mx-12">
@@ -184,7 +188,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                               {selected}
                             </span>
                           </span>
-                          <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2 w-1/4">
+                          <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2 w-1/9">
                             <ChevronUpDownIcon
                               className="h-5 w-5 text-gray-400"
                               aria-hidden="true"

@@ -17,7 +17,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { setAllGear } from '../../Redux/GearSlice';
 import logo from '../Assets/Logo.png';
 
-const apiKey = process.env.REACT_APP_MAPS_API_KEY!;
+const MAPS_API_KEY = process.env.REACT_APP_MAPS_API_KEY!;
 
 const CDNURL =
   'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
@@ -125,7 +125,7 @@ const MapContainer: React.FC<MapProps> = ({ homeGearImages }: any) => {
   };
 
   return (
-    <LoadScript googleMapsApiKey={apiKey}>
+    <LoadScript googleMapsApiKey={MAPS_API_KEY}>
       <div
         style={{
           height: '400px',
@@ -145,7 +145,7 @@ const MapContainer: React.FC<MapProps> = ({ homeGearImages }: any) => {
           <button
             onClick={handleClick}
             type='submit'
-            className='mt-10 w-full items-center justify-center rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+            className='mb-2 w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-black hover:bg-indigo-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
           >
             See gear around you
           </button>

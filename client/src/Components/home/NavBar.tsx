@@ -36,7 +36,7 @@ const NavBar: React.FC = (): JSX.Element => {
                     <img
                       src={logo}
                       alt="Logo"
-                      className="rounded-full w-[80px] h-[80px]"
+                      className="rounded-full w-[70px] h-[70px]"
                     />
 
                     {navigation?.map((item) => (
@@ -45,9 +45,9 @@ const NavBar: React.FC = (): JSX.Element => {
                         onClick={() => navigate(item.href)}
                         className={classNames(
                           item.current
-                            ? 'bg-gray-900 text-black'
-                            : 'text-black hover:shadow-md hover:text-white hover:bg-indigo-400',
-                          'rounded-md px-3 py-2 text-sm font-semibold'
+                            ? 'bg-indigo-400 text-black'
+                            : 'text-black hover:shadow-md hover:text-black',
+                          'rounded-md px-3 py-2 text-lg font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}>
                         {item.name}
@@ -89,7 +89,7 @@ const NavBar: React.FC = (): JSX.Element => {
                           <a
                             href="#"
                             className={classNames(
-                              active ? 'bg-gray-100' : '',
+                              active ? 'bg-indigo-400 text-white' : '',
                               'block px-4 py-2 text-sm text-gray-700'
                             )}
                             onClick={() => navigate(`/edituser`)}>
@@ -102,7 +102,7 @@ const NavBar: React.FC = (): JSX.Element => {
                           <a
                             href="#"
                             className={classNames(
-                              active ? 'bg-gray-100' : '',
+                              active ? 'bg-indigo-400 text-white' : '',
                               'block px-4 py-2 text-sm text-gray-700'
                             )}
                             onClick={() => {

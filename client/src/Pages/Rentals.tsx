@@ -19,6 +19,7 @@ const Rentals: React.FC = (): JSX.Element => {
       <NavBar />
       <ul role="list" className="divide-y divide-gray-100 mx-12 ">
         {activeRentals?.map((rental: any) => (
+
           <li key={rental.id} className="flex justify-between gap-x-6 py-5">
             <div className="flex gap-x-4">
               <div className="min-w-0 flex-auto">
@@ -29,6 +30,7 @@ const Rentals: React.FC = (): JSX.Element => {
                   Starts {format(new Date(rental.rental_start), 'EEEE, LLL do')}{' '}
                   | Ends {format(new Date(rental.rental_end), 'EEEE, LLL do')}
                 </p>
+
                 <p className="mt-1 truncate text-xs leading-5 text-gray-800">
                   Price: €{rental.Gear.price_day},00/ Day
                 </p>

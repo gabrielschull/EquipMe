@@ -33,11 +33,11 @@ const Chat: React.FC = (): JSX.Element => {
     e.preventDefault();
     if (!inputValue) return;
 
-    const newMessage: Message = {
+    const newMessage : Message = {
       content: inputValue,
       sender_id: userInfo.profile.id,
       conversation_id: chatState.currentConversationId,
-    };
+    }
 
     const { data: message, error } = await supabaseClient
       .from('Messages')
@@ -48,8 +48,9 @@ const Chat: React.FC = (): JSX.Element => {
     } else {
       dispatch(addMessage(inputValue));
     }
-    setInputValue('');
-  };
+    setInputValue('')
+
+  }
 
   const handleButtonClick = () => {
     dispatch(toggleChat());
@@ -58,6 +59,7 @@ const Chat: React.FC = (): JSX.Element => {
   const handleCloseClick = () => {
     dispatch(closeChat());
   };
+
 
   useEffect(() => {
     async function getAllConversations() {
@@ -76,36 +78,88 @@ const Chat: React.FC = (): JSX.Element => {
       return conversations;
     }
 
-    async function getMessagesByConversation(
-      conversationId: string
-    ): Promise<Message[]> {
-      const { data: messages, error } = await supabaseClient
-        .from('Messages')
-        .select('*')
-        .eq('conversation_id', conversationId);
 
-      if (error) {
-        console.error('Error fetching messages: ', error);
-        return [];
-      }
+  async function getMessagesByConversation(
+    conversationId: string
+  ): Promise<Message[]> {
+    const { data: messages, error } = await supabaseClient
+      .from('Messages')
+      .select('*')
+      .eq('conversation_id', conversationId);
 
-      return messages as Message[];
+
+    if (error) {
+      console.error('Error fetching messages: ', error);
+      return [];
     }
 
-    async function getConversationsAndMessages() {
-      const conversations = await getAllConversations();
+    return messages as Message[];
+  }
 
-      const messages = await Promise.all(
-        conversations.map((conversation) =>
-          getMessagesByConversation(conversation.id)
-        )
-      );
+  async function getConversationsAndMessages() {
+    const conversations = await getAllConversations();
 
-      const messagesByConversation: Record<string, Message[]> = {};
-      for (let i = 0; i < conversations.length; i++) {
-        messagesByConversation[conversations[i].id] = messages[i];
-      }
-      dispatch(setMessages(messagesByConversation));
+
+    const messages = await Promise.all(conversations.map(conversation => getMessagesByConversation(conversation.id)))
+
+    const messagesByConversation: Record<string, Message[]> = {};
+    for (let i = 0; i < conversations.length; i++) {
+      messagesByConversation[conversations[i]?.id] = messages[i];
+    }
+    dispatch(setMessages(messagesByConversation));
+
+
+  }
+getConversationsAndMessages()
+
+
+supabaseClient
+  .channel('messagesChannel')
+  .on(
+    'postgres_changes',
+    {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'Messages',
+      filter: `conversation_id=eq.${chatState.currentConversationId}`,
+    },
+    (payload) => {
+
+      dispatch(addMessage(payload.new))
+    }
+  )
+  .subscribe()
+
+}, [dispatch, userInfo.profile.id, chatState.currentConversationId])
+
+useEffect(() => {
+  async function fetchOtherUser() {
+    setOtherUser(null)
+    const conversation = await supabaseClient
+      .from('Conversations')
+      .select('*')
+      .eq('id', chatState.currentConversationId)
+      .single();
+
+    if (conversation.error) {
+      console.error("Error fetching conversation: ", conversation.error);
+      return;
+    }
+
+    const otherUserId = conversation.data.member1 === userInfo.profile.id
+      ? conversation.data.member2
+      : conversation.data.member1;
+
+    const otherUserDetails = await supabaseClient
+      .from('Users')
+      .select('*')
+      .eq('id', otherUserId)
+      .single();
+
+    if (otherUserDetails.error) {
+      console.error("Error fetching other user's details: ", otherUserDetails.error);
+      return;
+
     }
     getConversationsAndMessages();
 
@@ -269,7 +323,53 @@ const Chat: React.FC = (): JSX.Element => {
                 );
               }
             )}
-          </div>
+
+          <div className='flex-grow overflow-y-auto p-4'>
+
+
+          {messages[`${chatState.currentConversationId}`]?.map((message: Message) => {
+  const messageDate = parseISO(message.created_at!);
+  const now = new Date();
+  let formattedDate = '';
+
+  const diffInMinutes = (now.getTime() - messageDate.getTime()) / (1000 * 60);
+  const diffInHours = diffInMinutes / 60;
+  const diffInDays = diffInHours / 24;
+
+  if (diffInMinutes < 1) {
+    formattedDate = 'Just now';
+  } else if (diffInHours < 1) {
+    const minutes = Math.round(diffInMinutes);
+    formattedDate = `${minutes} min${minutes > 1 ? 's' : ''} ago`;
+  } else if (diffInDays < 1) {
+    const hours = Math.round(diffInHours);
+    formattedDate = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  } else if (diffInDays < 7) {
+    const days = Math.round(diffInDays);
+    formattedDate = `${days} day${days > 1 ? 's' : ''} ago`;
+  } else {
+    formattedDate = format(messageDate, 'MM-dd');
+  }
+
+  return (
+    <div
+      key={message.id}
+      className={`flex justify-${
+        message.sender_id === userInfo.profile.id ? 'end' : 'start'
+      } mb-2`}
+    >
+      <div
+        className={`${
+          message.sender_id === userInfo.profile.id ? 'ml-2 bg-indigo-400 p-2 rounded-lg text-white max-w-xs' : 'mr-2 bg-gray-400 p-2 rounded-lg text-white max-w-xs'
+        } `}
+      >
+        {message.content}
+        <div className='text-xs'>{formattedDate}</div>
+      </div>
+    </div>
+  );
+})}
+</div>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
