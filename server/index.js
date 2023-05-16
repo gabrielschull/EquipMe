@@ -27,7 +27,6 @@ app.post('/api/create-checkout-session', async (req, res) => {
           product_data: {
             name: gearInfo.name,
             description: gearInfo.description,
-            // deposit: gearInfo.deposit,
           },
           unit_amount: gearInfo.price_day * 100,
         },
