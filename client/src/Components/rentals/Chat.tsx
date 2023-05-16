@@ -56,6 +56,7 @@ const Chat: React.FC = (): JSX.Element => {
     }
     setInputValue('')
 
+
   }
 
   const handleButtonClick = () => {
@@ -253,7 +254,7 @@ useEffect(() => {
     >
       <div 
         className={`${
-          message.sender_id === userInfo.profile.id ? 'ml-2 bg-blue-500 p-2 rounded-lg text-white max-w-xs' : 'mr-2 bg-gray-400 p-2 rounded-lg text-white max-w-xs'
+          message.sender_id === userInfo.profile.id ? 'ml-2 bg-indigo-400 p-2 rounded-lg text-white max-w-xs' : 'mr-2 bg-gray-400 p-2 rounded-lg text-white max-w-xs'
         } `}
       >
         {message.content}
