@@ -8,7 +8,10 @@ export const AllRentalSlice = createSlice({
     initialState,
     reducers: {
       deleteRental: (state, action) => {
-        return state.filter((rental) => rental.id !== action.payload);
+        console.log("ACTION PAYLOAD", action.payload)
+        const returned =  state.filter((rental) => rental.id !== action.payload);
+        console.log("RETURNED", returned)
+        return returned
       },
     },
   });

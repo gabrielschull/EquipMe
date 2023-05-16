@@ -29,6 +29,12 @@ import PaymentSuccessful from './Components/payments/PaymentSuccessful';
 import PaymentCanceled from './Components/payments/PaymentCanceled';
 import { supabase } from './services/supabase.service';
 import { setAllGear } from './Redux/GearSlice';
+import { deleteRental } from './Redux/rentalSlice';
+import {
+  UserSlice,
+  setActiveRentals,
+  setUserInfo,
+} from "./Redux/UserSlice"
 // import Chat from './Components/rentals/Chat';
 
 const App: React.FC = (): JSX.Element => {
@@ -36,10 +42,18 @@ const App: React.FC = (): JSX.Element => {
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    supabase.getGear().then((gear) => {
+    const fetchData = async () => {
+      const gear = await supabase.getGear();
+      const contracts = await supabase.getContractsByRenterId(userInfo.profile.id);
+
       dispatch(setAllGear(gear));
+      dispatch(setActiveRentals(contracts));
+
       console.log('🍆 MyGear gear=', gear);
-    });
+      console.log('🐷 UseSession.tsx > getContractsOnRender', contracts);
+    };
+
+    fetchData();
   }, []);
 
 

@@ -63,7 +63,7 @@ export function useSession(): GearhubUserInfo {
           dispatch(setUserInfo({ session, profile: userData.data }))
         );
 
-      getContractsOnRender();
+      // getContractsOnRender();
 
       // is user is not in Users db, create them
       if (!userInfo.profile?.id) {
