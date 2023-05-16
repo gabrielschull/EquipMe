@@ -27,10 +27,21 @@ app.post('/api/create-checkout-session', async (req, res) => {
           product_data: {
             name: gearInfo.name,
             description: gearInfo.description,
+            // deposit: gearInfo.deposit,
           },
           unit_amount: gearInfo.price_day * 100,
         },
         quantity: rental_duration_days === 0 ? 1 : rental_duration_days,
+      },
+      {
+        price_data: {
+          currency: 'eur',
+          product_data: {
+            name: `Deposit for:  ${gearInfo.name}`,
+          },
+          unit_amount: gearInfo.deposit * 100,
+        },
+        quantity: 1,
       },
     ],
     mode: 'payment',
