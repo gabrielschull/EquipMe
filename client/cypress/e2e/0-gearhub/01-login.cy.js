@@ -1,3 +1,5 @@
+const { isReadable } = require('stream');
+
 /* eslint-disable no-undef */
 describe('Login test', () => {
   it('opens the /login page and sees the form', () => {
@@ -11,3 +13,11 @@ describe('Login test', () => {
     cy.visit('http://localhost:3000/home');
   });
 });
+
+// describe('add gear', ()=> {
+//   it('add new gear to the website', () => {
+//     cy.visit('http://localhost:3000/addgear');
+//     cy.get('button[type="submit"]').click();
+
+//   });
+// });
