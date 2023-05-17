@@ -78,12 +78,12 @@ const Calendar: React.FC<any> = ({
               selected={rentalStartDate}
               includeDates={gearAvailableDates}
               onChange={handleStartDateChange}
-              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 items-center'
               inline
             />
           )}
         </div>
-        <div className='bg-white rounded-lg shadow-md p-2'>
+        <div className='bg-white rounded-lg shadow-md p-2 items-center'>
           <h2 className='text-lg font-bold mb-4'>Select End Date</h2>
           {location.pathname === '/addgear' ? (
             <DatePicker
@@ -94,7 +94,7 @@ const Calendar: React.FC<any> = ({
                 { start: new Date(), end: addDays(new Date(), 90) },
               ]}
               onChange={handleEndDateChange}
-              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 items-center'
               inline
             />
           ) : (
