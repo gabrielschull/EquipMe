@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../Redux/store';
 import { useNavigate } from 'react-router-dom';
@@ -5,9 +6,12 @@ import NavBar from '../Components/home/NavBar';
 import { format } from 'date-fns';
 
 const Rentals: React.FC = (): JSX.Element => {
+  const dispatch: AppDispatch = useDispatch();
   const gear = useSelector((state: RootState) => state.Gear);
   const userInfo = useSelector((state: RootState) => state.User);
   const { activeRentals } = userInfo;
+  console.log('🚂 Rentals.tsx > userInfo=', userInfo);
+  console.log('🚂 Rentals.tsx > activeRentals.length=', activeRentals.length);
   const navigate = useNavigate();
 
   return (
@@ -15,10 +19,10 @@ const Rentals: React.FC = (): JSX.Element => {
       <NavBar />
       <ul role='list' className='divide-y divide-gray-100 mx-12 ml-14'>
         {activeRentals?.map((rental: any) => (
-          <li key={rental.id} className="flex justify-between gap-x-6 py-5">
-            <div className="flex gap-x-4 shadow-md w-full">
-              <div className="min-w-0 flex-auto ">
-                <p className="text-sm font-semibold text-black mb-4 ml-10">
+          <li key={rental.id} className='flex justify-between gap-x-6 py-5'>
+            <div className='flex gap-x-4 shadow-md w-full'>
+              <div className='min-w-0 flex-auto '>
+                <p className='text-sm font-semibold text-black mb-4 ml-10'>
                   {rental.Gear.name}
                 </p>
                 <p className='text-base text-indigo-400 leading-relaxed mb-4 ml-10'>
