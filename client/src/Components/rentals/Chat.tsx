@@ -29,11 +29,11 @@ const Chat: React.FC = (): JSX.Element => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputValue) return;
-    const newMessage : Message = {
+    const newMessage: Message = {
       content: inputValue,
-      sender_id: userInfo.profile.id,
+      sender_id: userInfo.profile?.id,
       conversation_id: chatState.currentConversationId,
-    }
+    };
     const { data: message, error } = await supabaseClient
       .from('Messages')
       .insert(newMessage);
@@ -52,6 +52,7 @@ const Chat: React.FC = (): JSX.Element => {
   };
 
 
+
   async function getAllConversations() {
     const { data: conversations, error } = await supabaseClient
       .from('Conversations')
@@ -62,12 +63,14 @@ const Chat: React.FC = (): JSX.Element => {
     if (error) {
       console.error('Error fetching conversations: ', error);
       return [];
+
     }
     console.log('CONVOS ==> ', conversations)
     return conversations;
   }
 
   useEffect(() => {
+
 
   async function getMessagesByConversation(
     conversationId: string
@@ -130,31 +133,36 @@ supabaseClient
 
 useEffect(() => {
   async function fetchOtherUser() {
-    setOtherUser(null)
+    setOtherUser(null);
     const conversation = await supabaseClient
       .from('Conversations')
       .select('*')
       .eq('id', chatState.currentConversationId)
       .single();
     if (conversation.error) {
-      console.error("Error fetching conversation: ", conversation.error);
+      console.error('Error fetching conversation: ', conversation.error);
       return;
     }
-    const otherUserId = conversation.data.member1 === userInfo.profile.id
-      ? conversation.data.member2
-      : conversation.data.member1;
+    const otherUserId =
+      conversation.data.member1 === userInfo.profile?.id
+        ? conversation.data.member2
+        : conversation.data.member1;
     const otherUserDetails = await supabaseClient
       .from('Users')
       .select('*')
       .eq('id', otherUserId)
       .single();
     if (otherUserDetails.error) {
-      console.error("Error fetching other user's details: ", otherUserDetails.error);
+      console.error(
+        "Error fetching other user's details: ",
+        otherUserDetails.error
+      );
       return;
     }
     setOtherUser(otherUserDetails.data as User);
   }
   fetchOtherUser();
+
 }, [chatState.currentConversationId, userInfo.profile.id]);
 
 const handleSwitchConversation = async (userId: string, activeUserId: string) => {
@@ -205,31 +213,35 @@ return (
         );
     })}
 
+
       {otherUser && (
-      <button
-        ref={buttonRef}
-        onClick={handleButtonClick}
-        className='fixed bottom-4 right-4 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center focus:outline-none'
-      >
-        {otherUser && chatState.currentConversationId ? (
-    <img
-      src={
-        'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/images/' +
-        otherUser.id +
-        '/profileImage'
-      }
-      alt="User"
-      className='w-full h-full object-cover rounded-full'
-    />
-  ) : (
-    chatState.isOpen ? '-' : '+'
-  )}
-</button>
-)}
+        <button
+          ref={buttonRef}
+          onClick={handleButtonClick}
+          className='fixed bottom-4 right-4 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center focus:outline-none'
+        >
+          {otherUser && chatState.currentConversationId ? (
+            <img
+              src={
+                'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/images/' +
+                otherUser?.id +
+                '/profileImage'
+              }
+              alt='User'
+              className='w-full h-full object-cover rounded-full'
+            />
+          ) : chatState.isOpen ? (
+            '-'
+          ) : (
+            '+'
+          )}
+        </button>
+      )}
       {chatState.isOpen && (
         <div
           ref={chatRef}
-          className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'>
+          className='fixed bottom-16 right-4 bg-gray-100 h-96 w-64 rounded-lg mx-8 break-all flex flex-col'
+        >
           <button
             onClick={handleCloseClick}
             style={{
@@ -245,15 +257,23 @@ return (
               fontWeight: '900',
               transition: 'box-shadow 0.3s',
             }}
-            className="absolute top-2 right-2 text-white">
+            className='absolute top-2 right-2 text-white'
+          >
             X
           </button>
           {otherUser && (
-              <h2 style={{marginLeft: "10px", marginTop:"7px", marginBottom:"7px"}}>
-                {otherUser.first_name} {otherUser.last_name}
-              </h2>
-            )}
+            <h2
+              style={{
+                marginLeft: '10px',
+                marginTop: '7px',
+                marginBottom: '7px',
+              }}
+            >
+              {otherUser.first_name} {otherUser.last_name}
+            </h2>
+          )}
           <div className='flex-grow overflow-y-auto p-4'>
+
           {messages[`${chatState.currentConversationId}`]?.map((message: Message) => {
   const messageDate = parseISO(message.created_at!);
   const now = new Date();
@@ -294,14 +314,15 @@ return (
   );
 })}
 </div>
+
           <form onSubmit={handleSubmit}>
             <input
-              type="text"
+              type='text'
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className='border-2 border-gray-300 p-2 w-full rounded-lg focus:outline-none focus:border-blue-500 whitespace-normal overflow-wrap-normal'
               placeholder='Type your message...'
-              style={{flex: 'none'}}
+              style={{ flex: 'none' }}
             />
           </form>
         </div>
