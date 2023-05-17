@@ -138,27 +138,22 @@ const GearDetails: React.FC = (): JSX.Element => {
 
     if (existingConversation) {
       return existingConversation.id;
-    }
-    if (!existingConversation) {
-      const { data: newConversation, error: insertError } =
-        (await supabaseClient
-          .from('Conversations')
-          .insert({
-            member1: ownerId,
-            member2: userId,
-          })
-          .single()) as { data: Conversation | null; error: Error | null };
 
-      if (insertError || !newConversation) {
-        console.error('Error creating conversation: ', insertError);
-        return '';
-      }
-      return newConversation.id;
+    } else {
+    const { data: newConversation, error: insertError } = await supabaseClient
+      .from('Conversations')
+      .insert({
+        member1: ownerId,
+        member2: userId,
+      })
+      .select('id')
+      .single()
+    if (insertError || !newConversation) {
+      console.error("Error creating conversation: ", insertError);
+      return '';
     }
-    console.log(
-      'reached final return in getOrCreateConversation (could not find or create conversation)'
-    );
-    return '';
+    return newConversation.id
+  }
   };
 
   return (

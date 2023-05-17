@@ -23,7 +23,7 @@ const Chat: React.FC = (): JSX.Element => {
     if (!inputValue) return;
     const newMessage: Message = {
       content: inputValue,
-      sender_id: userInfo.profile.id,
+      sender_id: userInfo.profile?.id,
       conversation_id: chatState.currentConversationId,
     };
     const { data: message, error } = await supabaseClient
@@ -48,7 +48,7 @@ const Chat: React.FC = (): JSX.Element => {
         .from('Conversations')
         .select('id')
         .or(
-          `member1.eq.${userInfo.profile.id},member2.eq.${userInfo.profile.id}`
+          `member1.eq.${userInfo.profile?.id},member2.eq.${userInfo.profile?.id}`
         );
       if (error) {
         console.error('Error fetching conversations: ', error);
@@ -69,6 +69,7 @@ const Chat: React.FC = (): JSX.Element => {
         return [];
       }
       return messages as Message[];
+
     }
     async function getConversationsAndMessages() {
       const conversations = await getAllConversations();
@@ -138,6 +139,7 @@ const Chat: React.FC = (): JSX.Element => {
         <button
           ref={buttonRef}
           onClick={handleButtonClick}
+
           className="fixed bottom-4 right-4 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center focus:outline-none">
           {otherUser && chatState.currentConversationId ? (
             <img
@@ -175,7 +177,8 @@ const Chat: React.FC = (): JSX.Element => {
               fontWeight: '900',
               transition: 'box-shadow 0.3s',
             }}
-            className="absolute top-2 right-2 text-white">
+            className='absolute top-2 right-2 text-white'
+          >
             X
           </button>
           {otherUser && (
@@ -192,7 +195,6 @@ const Chat: React.FC = (): JSX.Element => {
             {messages[`${chatState.currentConversationId}`]?.map(
               (message: Message) => {
                 const messageDate = parseISO(message.created_at!);
-
                 const now = new Date();
                 let formattedDate = '';
                 const diffInMinutes =
@@ -237,11 +239,13 @@ const Chat: React.FC = (): JSX.Element => {
           </div>
           <form onSubmit={handleSubmit}>
             <input
-              type="text"
+              type='text'
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
+
               className="border-2 border-gray-300 p-2 w-full rounded-lg focus:outline-none focus:border-blue-500 whitespace-normal overflow-wrap-normal"
               placeholder="Type your message..."
+
               style={{ flex: 'none' }}
             />
           </form>
