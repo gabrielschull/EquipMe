@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { StarIcon } from '@heroicons/react/20/solid';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../Redux/store';
+import { RootState, AppDispatch} from '../../Redux/store';
 import NavBar from '../home/NavBar';
 import { useNavigate, useParams } from 'react-router-dom';
 import { supabase, supabaseClient } from '../../services/supabase.service';
 import { format } from 'date-fns';
 import { Rental } from '../../types/rental.type';
 import { deleteRental } from '../../Redux/UserSlice';
+
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
@@ -18,9 +19,10 @@ const CurrentRental: React.FC = (): JSX.Element => {
   const { rental_id } = useParams();
   const { activeRentals } = userInfo;
   const [gearImages, setGearImages] = useState<any[]>([]);
+  // const [rentalDays, setRentalDays] = useState<any>([]);
   const dispatch: AppDispatch = useDispatch();
   const rental = useSelector((state: RootState) => state.Rental);
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const CDNURL =
     'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
@@ -29,9 +31,12 @@ const CurrentRental: React.FC = (): JSX.Element => {
     ({ id }: { id: string }) => id === rental_id
   );
 
+
   const totalPaid =
     currentRentalInfo?.rental_price * currentRentalInfo?.rental_duration_days +
     currentRentalInfo?.deposit;
+
+
 
   async function getGearImages() {
     try {
@@ -49,7 +54,9 @@ const CurrentRental: React.FC = (): JSX.Element => {
       if (error) console.log('ERROR IN IMAGE FETCH ==> ', error);
 
       if (data !== null) {
+        // console.log('🇬🇧 Images received', data);
         setGearImages(data);
+        // console.log('🇬🇧 gearImages', gearImages);
       }
     } catch (e: any) {
       console.log(e, 'Error getting gear images');
@@ -58,17 +65,18 @@ const CurrentRental: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     getGearImages();
+    // getRentalDays();
   }, []);
 
-  const handleDelete = (rental: Rental) => {
-    console.log('WE ARE GETTING HERE');
+  const handleDelete = (rental:Rental) => {
+    console.log("WE ARE GETTING HERE")
     supabase
       .deleteRental(rental.id as string)
       .then(() => {
         dispatch(deleteRental(rental.id));
-        console.log('successfully deleted gear');
-        navigate(`/home`);
-        console.log('ARE WE HERE');
+        console.log("successfully deleted gear")
+        navigate(`/home`)
+        console.log ("ARE WE HERE")
       })
       .catch((error) => {
         alert('Error: ' + error);
@@ -144,8 +152,7 @@ const CurrentRental: React.FC = (): JSX.Element => {
                 <div className="ml-100 mt-4 lg:row-span-3 lg:mt-0">
                   <h2 className="sr-only">Product information</h2>
                   <h5 className="text-3xl tracking-tight text-gray-900 leading-relaxed">
-                    Price/day: €{currentRentalInfo?.rental_price}
-                    <br></br>
+                    Price/day: €{currentRentalInfo?.rental_price}<br></br>
                     Rental Days: {currentRentalInfo?.rental_duration_days}
                     <br></br>
                     Deposit: €{currentRentalInfo?.deposit} <br></br>
@@ -164,7 +171,8 @@ const CurrentRental: React.FC = (): JSX.Element => {
                   </form>
                 </div>
 
-                <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6"></div>
+                <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+                </div>
               </div>
             </div>
           </div>

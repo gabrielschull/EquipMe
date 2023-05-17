@@ -1,6 +1,14 @@
 import React from 'react';
+import {
+  ArrowPathIcon,
+  CloudArrowUpIcon,
+  FingerPrintIcon,
+  LockClosedIcon,
+} from '@heroicons/react/24/outline';
+import { useEffect, useContext } from 'react';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
+import MapContainer from '../Components/misc/MapContainer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
 import MyGear from '../Components/gear/MyGear';
@@ -40,6 +48,7 @@ const UserProfile: React.FC = (): JSX.Element => {
           </div>
           <MyGear></MyGear>
           <div className="flex justify-center mt-2">
+            {/* <MapContainer></MapContainer> */}
             <div className="h-16">
               <div className="flex justify-between mx-8 py-2">
                 <button
