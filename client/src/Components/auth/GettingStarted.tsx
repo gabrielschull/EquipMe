@@ -136,7 +136,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                   e.preventDefault();
                   navigate(`/addgear`);
                 }}
-                className="bg-indigo-400 text-white font-semibold py-2 px-3 rounded shadow">
+                className="hover:bg-indigo-400 hover:text-white bg-white text-black font-semibold py-2 px-3 rounded shadow">
                 Add Gear
               </button>
             )}

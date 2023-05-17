@@ -188,7 +188,6 @@ const EditUser: React.FC = (): JSX.Element => {
                 <label
                   htmlFor="cover-photo"
                   className="block text-sm font-medium leading-6 text-gray-900">
-                  Photo
                 </label>
                 <img
                   className="rounded-lg mx-auto h-100 w-100"

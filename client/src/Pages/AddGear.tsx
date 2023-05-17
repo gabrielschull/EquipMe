@@ -314,13 +314,13 @@ const AddGear: React.FC = (): JSX.Element => {
 
                 navigate(`/home`);
               }}
-              className="rounded-md bg-indigo-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              className="rounded-md hover:bg-indigo-400 hover:text-white px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               List your gear on the site!
             </button>
             <button
               type="button"
               onClick={() => navigate(`/myprofile`)}
-              className="text-sm font-semibold leading-6 text-gray-900">
+              className=" rounded-md py-2 px-2 hover:bg-indigo-400 hover:text-white text-sm font-semibold leading-6 text-gray-900">
               Cancel
             </button>
           </div>

@@ -79,7 +79,7 @@ const MapContainer: React.FC<MapProps> = ({ homeGearImages }: any) => {
     <LoadScript googleMapsApiKey={MAPS_API_KEY}>
       <div
         style={{
-          height: '400px',
+          height: '600px',
           width: '60%',
           margin: '0 auto',
           alignItems: 'center',
@@ -89,7 +89,7 @@ const MapContainer: React.FC<MapProps> = ({ homeGearImages }: any) => {
           <button
             onClick={handleClick}
             type='submit'
-            className='mb-2 w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-black hover:bg-indigo-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2'
+            className='mb-2 w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-black hover:bg-indigo-400 hover:text-white'
           >
             See gear around you
           </button>

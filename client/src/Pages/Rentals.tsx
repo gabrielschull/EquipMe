@@ -17,27 +17,27 @@ const Rentals: React.FC = (): JSX.Element => {
   return (
     <div className="component-container">
       <NavBar />
-      <ul role="list" className="divide-y divide-gray-100 mx-12 ">
+      <ul role="list" className="divide-y divide-gray-100 mx-12 ml-14">
         {activeRentals?.map((rental: any) => (
 
           <li key={rental.id} className="flex justify-between gap-x-6 py-5">
-            <div className="flex gap-x-4">
-              <div className="min-w-0 flex-auto">
-                <p className="text-sm font-semibold leading-6 text-black">
+            <div className="flex gap-x-4 shadow-md w-full">
+              <div className="min-w-0 flex-auto ">
+                <p className="text-sm font-semibold text-black mb-4 ml-10">
                   {rental.Gear.name}
                 </p>
-                <p className="text-base text-indigo-400">
+                <p className="text-base text-indigo-400 leading-relaxed mb-4 ml-10">
                   Starts {format(new Date(rental.rental_start), 'EEEE, LLL do')}{' '}
                   | Ends {format(new Date(rental.rental_end), 'EEEE, LLL do')}
                 </p>
 
-                <p className="mt-1 truncate text-xs leading-5 text-gray-800">
+                <p className="mt-1 truncate text-s leading-5 text-gray-800 mb-4 ml-10">
                   Price: €{rental.Gear.price_day},00/ Day
                 </p>
-                <p className="mt-1 truncate text-xs leading-5 text-gray-800">
+                <p className="mt-1 truncate text-s mb-4 leading-5 text-gray-800 ml-10">
                   Deposit: €{rental.Gear.deposit},00
                 </p>
-                <p className="mt-1 truncate text-xs leading-5 text-gray-800">
+                <p className="mt-1 truncate text-s mb-4 leading-5 text-gray-800 ml-10">
                   Type: {rental.Gear.type}
                 </p>
               </div>
