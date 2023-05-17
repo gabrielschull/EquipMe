@@ -156,16 +156,17 @@ const GearDetails: React.FC = (): JSX.Element => {
 
     if (existingConversation) {
       return existingConversation.id;
-    }
-    if (!existingConversation) {
+    } else {
     const { data: newConversation, error: insertError } = await supabaseClient
       .from('Conversations')
       .insert({
         member1: ownerId,
-        member2: userId
+        member2: userId,
       })
-      .single() as {data: Conversation | null, error: Error | null};
+      .select('id')
+      .single()
 
+      console.log("THIS IS UNDEFINED??", newConversation)
     if (insertError || !newConversation) {
       console.error("Error creating conversation: ", insertError);
       return '';
