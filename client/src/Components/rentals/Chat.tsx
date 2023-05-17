@@ -6,15 +6,19 @@ import { Root } from 'react-dom/client';
 import { addMessage, setMessages } from '../../Redux/MessageSlice';
 import { Message } from '../../types/message.type';
 import { Data } from '@react-google-maps/api';
-import { openChat, closeChat, toggleChat } from '../../Redux/ChatSlice';
+import { openChat, closeChat, toggleChat, switchConversation } from '../../Redux/ChatSlice';
 import { User } from '../../types/user.type'
 import { formatDistanceToNow, format, parseISO } from 'date-fns';
+
+
+
 const Chat: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [inputValue, setInputValue] = useState('');
   const chatState = useSelector((state: RootState) => state.Chat);
   const messages = useSelector((state: RootState) => state.Message)
   const [otherUser, setOtherUser] = useState<User | null>(null);
+  const [otherUserIds, setOtherUserIds] = useState<Array<string>>([]);
   const dispatch = useDispatch()
   const chatRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -46,20 +50,24 @@ const Chat: React.FC = (): JSX.Element => {
   const handleCloseClick = () => {
     dispatch(closeChat());
   };
-  useEffect(() => {
-    async function getAllConversations() {
-      const { data: conversations, error } = await supabaseClient
-        .from('Conversations')
-        .select('id')
-        .or(
-          `member1.eq.${userInfo.profile.id},member2.eq.${userInfo.profile.id}`
-        );
-      if (error) {
-        console.error('Error fetching conversations: ', error);
-        return [];
-      }
-      return conversations;
+
+
+  async function getAllConversations() {
+    const { data: conversations, error } = await supabaseClient
+      .from('Conversations')
+      .select('*')
+      .or(
+        `member1.eq.${userInfo.profile.id},member2.eq.${userInfo.profile.id}`
+      );
+    if (error) {
+      console.error('Error fetching conversations: ', error);
+      return [];
     }
+    console.log('CONVOS ==> ', conversations)
+    return conversations;
+  }
+
+  useEffect(() => {
 
   async function getMessagesByConversation(
     conversationId: string
@@ -74,6 +82,8 @@ const Chat: React.FC = (): JSX.Element => {
     }
     return messages as Message[];
   }
+
+
   async function getConversationsAndMessages() {
     const conversations = await getAllConversations();
     const messages = await Promise.all(conversations.map(conversation => getMessagesByConversation(conversation.id)))
@@ -83,6 +93,8 @@ const Chat: React.FC = (): JSX.Element => {
     }
     dispatch(setMessages(messagesByConversation));
   }
+
+
 getConversationsAndMessages()
 supabaseClient
   .channel('messagesChannel')
@@ -99,7 +111,23 @@ supabaseClient
     }
   )
   .subscribe()
+
+  async function getPriorConvoIds() {
+    const conversations = await getAllConversations();
+    const otherUserIds = conversations.map((conversation) => {
+      return conversation.member1 === userInfo.profile.id ? conversation.member2 : conversation.member1;
+    });
+    console.log("FUK", otherUserIds)
+    setOtherUserIds(otherUserIds);
+  }
+
+  getPriorConvoIds()
+
+
 }, [dispatch, userInfo.profile.id, chatState.currentConversationId])
+
+
+
 useEffect(() => {
   async function fetchOtherUser() {
     setOtherUser(null)
@@ -128,8 +156,55 @@ useEffect(() => {
   }
   fetchOtherUser();
 }, [chatState.currentConversationId, userInfo.profile.id]);
-  return (
-    <div className='flex'>
+
+const handleSwitchConversation = async (userId: string, activeUserId: string) => {
+  const newConvo = await getOneConversationById(userId, activeUserId)
+  console.log("HERE ==> ",newConvo)
+  dispatch(switchConversation(newConvo))
+}
+
+const getOneConversationById = async (ownerId: string, userId: string) => {
+
+  const allConvos = await getAllConversations();
+  const convo = allConvos.find(convo => (convo.member1 == ownerId || convo.member1 == userId) && (convo.member2 == ownerId || convo.member2 == userId));
+
+  const { data: existingConversation, error } = await supabaseClient
+    .from('Conversations')
+    .select('id')
+    .or(`member1.eq.${userId},member2.eq.${ownerId}`)
+    .or(`member1.eq.${ownerId},member2.eq.${userId}`)
+    .single()
+
+  if (convo!.id) {
+    console.log("MFS", convo!.id)
+    return convo!.id;
+  } else {
+    console.log("error fetching convo ", error)
+  }
+}
+return (
+  <div className='flex flex-row-reverse'>
+    {otherUserIds && otherUserIds.length > 0 && otherUserIds
+      .filter(userId => otherUser && userId !== otherUser.id)
+      .map((userId, index) => {
+        // Adjust the bottom position of the rest of the buttons
+        
+        return (
+          <button 
+            style={{ position: 'fixed', right: '16px', bottom: `${58 + index * 50}px`}}
+            key={index}
+            onClick={() => handleSwitchConversation(userId, userInfo.profile.id)}
+            className='bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center focus:outline-none my-2'
+          >
+            <img
+              src={`https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/images/${userId}/profileImage`}
+              alt="User"
+              className='w-full h-full object-cover rounded-full my-8'
+            />
+          </button>
+        );
+    })}
+
       {otherUser && (
       <button
         ref={buttonRef}
@@ -180,9 +255,7 @@ useEffect(() => {
             )}
           <div className='flex-grow overflow-y-auto p-4'>
           {messages[`${chatState.currentConversationId}`]?.map((message: Message) => {
-            console.log(message, "FUCKER")
   const messageDate = parseISO(message.created_at!);
-  console.log(messageDate, "DATE")
   const now = new Date();
   let formattedDate = '';
   const diffInMinutes = (now.getTime() - messageDate.getTime()) / (1000 * 60);

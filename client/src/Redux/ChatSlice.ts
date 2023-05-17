@@ -2,26 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const ChatSlice = createSlice({
     name: 'chat',
-    initialState: {isOpen: false, currentConversationId: '', previousConversations: []},
+    initialState: {isOpen: false, currentConversationId: ''},
     reducers: {
         toggleChat: (state) => {
             state.isOpen = !state.isOpen
         },
         openChat: (state, action) => {
-            // if (state.currentConversationId) {
-            //     state.previousConversations.push(state.currentConversationId)
-            // }
+            
             state.isOpen = true;
             state.currentConversationId = action.payload;
         },
         closeChat: (state) => {
             state.isOpen = false;
         },
-        // switchToPreviousChat: (state) => {
-        //     if (state.previousConversations.length > 0) {
-        //         state.currentConversationId = state.previousConversations.pop()
-        //     }
-        // },
+        switchConversation: (state, action) => {
+            state.currentConversationId = action.payload;
+        },
     },
 });
 
@@ -29,6 +25,6 @@ export const {
     toggleChat,
     openChat,
     closeChat,
-    // switchToPreviousChat
+    switchConversation,
 } = ChatSlice.actions;
 export default ChatSlice.reducer
