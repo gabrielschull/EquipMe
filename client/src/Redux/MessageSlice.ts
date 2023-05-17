@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Message } from "../types/message.type";
 
 interface Conversation {
-    [conversationId: string]: Message[]
+    [conversationId: string ]: Message[]
 }
 
 const initialState: Conversation = {};

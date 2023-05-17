@@ -166,18 +166,13 @@ const GearDetails: React.FC = (): JSX.Element => {
       .select('id')
       .single()
 
-      console.log("THIS IS UNDEFINED??", newConversation)
     if (insertError || !newConversation) {
       console.error("Error creating conversation: ", insertError);
       return '';
     }
     return newConversation.id
   }
-  console.log("reached final return in getOrCreateConversation (could not find or create conversation)")
-  return ''
-  };
-
-
+  }
 
   return (
     <>
