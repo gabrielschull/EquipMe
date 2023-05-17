@@ -33,10 +33,11 @@ const CurrentRental: React.FC = (): JSX.Element => {
 
 
   const totalPaid =
-    currentRentalInfo?.rental_price * currentRentalInfo?.rental_duration_days +
+    currentRentalInfo?.rental_price *
+      (currentRentalInfo?.rental_duration_days === 0
+        ? '1'
+        : currentRentalInfo?.rental_duration_days) +
     currentRentalInfo?.deposit;
-
-
 
   async function getGearImages() {
     try {
@@ -68,15 +69,15 @@ const CurrentRental: React.FC = (): JSX.Element => {
     // getRentalDays();
   }, []);
 
-  const handleDelete = (rental:Rental) => {
-    console.log("WE ARE GETTING HERE")
+  const handleDelete = (rental: Rental) => {
+    console.log('WE ARE GETTING HERE');
     supabase
       .deleteRental(rental.id as string)
       .then(() => {
         dispatch(deleteRental(rental.id));
-        console.log("successfully deleted gear")
-        navigate(`/home`)
-        console.log ("ARE WE HERE")
+        console.log('successfully deleted gear');
+        navigate(`/home`);
+        console.log('ARE WE HERE');
       })
       .catch((error) => {
         alert('Error: ' + error);
@@ -87,21 +88,23 @@ const CurrentRental: React.FC = (): JSX.Element => {
     <>
       <NavBar></NavBar>
       {currentRentalInfo && (
-        <div className="component-container font-sans">
-          <div className="bg-white">
-            <div className="pt-6">
+        <div className='component-container font-sans'>
+          <div className='bg-white'>
+            <div className='pt-6'>
               <div
-                id="image-track"
+                id='image-track'
                 style={{
                   display: 'flex',
                   gap: '4vmin',
                   transform: 'translate(7%, 0%)',
-                }}>
+                }}
+              >
                 {gearImages?.map((image, index) => {
                   return (
                     <div
                       key={image.name}
-                      className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
+                      className='aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block'
+                    >
                       <img
                         src={
                           CDNURL +
@@ -111,8 +114,8 @@ const CurrentRental: React.FC = (): JSX.Element => {
                           '/' +
                           image.name
                         }
-                        alt=""
-                        className="h-full w-full object-cover object-center"
+                        alt=''
+                        className='h-full w-full object-cover object-center'
                         style={{
                           width: '40vmin',
                           height: '56vmin',
@@ -124,17 +127,17 @@ const CurrentRental: React.FC = (): JSX.Element => {
                   );
                 })}
               </div>
-              <div className=" ml-28 px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
-                <div className="ml-0 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                  <span className="mb-10 self-center text-xl font-semibold whitespace-nowrap dark:text-white leading-loose">
+              <div className=' ml-28 px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16'>
+                <div className='ml-0 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
+                  <span className='mb-10 self-center text-xl font-semibold whitespace-nowrap dark:text-white leading-loose'>
                     Your active rental:
                   </span>
-                  <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl mb-10 mt-5 ">
+                  <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl mb-10 mt-5 '>
                     {currentRentalInfo?.Gear?.name}
                   </h1>
                   <div>
-                    <div className="space-y-10">
-                      <p className="text-base text-gray-900">
+                    <div className='space-y-10'>
+                      <p className='text-base text-gray-900'>
                         Starts{' '}
                         {format(
                           new Date(currentRentalInfo.rental_start),
@@ -149,30 +152,34 @@ const CurrentRental: React.FC = (): JSX.Element => {
                     </div>
                   </div>
                 </div>
-                <div className="ml-100 mt-4 lg:row-span-3 lg:mt-0">
-                  <h2 className="sr-only">Product information</h2>
-                  <h5 className="text-3xl tracking-tight text-gray-900 leading-relaxed">
-                    Price/day: €{currentRentalInfo?.rental_price}<br></br>
-                    Rental Days: {currentRentalInfo?.rental_duration_days}
+                <div className='ml-100 mt-4 lg:row-span-3 lg:mt-0'>
+                  <h2 className='sr-only'>Product information</h2>
+                  <h5 className='text-3xl tracking-tight text-gray-900 leading-relaxed'>
+                    Price/day: €{currentRentalInfo?.rental_price}
+                    <br></br>
+                    Rental Days:{' '}
+                    {currentRentalInfo?.rental_duration_days === 0
+                      ? '1'
+                      : currentRentalInfo?.rental_duration_days}
                     <br></br>
                     Deposit: €{currentRentalInfo?.deposit} <br></br>
                     <br></br>
                   </h5>
-                  <p className="text-base font-bold tracking-tight text-black-900">
+                  <p className='text-base font-bold tracking-tight text-black-900'>
                     Total Paid: €{totalPaid}
                   </p>
-                  <form className="mt-10">
+                  <form className='mt-10'>
                     <button
-                      type="button"
-                      className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      onClick={() => handleDelete(currentRentalInfo)}>
+                      type='button'
+                      className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                      onClick={() => handleDelete(currentRentalInfo)}
+                    >
                       Cancel Rental
                     </button>
                   </form>
                 </div>
 
-                <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
-                </div>
+                <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'></div>
               </div>
             </div>
           </div>
