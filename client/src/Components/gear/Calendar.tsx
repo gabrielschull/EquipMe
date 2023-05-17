@@ -21,7 +21,17 @@ const Calendar: React.FC<any> = ({
 }): JSX.Element => {
   const gearInfo = useSelector((state: RootState) => state.Gear);
   const { id } = useParams();
+
+  // console.log('🐆 Calendar >>> availableDates', availableDates);
   const dispatch: AppDispatch = useDispatch();
+
+  // const handleAvailableDates = () => {
+  // const gear = gearInfo.find((gear) => gear.id === id);
+  // console.log('🐆 Calendar >>> gear', gear);
+
+  // }
+  // setAvailableDates(dateArr);
+  // };
 
   const handleStartDateChange = (date: Date) => {
     if (location.pathname === '/addgear') {
@@ -40,60 +50,61 @@ const Calendar: React.FC<any> = ({
   };
 
   useEffect(() => {
+    // if (location.pathname !== '/addgear') handleAvailableDates();
     console.log('Calendar, gearAvailableDates', gearAvailableDates);
   }, [gearAvailableDates]);
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="bg-white rounded-lg shadow-md p-2">
-          <h2 className="text-lg font-bold mb-4">Select Start Date</h2>
+      <div className='grid grid-cols-2 gap-4'>
+        <div className='bg-white rounded-lg shadow-md p-2'>
+          <h2 className='text-lg font-bold mb-4'>Select Start Date</h2>
           {location.pathname === '/addgear' ? (
             <DatePicker
-              dateFormat="yyyy/MM/dd"
-              id="start-date-picker"
+              dateFormat='yyyy/MM/dd'
+              id='start-date-picker'
               selected={startDate}
               includeDateIntervals={[
                 { start: new Date(), end: addDays(new Date(), 90) },
               ]}
               onChange={handleStartDateChange}
-              className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
               inline
             />
           ) : (
             <DatePicker
-              dateFormat="yyyy/MM/dd"
-              id="start-date-picker"
+              dateFormat='yyyy/MM/dd'
+              id='start-date-picker'
               selected={rentalStartDate}
               includeDates={gearAvailableDates}
               onChange={handleStartDateChange}
-              className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 items-center"
+              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 items-center'
               inline
             />
           )}
         </div>
-        <div className="bg-white rounded-lg shadow-md p-2 items-center">
-          <h2 className="text-lg font-bold mb-4">Select End Date</h2>
+        <div className='bg-white rounded-lg shadow-md p-2 items-center'>
+          <h2 className='text-lg font-bold mb-4'>Select End Date</h2>
           {location.pathname === '/addgear' ? (
             <DatePicker
-              dateFormat="yyyy/MM/dd"
-              id="end-date-picker"
+              dateFormat='yyyy/MM/dd'
+              id='end-date-picker'
               selected={endDate}
               includeDateIntervals={[
                 { start: new Date(), end: addDays(new Date(), 90) },
               ]}
               onChange={handleEndDateChange}
-              className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 items-center"
+              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 items-center'
               inline
             />
           ) : (
             <DatePicker
-              dateFormat="yyyy/MM/dd"
-              id="end-date-picker"
+              dateFormat='yyyy/MM/dd'
+              id='end-date-picker'
               selected={rentalEndDate}
               includeDates={gearAvailableDates}
               onChange={handleEndDateChange}
-              className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className='border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
               inline
             />
           )}
@@ -101,6 +112,7 @@ const Calendar: React.FC<any> = ({
       </div>
     </div>
   );
+
 };
 
 export default Calendar;

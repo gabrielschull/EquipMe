@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
@@ -187,7 +187,8 @@ const EditUser: React.FC = (): JSX.Element => {
               <div className="col-span-full">
                 <label
                   htmlFor="cover-photo"
-                  className="block text-sm font-medium leading-6 text-gray-900"></label>
+                  className="block text-sm font-medium leading-6 text-gray-900">
+                </label>
                 <img
                   className="rounded-lg mx-auto h-100 w-100"
                   alt=""
@@ -232,14 +233,18 @@ const EditUser: React.FC = (): JSX.Element => {
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
               type="button"
+
               className="border-transparent bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold"
+
               onClick={() => navigate(`/home`)}>
               Cancel
             </button>
             <button
               type="submit"
               onClick={handleSubmit}
+
               className="border-transparent bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
+
               Update
             </button>
           </div>
