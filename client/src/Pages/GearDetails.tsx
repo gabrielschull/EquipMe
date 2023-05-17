@@ -276,7 +276,13 @@ const GearDetails: React.FC = (): JSX.Element => {
                   >
                     Reserve this gear
                   </button>
-                  <button onClick={() => handleContactClick(gearInfo.owner_id as string, userInfo.profile.id)}
+                  <button
+                    onClick={() =>
+                      handleContactClick(
+                        gearInfo.owner_id as string,
+                        userInfo.profile.id
+                      )
+                    }
                     type='button'
                     className='mt-10 flex w-full items-center justify-center bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3  rounded shadow border-transparent'
                   >
