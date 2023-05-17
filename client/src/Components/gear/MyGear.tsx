@@ -4,7 +4,7 @@ import { Gear } from '../../types/gear.type';
 import { supabase, supabaseClient } from '../../services/supabase.service';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAllGear, deleteGear } from '../../Redux/GearSlice';
+import { deleteGear } from '../../Redux/GearSlice';
 import { RootState, AppDispatch } from '../../Redux/store';
 
 const MyGear: React.FC = (): JSX.Element => {
@@ -31,8 +31,6 @@ const MyGear: React.FC = (): JSX.Element => {
           offset: 0,
           sortBy: { column: 'name', order: 'asc' },
         });
-
-      //console.log(`${ownerid}/gear/${gearid}`);
 
       if (error) console.log('ERROR IN IMAGE FETCH ==> ', error);
 
@@ -83,8 +81,7 @@ const MyGear: React.FC = (): JSX.Element => {
           filteredGear.map((gear) => (
             <div
               key={gear.id}
-              className="flex-shrink-0 w-64 mr-4 scroll-snap-align-start"
-              >
+              className="flex-shrink-0 w-64 mr-4 scroll-snap-align-start">
               <div className="bg-white shadow rounded-lg p-4 h-fit">
                 <div className="flex gap-x-4">
                   <div className="min-w-0 flex-auto">

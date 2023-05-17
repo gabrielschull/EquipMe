@@ -26,7 +26,6 @@ function classNames(...classes: any) {
 }
 
 const GettingStarted: React.FC = (): JSX.Element => {
-  // const [allGear, setAllGear] = useState<any[]>([]);
   const gear = useSelector((state: RootState) => state.Gear);
   const { profile } = useSelector((state: RootState) => state.User);
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
@@ -48,16 +47,6 @@ const GettingStarted: React.FC = (): JSX.Element => {
 
   const [gearType, setGearType] = useState<string>('--------');
 
-  //filter gear by type
-  // const handleSearchButton = async () => {
-  //   if (gearType) {
-  //     //console.log('gearType 🏂 ----------> ', gearType);
-  //     setGearType(gearType);
-  //   } else {
-  //     alert('Cannot find gear type');
-  //   }
-  // };
-
   const handleGeolocation = async () => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -76,14 +65,6 @@ const GettingStarted: React.FC = (): JSX.Element => {
       }
     );
   };
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const allGear = await supabase.getGear();
-  //     if (allGear) allGear;
-  //     if (allGear) dispatch(setFilteredGear(allGear));
-  //   })();
-  // }, []);
 
   useEffect(() => {
     dispatch(
@@ -111,10 +92,9 @@ const GettingStarted: React.FC = (): JSX.Element => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
-        }}
-      >
-        <div className='flex items-center justify-center white'>
-          <div className='flex flex-col items-center space-y-12 mt-20'>
+        }}>
+        <div className="flex items-center justify-center white">
+          <div className="flex flex-col items-center space-y-12 mt-20">
             <button
               type="submit"
               onClick={() => {
@@ -123,10 +103,8 @@ const GettingStarted: React.FC = (): JSX.Element => {
                   : supabase.updateIsOwnerToTrue(userInfo.profile.id);
                 dispatch(toggleIsOwner(userInfo.profile.id));
               }}
-              className='bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow'
-            >
+              className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow">
               {userInfo.profile?.is_owner ? '✔' : ''} I want to lease my sports
-
               gear to others
             </button>
             {userInfo.profile?.is_owner && (
@@ -148,8 +126,7 @@ const GettingStarted: React.FC = (): JSX.Element => {
                   : supabase.updateIsRenterToTrue(userInfo.profile.id);
                 dispatch(toggleIsRenter(userInfo.profile.id));
               }}
-              className='bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow'
-            >
+              className="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-3 rounded shadow">
               {userInfo.profile?.is_renter ? '✔' : ''} I'm looking to rent some
               gear
             </button>
@@ -161,7 +138,6 @@ const GettingStarted: React.FC = (): JSX.Element => {
             <Listbox
               value={selected}
               onChange={(gearType) => {
-                console.log(gearType);
                 setSelected(gearType);
                 gearType && setGearType(gearType);
               }}>
@@ -267,7 +243,6 @@ const GettingStarted: React.FC = (): JSX.Element => {
           </button>
         </div>
       </div>
-      {/* <MapContainer></MapContainer> */}
     </>
   );
 };

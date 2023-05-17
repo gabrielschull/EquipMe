@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { supabase } from '../services/supabase.service';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Gear } from '../types/gear.type';
 import Calendar from '../Components/gear/Calendar';
 import { RootState, AppDispatch } from '../Redux/store';
 import { addGear } from '../Redux/GearSlice';
@@ -29,7 +28,6 @@ const AddGear: React.FC = (): JSX.Element => {
   const handleChange = (event: any) => {
     const inputName = event.target.name;
     const value = event.target.value;
-    // const selectedValue = event.target.value;
 
     setFormState((prevalue) => {
       return {
@@ -185,11 +183,6 @@ const AddGear: React.FC = (): JSX.Element => {
                     <div className="container grid grid-cols-10 gap-2">
                       {files &&
                         files.map((image) => {
-                          // console.log('image', image);
-                          // console.log(
-                          //   'URL.createObjectURL(image)',
-                          //   URL.createObjectURL(image)
-                          // );
                           return (
                             <img
                               src={URL.createObjectURL(image)}
@@ -200,10 +193,8 @@ const AddGear: React.FC = (): JSX.Element => {
                     </div>
                     <div className="mt-4 flex text-sm leading-6 text-gray-600">
                       <label
-
-                        htmlFor='file-upload'
-                        className='px-4 text-center relative cursor-pointer rounded-md font-semibold focus-within:outline-none hover:bg-indigo-400 hover:text-white'
-                      >
+                        htmlFor="file-upload"
+                        className="px-4 text-center relative cursor-pointer rounded-md font-semibold focus-within:outline-none hover:bg-indigo-400 hover:text-white">
                         <span>Upload a file</span>
                         <input
                           id="file-upload"
@@ -238,22 +229,21 @@ const AddGear: React.FC = (): JSX.Element => {
 
           <div className="pb-12">
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-               <div className='sm:col-span-3'>
+              <div className="sm:col-span-3">
                 <label
-                  htmlFor='first-name'
-                  className='block text-sm font-medium leading-6 text-gray-900'
-                >
+                  htmlFor="first-name"
+                  className="block text-sm font-medium leading-6 text-gray-900">
                   Price per hour /€
                 </label>
-                <div className='mt-2'>
+                <div className="mt-2">
                   <input
                     value={formState.pricehour}
                     onChange={handleChange}
-                    type='text'
-                    name='pricehour'
-                    id='first-name'
-                    autoComplete='given-name'
-                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    type="text"
+                    name="pricehour"
+                    id="first-name"
+                    autoComplete="given-name"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
