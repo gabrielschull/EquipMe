@@ -151,15 +151,15 @@ const CurrentRental: React.FC = (): JSX.Element => {
                 </div>
                 <div className="ml-100 mt-4 lg:row-span-3 lg:mt-0">
                   <h2 className="sr-only">Product information</h2>
-                  <h5 className="text-3xl tracking-tight text-gray-900">
-                    Price/day: €{currentRentalInfo?.rental_price},00 <br></br>
-                    Days of Rental: {currentRentalInfo?.rental_duration_days}
+                  <h5 className="text-3xl tracking-tight text-gray-900 leading-relaxed">
+                    Price/day: €{currentRentalInfo?.rental_price}<br></br>
+                    Rental Days: {currentRentalInfo?.rental_duration_days}
                     <br></br>
-                    Deposit: €{currentRentalInfo?.deposit},00 <br></br>
+                    Deposit: €{currentRentalInfo?.deposit} <br></br>
                     <br></br>
                   </h5>
                   <p className="text-base font-bold tracking-tight text-black-900">
-                    Total Paid: €{totalPaid},00
+                    Total Paid: €{totalPaid}
                   </p>
                   <form className="mt-10">
                     <button

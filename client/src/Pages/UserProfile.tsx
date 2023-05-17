@@ -54,14 +54,14 @@ const UserProfile: React.FC = (): JSX.Element => {
                 <button
                   type="submit"
                   onClick={() => navigate(`/edituser`)}
-                  className="border-transparent bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
+                  className=" text-2xl border-transparent bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
                   Edit Profile
                 </button>
                 <div className="w-4"></div>
                 <button
                   type="submit"
                   onClick={() => navigate(`/addgear`)}
-                  className="border-transparent bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold">
+                  className=" text-2xl border-transparent bg-white hover:bg-indigo-400 hover:text-white text-black font-semibold py-2 px-3 rounded shadow border border-gray-300 focus:ring-offset-2font-semibold ml-20">
                   Add Gear
                 </button>
               </div>

@@ -44,9 +44,9 @@ const NavBar: React.FC = (): JSX.Element => {
                         onClick={() => navigate(item.href)}
                         className={classNames(
                           item.current
-                            ? 'bg-indigo-400 text-pink'
-                            : 'text-black hover:shadow-md hover:text-black',
-                          'rounded-md px-3 py-2 text-lg font-medium'
+                            ? 'bg-indigo-400 text-pink hover:text-white'
+                            : 'text-black hover:shadow-md hover:text-white hover:bg-indigo-400',
+                          'rounded-md px-8 py-2 text-lg font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}>
                         {item.name}
