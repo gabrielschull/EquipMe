@@ -9,11 +9,6 @@ export const supabaseClient = createClient<Database>(
   process.env.REACT_APP_SUPABASE_ANON_KEY!
 );
 
-function getErrorMessage(error: unknown) {
-  if (error instanceof Error) return error.message;
-  return String(error);
-}
-
 export const supabase = {
   signOut: async function signOut() {
     try {
@@ -55,14 +50,6 @@ export const supabase = {
     end_date: Date
   ) {
     try {
-      // console.log(
-      //   'service gear_id=',
-      //   gear_id,
-      //   'service start=',
-      //   start_date,
-      //   'service end=',
-      //   end_date
-      // );
       const { data, error } = await supabaseClient.rpc(
         'deleteDateAvailability',
         {
@@ -109,9 +96,6 @@ export const supabase = {
       const data = await supabaseClient.from('Gear').select();
       console.log('🇬🇧 supabase service >>> getGear', data);
       if (data && data.data) {
-        // data.data.map((gear) => {
-
-        // })
         return data.data as unknown as Gear[];
       } else throw new Error('no data');
     } catch (e: any) {
@@ -244,7 +228,6 @@ export const supabase = {
     try {
       const data = await supabaseClient.from('Gear').select().eq('id', id);
       if (data && data.data) {
-        //console.log('THIS IS THE DATA', data.data);
         return data.data;
       }
     } catch (e: any) {
@@ -333,7 +316,6 @@ export const supabase = {
       if (error) {
         throw error;
       }
-      // console.log('data returned by addGear', data);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot create gear in Supabase');
@@ -397,7 +379,6 @@ export const supabase = {
       if (error) {
         throw error;
       }
-      //console.log('data returned by startRentalContract', data);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot create a new rental contract');
@@ -413,7 +394,6 @@ export const supabase = {
       if (error) {
         throw error;
       }
-      //console.log('data returned by startRentalContract', data);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot find contracts in the db');
@@ -430,7 +410,6 @@ export const supabase = {
       if (error) {
         throw error;
       }
-      //console.log('data returned by RentalContracts', data);
       return data;
     } catch (e: any) {
       console.log(e, 'Cannot find contracts in the db');
@@ -471,7 +450,6 @@ export const supabase = {
         .from('RentalContracts')
         .delete()
         .eq('id', id);
-
       if (error) {
         throw error;
       }

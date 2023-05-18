@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import { addDays } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import { supabase } from '../../services/supabase.service';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../../Redux/store';
-import { setAllGear } from '../../Redux/GearSlice';
 
 const Calendar: React.FC<any> = ({
   startDate,
@@ -19,19 +14,6 @@ const Calendar: React.FC<any> = ({
   setRentalEndDate,
   gearAvailableDates,
 }): JSX.Element => {
-  const gearInfo = useSelector((state: RootState) => state.Gear);
-  const { id } = useParams();
-
-  // console.log('🐆 Calendar >>> availableDates', availableDates);
-  const dispatch: AppDispatch = useDispatch();
-
-  // const handleAvailableDates = () => {
-  // const gear = gearInfo.find((gear) => gear.id === id);
-  // console.log('🐆 Calendar >>> gear', gear);
-
-  // }
-  // setAvailableDates(dateArr);
-  // };
 
   const handleStartDateChange = (date: Date) => {
     if (location.pathname === '/addgear') {
@@ -48,11 +30,6 @@ const Calendar: React.FC<any> = ({
       setRentalEndDate(date);
     }
   };
-
-  useEffect(() => {
-    // if (location.pathname !== '/addgear') handleAvailableDates();
-    console.log('Calendar, gearAvailableDates', gearAvailableDates);
-  }, [gearAvailableDates]);
 
   return (
     <div>

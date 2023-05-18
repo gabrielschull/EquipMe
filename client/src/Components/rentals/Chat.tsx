@@ -1,14 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../Redux/store';
-import { supabase, supabaseClient } from '../../services/supabase.service';
-import { Root } from 'react-dom/client';
+import { RootState } from '../../Redux/store';
+import { supabaseClient } from '../../services/supabase.service';
 import { addMessage, setMessages } from '../../Redux/MessageSlice';
 import { Message } from '../../types/message.type';
-import { Data } from '@react-google-maps/api';
-import { openChat, closeChat, toggleChat, switchConversation } from '../../Redux/ChatSlice';
+import { closeChat, toggleChat, switchConversation } from '../../Redux/ChatSlice';
 import { User } from '../../types/user.type'
-import { formatDistanceToNow, format, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 
 
@@ -22,10 +20,7 @@ const Chat: React.FC = (): JSX.Element => {
   const dispatch = useDispatch()
   const chatRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  //\console.log('userInfo!!! =>>>', userInfo)
-  // useEffect(() => {
-  //  dispatch(openChat(conversationId))
-  // }, [])
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputValue) return;
@@ -51,8 +46,6 @@ const Chat: React.FC = (): JSX.Element => {
     dispatch(closeChat());
   };
 
-
-
   async function getAllConversations() {
     const { data: conversations, error } = await supabaseClient
       .from('Conversations')
@@ -65,7 +58,6 @@ const Chat: React.FC = (): JSX.Element => {
       return [];
 
     }
-    console.log('CONVOS ==> ', conversations)
     return conversations;
   }
 
@@ -120,7 +112,6 @@ supabaseClient
     const otherUserIds = conversations.map((conversation) => {
       return conversation.member1 === userInfo.profile.id ? conversation.member2 : conversation.member1;
     });
-    console.log("FUK", otherUserIds)
     setOtherUserIds(otherUserIds);
   }
 
@@ -167,7 +158,6 @@ useEffect(() => {
 
 const handleSwitchConversation = async (userId: string, activeUserId: string) => {
   const newConvo = await getOneConversationById(userId, activeUserId)
-  console.log("HERE ==> ",newConvo)
   dispatch(switchConversation(newConvo))
 }
 
@@ -184,7 +174,6 @@ const getOneConversationById = async (ownerId: string, userId: string) => {
     .single()
 
   if (convo!.id) {
-    console.log("MFS", convo!.id)
     return convo!.id;
   } else {
     console.log("error fetching convo ", error)
@@ -195,10 +184,8 @@ return (
     {otherUserIds && otherUserIds.length > 0 && otherUserIds
       .filter(userId => otherUser && userId !== otherUser.id)
       .map((userId, index) => {
-        // Adjust the bottom position of the rest of the buttons
-        
         return (
-          <button 
+          <button
             style={{ position: 'fixed', right: '16px', bottom: `${58 + index * 50}px`}}
             key={index}
             onClick={() => handleSwitchConversation(userId, userInfo.profile.id)}
@@ -212,8 +199,6 @@ return (
           </button>
         );
     })}
-
-
       {otherUser && (
         <button
           ref={buttonRef}

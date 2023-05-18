@@ -13,23 +13,16 @@ import { Link } from 'react-router-dom';
 import { setAllGear } from '../../Redux/GearSlice';
 
 const MAPS_API_KEY = process.env.REACT_APP_MAPS_API_KEY!;
+const CDNURL = 'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
 
-const CDNURL =
-  'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
+interface MapProps { homeGearImages:any}
 
-interface MapProps {
-  homeGearImages: any;
-}
-
-const MapContainer: React.FC<MapProps> = ({ homeGearImages }: any) => {
+const MapContainer: React.FC<MapProps> = ({ homeGearImages }) => {
   const { profile } = useSelector((state: RootState) => state.User);
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
   const [zoom, setZoom] = useState(13);
   const [mapLoaded, setMapLoaded] = useState(false);
   const dispatch: AppDispatch = useDispatch();
-  // const gear = useSelector((state: RootState) => state.Gear);
-  // const [gearImages, setGearImages] = useState<any[]>([]);
-  // const location = useLocation();
   const [markerPositions, setMarkerPositions] = useState<any[]>([]);
   const [selectedGear, setSelectedGear] = useState<any>();
   const [data, setData] = useState<any>([]);

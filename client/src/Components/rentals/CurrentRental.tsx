@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { StarIcon } from '@heroicons/react/20/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch} from '../../Redux/store';
 import NavBar from '../home/NavBar';
@@ -9,28 +8,19 @@ import { format } from 'date-fns';
 import { Rental } from '../../types/rental.type';
 import { deleteRental } from '../../Redux/UserSlice';
 
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
-}
-
 const CurrentRental: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const { rental_id } = useParams();
   const { activeRentals } = userInfo;
   const [gearImages, setGearImages] = useState<any[]>([]);
-  // const [rentalDays, setRentalDays] = useState<any>([]);
   const dispatch: AppDispatch = useDispatch();
-  const rental = useSelector((state: RootState) => state.Rental);
   const navigate = useNavigate()
 
-  const CDNURL =
-    'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
+  const CDNURL = 'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
 
   const currentRentalInfo = activeRentals.find(
     ({ id }: { id: string }) => id === rental_id
   );
-
 
   const totalPaid =
     currentRentalInfo?.rental_price *
@@ -55,9 +45,7 @@ const CurrentRental: React.FC = (): JSX.Element => {
       if (error) console.log('ERROR IN IMAGE FETCH ==> ', error);
 
       if (data !== null) {
-        // console.log('🇬🇧 Images received', data);
         setGearImages(data);
-        // console.log('🇬🇧 gearImages', gearImages);
       }
     } catch (e: any) {
       console.log(e, 'Error getting gear images');
@@ -66,18 +54,14 @@ const CurrentRental: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     getGearImages();
-    // getRentalDays();
   }, []);
 
   const handleDelete = (rental: Rental) => {
-    console.log('WE ARE GETTING HERE');
     supabase
       .deleteRental(rental.id as string)
       .then(() => {
         dispatch(deleteRental(rental.id));
-        console.log('successfully deleted gear');
         navigate(`/home`);
-        console.log('ARE WE HERE');
       })
       .catch((error) => {
         alert('Error: ' + error);

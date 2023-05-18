@@ -3,10 +3,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useNavigate,
 } from 'react-router-dom';
 import Home from './Pages/Home';
-import Calendar from './Components/gear/Calendar';
 import Login from './Components/auth/Login';
 import GearDetailsPage from './Pages/GearDetails';
 import MyGear from './Components/gear/MyGear';
@@ -14,27 +12,18 @@ import AddGear from './Pages/AddGear';
 import UserProfile from './Pages/UserProfile';
 import EditUser from './Pages/EditUser';
 import EditGear from './Pages/EditGear';
-import { Provider, useDispatch } from 'react-redux';
-import { store } from './Redux/store';
-import { initialState } from './Redux/UserSlice';
+import {useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootState, AppDispatch } from './Redux/store';
 import { useEffect } from 'react';
-import { useSession } from './Components/users/UseSession';
-import CurrentRentalBanner from './Components/rentals/CurrentRentalBanner';
 import CurrentRental from './Components/rentals/CurrentRental';
 import Rentals from './Pages/Rentals';
 import PaymentSuccessful from './Components/payments/PaymentSuccessful';
 import PaymentCanceled from './Components/payments/PaymentCanceled';
 import { supabase } from './services/supabase.service';
 import { setAllGear } from './Redux/GearSlice';
-import { deleteRental } from './Redux/rentalSlice';
-import {
-  UserSlice,
-  setActiveRentals,
-  setUserInfo,
-} from "./Redux/UserSlice"
- import Chat from './Components/rentals/Chat';
+import { setActiveRentals,} from "./Redux/UserSlice"
+import Chat from './Components/rentals/Chat';
 
 
 const App: React.FC = (): JSX.Element => {
@@ -48,12 +37,8 @@ const App: React.FC = (): JSX.Element => {
         const contracts = await supabase.getContractsByRenterId(
           userInfo.profile.id
         );
-
         dispatch(setAllGear(gear));
         dispatch(setActiveRentals(contracts));
-
-        console.log('🍆 MyGear gear=', gear);
-        console.log('🐷 UseSession.tsx > getContractsOnRender', contracts);
       };
 
       fetchData();
@@ -92,11 +77,6 @@ const App: React.FC = (): JSX.Element => {
           <Route path='/addgear' element={<AddGear />} />
           <Route path='/myprofile' element={<UserProfile />} />
           <Route path='/edituser' element={<EditUser />} />
-
-          {/* <Route path='/calendar' element={<Calendar />} /> */}
-          {/* <Route path='/test' element={<CurrentRental />} /> */}
-
-          {/* <Route path='/stripe' element={<Stripe />} /> */}
           <Route path='/paymentsuccessful' element={<PaymentSuccessful />} />
           <Route path='/paymentcanceled' element={<PaymentCanceled />} />
         </>

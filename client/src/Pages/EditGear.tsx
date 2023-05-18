@@ -1,14 +1,12 @@
 import React from 'react';
-import { useState, useEffect, useContext } from 'react';
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
-import Delete from '../Components/gear/DeleteModal';
+import { useState, useEffect} from 'react';
+import { PhotoIcon} from '@heroicons/react/24/solid';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate, useParams } from 'react-router-dom';
 import { supabase, supabaseClient } from '../services/supabase.service';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../Redux/store';
 import { Gear } from '../types/gear.type';
-import Calendar from '../Components/gear/Calendar';
 import { updateGear } from '../Redux/GearSlice';
 
 const EditGear: React.FC = (): JSX.Element => {
@@ -17,8 +15,6 @@ const EditGear: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const { gearId } = useParams<{ gearId: string }>();
   const [files, setFiles] = useState<File[]>([]);
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
   const [gearImages, setGearImages] = useState<any[]>([]);
   const dispatch = useDispatch()
   const gearInfo = useSelector((state: RootState) =>
@@ -92,8 +88,6 @@ const EditGear: React.FC = (): JSX.Element => {
         deposit: formState.deposit,
       })
     );
-
-    // upload new files to the storage bucket
 
     if (files) {
       const fileUploads = files?.map((file) =>
@@ -187,11 +181,7 @@ const EditGear: React.FC = (): JSX.Element => {
                     defaultValue={''}
                   />
                 </div>
-                {/* <p className='mt-3 text-sm leading-6 text-gray-600'>
-                  Edit your gear description
-                </p> */}
               </div>
-
               <div className='col-span-full'>
                 <label
                   htmlFor='cover-photo'
@@ -226,11 +216,6 @@ const EditGear: React.FC = (): JSX.Element => {
                         })}
                       {files &&
                         files.map((image) => {
-                          // console.log('image', image);
-                          // console.log(
-                          //   'URL.createObjectURL(image)',
-                          //   URL.createObjectURL(image)
-                          // );
                           return (
                             <img
                               src={URL.createObjectURL(image)}
@@ -336,12 +321,6 @@ const EditGear: React.FC = (): JSX.Element => {
                   />
                 </div>
               </div>
-              {/* <Calendar
-              startDate={startDate}
-              setStartDate={setStartDate}
-              endDate={endDate}
-              setEndDate={setEndDate}
-              /> */}
             </div>
           </div>
 
@@ -362,7 +341,6 @@ const EditGear: React.FC = (): JSX.Element => {
               type='button'
               onClick={() => navigate(`/myprofile`)}
               className='rounded-md px-3 py-2 text-sm font-semibold text-black hover:text-white shadow-sm hover:bg-indigo-400 hover:text0-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
-
             >
               Cancel
             </button>
