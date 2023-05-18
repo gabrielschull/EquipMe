@@ -8,18 +8,10 @@ import { useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../Redux/store';
 import Calendar from '../Components/gear/Calendar';
-import { setAvailableDates, setUnavailableDates } from '../Redux/GearSlice';
 import { loadStripe } from '@stripe/stripe-js';
 import { differenceInDays } from 'date-fns';
 import { openChat } from '../Redux/ChatSlice';
-
-import { addOneNewRental, setActiveRentals } from '../Redux/UserSlice';
-
-interface Conversation {
-  id: string;
-  member1: string;
-  member2: string;
-}
+import { addOneNewRental} from '../Redux/UserSlice';
 
 const CDNURL =
   'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
@@ -44,18 +36,12 @@ const GearDetails: React.FC = (): JSX.Element => {
   const gearInfo = useSelector((state: RootState) =>
     state.Gear.find((gear) => gear.id === id)
   );
-
   const dispatch: AppDispatch = useDispatch();
   const stripeAPIKey = process.env.REACT_APP_STRIPE_KEY!;
 
-  const location = useLocation();
-  // const gearInfo = location.state?.gear;
-
   const getGearAvailability = async () => {
     const gearAvailability = await supabase.getAvailabilityByGearId(id);
-    // dispatch(setAvailableDates({ id, gearAvailability }));
     const dateArr: Date[] = [];
-    // if (gear && gear.availableDates) {
     gearAvailability?.forEach((element: any) =>
       dateArr.push(new Date(element.date_available))
     );
@@ -73,15 +59,6 @@ const GearDetails: React.FC = (): JSX.Element => {
       rentalEndDate,
       rentalDays
     );
-    //   .then(() => {
-    //     dispatch(setUnavailableDates({ id, rentalStartDate, rentalEndDate }));
-    //   });
-    // id &&
-    //   supabase.calendarDeleteGearAvailability(
-    //     id,
-    //     rentalStartDate,
-    //     rentalEndDate
-    //   );
     makePayment();
     if (newContract) {
      dispatch(addOneNewRental(newContract[0]))}
@@ -127,7 +104,7 @@ const GearDetails: React.FC = (): JSX.Element => {
     };
 
     const response = await fetch(
-      'http://localhost:8000/api/create-checkout-session',
+      'http://localhost:7000/api/create-checkout-session',
       {
         method: 'POST',
         headers: headers,
@@ -140,10 +117,6 @@ const GearDetails: React.FC = (): JSX.Element => {
     const result = stripe!.redirectToCheckout({
       sessionId: session.id,
     });
-
-    // if (result.error) {
-    //   console.log(result?.error);
-    // }
   };
 
   const getOrCreateConversation = async (ownerId: string, userId: string): Promise<string> => {
@@ -171,7 +144,7 @@ const GearDetails: React.FC = (): JSX.Element => {
       return '';
     }
     return newConversation.id
-  }
+    }
   }
 
   return (
@@ -227,7 +200,6 @@ const GearDetails: React.FC = (): JSX.Element => {
                   {gearInfo.description}
                 </h3>
               </div>
-
               <div className='mt-4 lg:row-span-3 lg:mt-0 m-10'>
                 <p className='text-3xl tracking-tight text-gray-900 mb-5'>
                   Price/day: €{gearInfo.price_day}

@@ -1,26 +1,20 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Gear } from '../../types/gear.type';
-import { RootState, AppDispatch } from '../../Redux/store';
-import { setAllGear } from '../../Redux/GearSlice';
+import { RootState } from '../../Redux/store';
 import { useNavigate } from 'react-router-dom';
 import { supabase, supabaseClient } from '../../services/supabase.service';
 import Socials from '../misc/Socials';
 import MapContainer from '../misc/MapContainer';
 
 const GearListings: React.FC = (): JSX.Element => {
-  const dispatch: AppDispatch = useDispatch();
   const gear = useSelector((state: RootState) => state.Gear);
   const userInfo = useSelector((state: RootState) => state.User);
   const [homeGearImages, setHomeGearImages] = useState<any>({});
   const filteredGear = useSelector((state: RootState) => state.FilteredGear);
-
-  const CDNURL =
-    'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
-
+  const CDNURL = 'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
   const [owners, setOwners] = useState<{ [key: string]: string }>({});
   const [distances, setDistances] = useState<{ [key: string]: string }>({});
-
   const navigate = useNavigate();
 
   const getOwnerFirstName = async (ownerId: string) => {

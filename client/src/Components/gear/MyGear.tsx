@@ -4,7 +4,7 @@ import { Gear } from '../../types/gear.type';
 import { supabase, supabaseClient } from '../../services/supabase.service';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAllGear, deleteGear } from '../../Redux/GearSlice';
+import { deleteGear } from '../../Redux/GearSlice';
 import { RootState, AppDispatch } from '../../Redux/store';
 
 const MyGear: React.FC = (): JSX.Element => {
@@ -13,11 +13,9 @@ const MyGear: React.FC = (): JSX.Element => {
   const userInfo = useSelector((state: RootState) => state.User);
   const [filteredGear, setFilteredGear] = useState<any[]>([]);
   const [homeGearImages, setHomeGearImages] = useState<any>({});
-
   const [owners, setOwners] = useState<{ [key: string]: string }>({});
-
-  const CDNURL =
-    'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
+  const CDNURL = 'https://yiiqhxthvamjfwobhmxz.supabase.co/storage/v1/object/public/gearImagesBucket/';
+  const navigate = useNavigate();
 
   async function getHomeGearImages(
     ownerid: string | null | undefined,
@@ -31,11 +29,7 @@ const MyGear: React.FC = (): JSX.Element => {
           offset: 0,
           sortBy: { column: 'name', order: 'asc' },
         });
-
-      //console.log(`${ownerid}/gear/${gearid}`);
-
       if (error) console.log('ERROR IN IMAGE FETCH ==> ', error);
-
       if (data !== null && data.length > 0) {
         setHomeGearImages((state: any) => {
           return { ...state, [gearid as string]: data[0].name };
@@ -60,7 +54,6 @@ const MyGear: React.FC = (): JSX.Element => {
     );
   }, [gear]);
 
-  const navigate = useNavigate();
 
   const handleDelete = (gear: Gear) => {
     supabase

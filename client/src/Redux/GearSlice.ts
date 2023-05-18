@@ -17,27 +17,20 @@ export const AllGearSlice = createSlice({
       return state.filter((gear) => gear.id !== action.payload);
     },
     setAvailableDates: (state, action) => {
-      console.log('🐷 GearSlice >>> availableDates=', action.payload);
       const indexToUpd = state.findIndex(
         (gear) => gear.id === action.payload.id
       );
-      console.log('🐷 GearSlice >>> indexToUpd=', indexToUpd);
-      console.log('🐷 GearSlice >>> state[indexToUpd]=', state[indexToUpd]);
       if (indexToUpd !== -1)
         state[indexToUpd].availableDates = action.payload.gearAvailability;
-      console.log('🐷 GearSlice >>> state[indexToUpd]=', state[indexToUpd]);
     },
     setUnavailableDates: (state, action) => {
       const indexToUpd = state.findIndex(
         (gear) => gear.id === action.payload.id
       );
-      // const unavailableDates = action.payload;
-      console.log('GearSlice >>> unavailableDates=', action.payload);
       state[indexToUpd].unavailableDates = [
         action.payload.rentalStartDate,
         action.payload.rentalEndDate,
       ];
-      console.log('GearSlice >>> state[indexToUpd]=', state[indexToUpd]);
     },
     updateGear: (state, action) => {
       const updatedGear = state.map((gear) => {

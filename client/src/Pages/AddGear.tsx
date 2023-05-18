@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { supabase } from '../services/supabase.service';
 import NavBar from '../Components/home/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Gear } from '../types/gear.type';
 import Calendar from '../Components/gear/Calendar';
-import { RootState, AppDispatch } from '../Redux/store';
+import { RootState } from '../Redux/store';
 import { addGear } from '../Redux/GearSlice';
 
 const AddGear: React.FC = (): JSX.Element => {
@@ -29,8 +28,6 @@ const AddGear: React.FC = (): JSX.Element => {
   const handleChange = (event: any) => {
     const inputName = event.target.name;
     const value = event.target.value;
-    // const selectedValue = event.target.value;
-
     setFormState((prevalue) => {
       return {
         ...prevalue,
@@ -63,7 +60,6 @@ const AddGear: React.FC = (): JSX.Element => {
           type: formState.type,
         })
       );
-      // upload the files to the storage bucket
       if (files) {
         const fileUploads = files?.map((file) =>
           supabase.uploadGear(
@@ -73,8 +69,6 @@ const AddGear: React.FC = (): JSX.Element => {
         );
         await Promise.all(fileUploads);
       }
-
-      // Create availability date in the GearAvailability db
       supabase.calendarSetGearAvailability(
         gearJustAddedInfo[0].id,
         startDate,
@@ -185,11 +179,6 @@ const AddGear: React.FC = (): JSX.Element => {
                     <div className="container grid grid-cols-10 gap-2">
                       {files &&
                         files.map((image) => {
-                          // console.log('image', image);
-                          // console.log(
-                          //   'URL.createObjectURL(image)',
-                          //   URL.createObjectURL(image)
-                          // );
                           return (
                             <img
                               src={URL.createObjectURL(image)}
@@ -235,7 +224,6 @@ const AddGear: React.FC = (): JSX.Element => {
               </div>
             </div>
           </div>
-
           <div className="pb-12">
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                <div className='sm:col-span-3'>
@@ -311,7 +299,6 @@ const AddGear: React.FC = (): JSX.Element => {
               onClick={(e) => {
                 e.preventDefault();
                 handleSubmit();
-
                 navigate(`/home`);
               }}
               className="rounded-md hover:bg-indigo-400 hover:text-white px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
@@ -329,5 +316,4 @@ const AddGear: React.FC = (): JSX.Element => {
     </>
   );
 };
-
 export default AddGear;

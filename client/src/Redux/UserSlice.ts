@@ -24,7 +24,6 @@ export const UserSlice = createSlice({
     },
     deleteRental: (state, action) => {
       state.activeRentals =  state.activeRentals.filter((rental : any) => rental.id !== action.payload);
-      console.log("STATE RENTALS",state.activeRentals)
     },
     updateUser: (state, action) => {
       const { firstname, lastname, email, phone, bio } = action.payload.profile;

@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react';
-import MapContainer from '../misc/MapContainer';
 import { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
@@ -8,11 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../Redux/store';
 import { supabase } from '../../services/supabase.service';
 import { Gear } from '../../types/gear.type';
-import {
-  UserSlice,
-  toggleIsOwner,
-  toggleIsRenter,
-} from '../../Redux/UserSlice';
+import {toggleIsOwner,toggleIsRenter,} from '../../Redux/UserSlice';
 import { setFilteredGear } from '../../Redux/filteredGearSlice';
 import { updateLocation } from '../../Redux/UserSlice';
 import Background from '../Assets/Background.jpg';
@@ -26,7 +21,6 @@ function classNames(...classes: any) {
 }
 
 const GettingStarted: React.FC = (): JSX.Element => {
-  // const [allGear, setAllGear] = useState<any[]>([]);
   const gear = useSelector((state: RootState) => state.Gear);
   const { profile } = useSelector((state: RootState) => state.User);
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
@@ -48,16 +42,6 @@ const GettingStarted: React.FC = (): JSX.Element => {
 
   const [gearType, setGearType] = useState<string>('--------');
 
-  //filter gear by type
-  // const handleSearchButton = async () => {
-  //   if (gearType) {
-  //     //console.log('gearType 🏂 ----------> ', gearType);
-  //     setGearType(gearType);
-  //   } else {
-  //     alert('Cannot find gear type');
-  //   }
-  // };
-
   const handleGeolocation = async () => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -76,14 +60,6 @@ const GettingStarted: React.FC = (): JSX.Element => {
       }
     );
   };
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const allGear = await supabase.getGear();
-  //     if (allGear) allGear;
-  //     if (allGear) dispatch(setFilteredGear(allGear));
-  //   })();
-  // }, []);
 
   useEffect(() => {
     dispatch(
@@ -267,7 +243,6 @@ const GettingStarted: React.FC = (): JSX.Element => {
           </button>
         </div>
       </div>
-      {/* <MapContainer></MapContainer> */}
     </>
   );
 };
