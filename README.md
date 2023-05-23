@@ -4,20 +4,20 @@ A peer-to-peer sports gear rental platform. Imagine Airbnb for renting sports ge
 
 The app grants users the ability to create profiles and either rent equipment to or from others. They are able to find either lessors or lessees based on proximity, availability and price. It is essentially a marketplace for short-term rentals, complete with authentication, chat card payments, and a rating and review system.
 
-![](https://github.com/gabrielschull/GearHub/GearHub-Screenshot-MapChat.png)
-
 ## Tech stack
 
-**Front-end:** React, Supabase, Tailwind;
+**Front-end:** React, Supabase, Tailwind;  
 **Back-end:** Express, Stripe API.
+
+![](GearHub-Screenshot-MapChat.png)
 
 ## Team
 
 Four full-stack engineers:
 
-@gabrielschull Gabriel Schull
-@raaulhb Raul Barros
-@ivaaan Ivan Afanasev
-@jbratton12 James Bratton
+[@gabrielschull](https://www.github.com/abrielschull) Gabriel Schull  
+[@raaulhb](https://www.github.com/raaulhb) Raul Barros  
+[@ivaaan](https://www.github.com/ivaaan) Ivan Afanasev  
+[@jbratton12](https://www.github.com/jbratton12) James Bratton
 
-![](https://github.com/gabrielschull/GearHub/GearHub-Screenshot-Details.png)
+![](GearHub-Screenshot-Details.png)
