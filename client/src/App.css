@@ -10,7 +10,9 @@
     @apply text-7xl;
   }
 }
-
-.component-container {
-  border: 1px solid black;
+.image-track > .image {
+  width: 40vmin;
+  height: 56vmin;
+  object-fit: cover;
+  object-position: center;
 }
